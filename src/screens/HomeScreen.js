@@ -20,7 +20,6 @@ const HomeScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Products One</h1>
         <Row>
           {products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
@@ -31,7 +30,6 @@ const HomeScreen = () => {
       </Container>
 
       <Container className="my-3">
-        <h1>Products Two</h1>
         <Row>
           {products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
@@ -42,7 +40,6 @@ const HomeScreen = () => {
       </Container>
 
       <Container className="my-3">
-        <h1>Products Three</h1>
         <Row>
           {products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
@@ -53,7 +50,6 @@ const HomeScreen = () => {
       </Container>
 
       <Container className="my-3">
-        <h1>Products Four</h1>
         <Row>
           {products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
