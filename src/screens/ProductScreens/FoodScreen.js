@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
-import Rating from "../components/Rating";
+import Rating from "../../components/Rating";
 // import products from "../products"; //same as in HomeScreen component.,use axios to fetch data
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const ProductScreen = () => {
+const FoodScreen = () => {
   const { id } = useParams();
   //   console.log(id);
   //   const product = products.find((p) => p._id === id);
   //   console.log(product);
 
-  const [product, setProduct] = useState({});
+  const [food, setFood] = useState({});
+  //   console.log(food);
   useEffect(() => {
-    const fetchProduct = async () => {
-      const res = await axios.get(`/api/products/${id}`);
-      setProduct(res.data);
+    const fetchFood = async () => {
+      const res = await axios.get(`/api/food/${id}`);
+      setFood(res.data);
     };
-    fetchProduct();
+    fetchFood();
   }, [id]);
 
   return (
@@ -28,23 +29,21 @@ const ProductScreen = () => {
       </Link>
       <Row>
         <Col md={6}>
-          <Image src={product.image} alt={product.name} fluid />
+          <Image src={food.image} alt={food.name} fluid />
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3>{product.name}</h3>
+              <h3>{food.name}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                value={product.rating}
-                text={`${product.numReviews} reviews`}
+                value={parseInt(food.rating)}
+                text={`${food.numReviews} reviews`}
               />
             </ListGroup.Item>
-            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
-            <ListGroup.Item>
-              Description : ${product.description}
-            </ListGroup.Item>
+            <ListGroup.Item>Price : ${food.price}</ListGroup.Item>
+            <ListGroup.Item>Description : ${food.description}</ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -54,7 +53,7 @@ const ProductScreen = () => {
                 <Row>
                   <Col>Price:</Col>
                   <Col>
-                    <strong>${product.price}</strong>
+                    <strong>${food.price}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -64,10 +63,10 @@ const ProductScreen = () => {
                   <Col>Status:</Col>
                   <Col
                     style={{
-                      color: `${product.countInStock > 0 ? "green" : "red"}`,
+                      color: `${food.countInStock > 0 ? "green" : "red"}`,
                     }}
                   >
-                    {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+                    {food.countInStock > 0 ? "In Stock" : "Out of Stock"}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -76,7 +75,7 @@ const ProductScreen = () => {
                 <Button
                   className="btn-block"
                   type="button"
-                  disabled={product.countInStock === 0}
+                  disabled={food.countInStock === 0}
                 >
                   Add to Cart
                 </Button>
@@ -89,4 +88,4 @@ const ProductScreen = () => {
   );
 };
 
-export default ProductScreen;
+export default FoodScreen;
