@@ -3,7 +3,10 @@ import { Container } from "react-bootstrap";
 import Hearder from "./components/Hearder";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
+import VillaScreen from "./screens/ProductScreens/VillaScreen";
+import FoodScreen from "./screens/ProductScreens/FoodScreen";
+import SpecialtyScreen from "./screens/ProductScreens/SpecialtyScreen";
+import TravelScreen from "./screens/ProductScreens/TravelScreen";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -15,7 +18,10 @@ const App = () => {
           <Container>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
-              <Route path="/product/:id" element={<ProductScreen />} />
+              <Route path="/villas/:id" element={<VillaScreen />} />
+              <Route path="/food/:id" element={<FoodScreen />} />
+              <Route path="/specialties/:id" element={<SpecialtyScreen />} />
+              <Route path="/travel/:id" element={<TravelScreen />} />
             </Routes>
           </Container>
         </main>

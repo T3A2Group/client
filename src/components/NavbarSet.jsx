@@ -26,9 +26,9 @@ const NavbarSet = () => {
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="/products">
+            <LinkContainer to="/specialties">
               <Nav.Link>
-                <i className="fa-solid fa-gifts"></i> Products
+                <i className="fa-solid fa-gifts"></i> Specialties
               </Nav.Link>
             </LinkContainer>
 
