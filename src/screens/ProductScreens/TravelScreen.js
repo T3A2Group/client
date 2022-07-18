@@ -88,6 +88,12 @@ const TravelScreen = () => {
             <Col md={6} className=" mt-3">
               <Card>
                 <ListGroup variant="flush" className="border-light">
+                  <ListGroup.Item className="text-success">
+                    Type : {travel.type}
+                  </ListGroup.Item>
+                  <ListGroup.Item className="text-success">
+                    Category : {travel.category}
+                  </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Price:</Col>
