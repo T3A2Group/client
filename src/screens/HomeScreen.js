@@ -52,6 +52,11 @@ const HomeScreen = () => {
             ))}
           </Row>
         )}
+        {/* <Row className="justify-content-md-center">
+          <Col xs="auto" lg="2" md="auto">
+            <Button className="btn btn-success">Explore More</Button>
+          </Col>
+        </Row> */}
       </Container>
 
       <Container className="my-3">

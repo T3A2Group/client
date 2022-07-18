@@ -34,7 +34,7 @@ const FoodScreen = () => {
           <Col md={6}>
             <Image src={food.image} alt={food.name} fluid />
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{food.name}</h3>
@@ -46,10 +46,16 @@ const FoodScreen = () => {
                 />
               </ListGroup.Item>
               <ListGroup.Item>Price : ${food.price}</ListGroup.Item>
+              <ListGroup.Item className="text-success">
+                Type : {food.type}
+              </ListGroup.Item>
+              <ListGroup.Item className="text-success">
+                Category : {food.category}
+              </ListGroup.Item>
               <ListGroup.Item>Description : ${food.description}</ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <Card>
               <ListGroup variant="flush" className="border-light">
                 <ListGroup.Item>
@@ -79,6 +85,11 @@ const FoodScreen = () => {
                     className="btn-block"
                     type="button"
                     disabled={food.countInStock === 0}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
                   >
                     Add to Cart
                   </Button>
