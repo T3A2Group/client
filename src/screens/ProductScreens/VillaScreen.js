@@ -35,7 +35,7 @@ const VillaScreen = () => {
           <Col md={6}>
             <Image src={villa.image} alt={villa.name} fluid />
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{villa.name}</h3>
@@ -52,8 +52,25 @@ const VillaScreen = () => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <Card>
+              <ListGroup variant="flush" className="border-light">
+                <ListGroup.Item className="text-success">
+                  Category: {villa.category}
+                </ListGroup.Item>
+                <ListGroup.Item className="text-success">
+                  Type: {villa.type}
+                </ListGroup.Item>
+                <ListGroup.Item className="text-success">
+                  Maxpople: {villa.maxPeople}
+                </ListGroup.Item>
+                <ListGroup.Item className="text-success">
+                  roomNums: {villa.roomNums}
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+
+            <Card className="mt-3">
               <ListGroup variant="flush" className="border-light">
                 <ListGroup.Item>
                   <Row>

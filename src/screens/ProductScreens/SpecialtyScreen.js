@@ -34,7 +34,7 @@ const SpecialtyScreen = () => {
           <Col md={6}>
             <Image src={specialty.image} alt={specialty.name} fluid />
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{specialty.name}</h3>
@@ -51,9 +51,15 @@ const SpecialtyScreen = () => {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col md={3}>
+          <Col md={3} className="mt-md-0 mt-3">
             <Card>
               <ListGroup variant="flush" className="border-light">
+                <ListGroup.Item className="text-success">
+                  Type : {specialty.type}
+                </ListGroup.Item>
+                <ListGroup.Item className="text-success">
+                  Category : {specialty.category}
+                </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
                     <Col>Price:</Col>
