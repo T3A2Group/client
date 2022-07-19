@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const EachSpecialty = ({ specialty }) => {
   return (
-    <Card className="my-3 p-3 rounded border-light">
-      <Link to={`/specialties/${specialty._id}`}>
+    <Card className="my-3 p-3 rounded">
+      <Link to={`/specialty/${specialty._id}`}>
         <Card.Img
           src={specialty.image}
           variant="top"
@@ -15,7 +15,7 @@ const EachSpecialty = ({ specialty }) => {
         />
       </Link>
       <Card.Body>
-        <Link to={`/specialties/${specialty._id}`}>
+        <Link to={`/specialty/${specialty._id}`}>
           <Card.Title as="div" className="lead">
             <strong>{specialty.name}</strong>
           </Card.Title>

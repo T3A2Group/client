@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 const EachVilla = ({ villa }) => {
   return (
-    <Card className="my-3 p-3 rounded border-light">
-      <Link to={`/villas/${villa._id}`}>
+    <Card className="my-3 p-3 rounded">
+      <Link to={`/villa/${villa._id}`}>
         <Card.Img
           src={villa.image}
           variant="top"
@@ -15,7 +15,7 @@ const EachVilla = ({ villa }) => {
         />
       </Link>
       <Card.Body>
-        <Link to={`/villas/${villa._id}`}>
+        <Link to={`/villa/${villa._id}`}>
           <Card.Title as="div" className="lead">
             <strong>{villa.name}</strong>
           </Card.Title>
