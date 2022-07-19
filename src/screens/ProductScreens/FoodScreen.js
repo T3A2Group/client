@@ -134,16 +134,11 @@ const FoodScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item>
+                  <ListGroup.Item className="d-grid gap-2">
                     <Button
-                      className="btn-block"
+                      className="lg"
                       type="button"
                       disabled={food.countInStock === 0}
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
                       onClick={addToCartHandler}
                     >
                       Add to Cart

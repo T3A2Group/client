@@ -140,9 +140,9 @@ const SpecialtyScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item>
+                  <ListGroup.Item className="d-grid gap-2">
                     <Button
-                      className="btn-block"
+                      className="lg"
                       type="button"
                       disabled={specialty.countInStock === 0}
                       onClick={addToCartHandler}

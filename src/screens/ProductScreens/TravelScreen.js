@@ -157,9 +157,9 @@ const TravelScreen = () => {
                     </ListGroup.Item>
                   )}
 
-                  <ListGroup.Item>
+                  <ListGroup.Item className="d-grid gap-2">
                     <Button
-                      className="btn-block"
+                      className="lg"
                       type="button"
                       disabled={travel.countInStock === 0}
                       onClick={addToCartHandler}
