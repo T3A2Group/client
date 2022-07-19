@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Row,
   Col,
@@ -8,6 +8,7 @@ import {
   Card,
   Button,
   Container,
+  Form,
 } from "react-bootstrap";
 import Rating from "../../components/Rating";
 // import products from "../products"; //same as in HomeScreen component.,use axios to fetch data
@@ -20,6 +21,9 @@ import Message from "../../components/Loading/Message";
 
 const TravelScreen = () => {
   const { id } = useParams();
+  const [travelQty, setTravelQty] = useState(1);
+  const navigateTo = useNavigate(); //for cart qty url
+
   const dispatch = useDispatch();
   const travelDetails = useSelector((state) => state.travelDetails);
   const { loading, error, travel } = travelDetails;
@@ -27,6 +31,11 @@ const TravelScreen = () => {
   useEffect(() => {
     dispatch(listTravelDetails(id));
   }, [dispatch, id]);
+
+  // event handler: for add to cart
+  const addToCartHandler = () => {
+    navigateTo(`/cart/${id}?category=travel&qty=${travelQty}`);
+  };
 
   return (
     <>
@@ -40,10 +49,10 @@ const TravelScreen = () => {
       ) : (
         <Container>
           <Row>
-            <Col md={6}>
+            <Col lg={6}>
               <Image src={travel.image} alt={travel.name} fluid />
             </Col>
-            <Col md={6} className="mt-md-0 mt-3">
+            <Col lg={6} className="mt-3">
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <h3>{travel.name}</h3>
@@ -63,9 +72,9 @@ const TravelScreen = () => {
           </Row>
 
           <Row>
-            <Col md={6} className="mt-3">
+            <Col lg={6} className="mt-3">
               <Card>
-                <ListGroup variant="flush" className="border-light">
+                <ListGroup variant="flush">
                   <ListGroup.Item className="text-success">
                     Attractions:
                   </ListGroup.Item>
@@ -83,9 +92,9 @@ const TravelScreen = () => {
               </Card>
             </Col>
 
-            <Col md={6} className=" mt-3">
+            <Col lg={6} className=" mt-3">
               <Card>
-                <ListGroup variant="flush" className="border-light">
+                <ListGroup variant="flush">
                   <ListGroup.Item className="text-success">
                     Type : {travel.type}
                   </ListGroup.Item>
@@ -114,11 +123,46 @@ const TravelScreen = () => {
                     </Row>
                   </ListGroup.Item>
 
+                  {/* use ternary operator to daminamicly show travel plan qty status: 0< travel.qty <=10 */}
+                  {travel.countInStock > 0 && travel.countInStock <= 8 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col className="text-danger">
+                          <strong>
+                            Hurry up! Only {travel.countInStock} Left!
+                          </strong>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
+                  {travel.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>How Many People</Col>
+                        <Col>
+                          <Form.Control
+                            as="select"
+                            value={travelQty}
+                            onChange={(e) => setTravelQty(e.target.value)}
+                          >
+                            {[...Array(travel.countInStock).keys()].map((t) => (
+                              <option key={t + 1} value={t + 1}>
+                                {t + 1}
+                              </option>
+                            ))}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
                   <ListGroup.Item>
                     <Button
                       className="btn-block"
                       type="button"
                       disabled={travel.countInStock === 0}
+                      onClick={addToCartHandler}
                     >
                       Add to Cart
                     </Button>

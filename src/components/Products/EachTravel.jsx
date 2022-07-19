@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const EachTravel = ({ travel }) => {
   return (
-    <Card className="my-3 p-3 rounded border-light">
+    <Card className="my-3 p-3 rounded">
       <Link to={`/travel/${travel._id}`}>
         <Card.Img
           src={travel.image}

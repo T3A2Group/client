@@ -7,6 +7,7 @@ import VillaScreen from "./screens/ProductScreens/VillaScreen";
 import FoodScreen from "./screens/ProductScreens/FoodScreen";
 import SpecialtyScreen from "./screens/ProductScreens/SpecialtyScreen";
 import TravelScreen from "./screens/ProductScreens/TravelScreen";
+import CartScreen from "./screens/CartScreen";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -18,10 +19,14 @@ const App = () => {
           <Container>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
-              <Route path="/villas/:id" element={<VillaScreen />} />
+              <Route path="/villa/:id" element={<VillaScreen />} />
               <Route path="/food/:id" element={<FoodScreen />} />
-              <Route path="/specialties/:id" element={<SpecialtyScreen />} />
+              <Route path="/specialty/:id" element={<SpecialtyScreen />} />
               <Route path="/travel/:id" element={<TravelScreen />} />
+              <Route path="/cart">
+                <Route path=":id" element={<CartScreen />} />
+                <Route path="" element={<CartScreen />} />
+              </Route>
             </Routes>
           </Container>
         </main>

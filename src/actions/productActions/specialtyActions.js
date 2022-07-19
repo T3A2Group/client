@@ -11,7 +11,7 @@ import {
 export const listSpecialties = () => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_LIST_REQUEST });
-    const { data } = await axios.get("/api/specialties");
+    const { data } = await axios.get("/api/specialty");
     dispatch({ type: SPECIALTY_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -27,7 +27,7 @@ export const listSpecialties = () => async (dispatch) => {
 export const listSpecialtyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/specialties/${id}`);
+    const { data } = await axios.get(`/api/specialty/${id}`);
     dispatch({ type: SPECIALTY_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

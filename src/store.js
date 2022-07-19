@@ -17,8 +17,7 @@ import {
   travelListReducer,
   travelDetailsReducer,
 } from "./reducers/productsReducers/travelReducers";
-
-const initialState = {};
+import { cartReducer } from "./reducers/cartReducers";
 
 const reducer = {
   villaList: villaListReducer,
@@ -30,6 +29,16 @@ const reducer = {
   foodDetails: foodDetailsReducer,
   specialtyDetails: specialtyDetailsReducer,
   travelDetails: travelDetailsReducer,
+
+  cart: cartReducer,
+};
+
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+
+const initialState = {
+  cart: { cartItems: cartItemsFromStorage },
 };
 
 // const middleware = [thunk];

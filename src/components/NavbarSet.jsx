@@ -14,7 +14,7 @@ const NavbarSet = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
-            <LinkContainer to="/resort">
+            <LinkContainer to="/villa">
               <Nav.Link>
                 <i className="fa-solid fa-bed"></i> Resort
               </Nav.Link>
@@ -26,7 +26,7 @@ const NavbarSet = () => {
               </Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to="/specialties">
+            <LinkContainer to="/specialty">
               <Nav.Link>
                 <i className="fa-solid fa-gifts"></i> Specialties
               </Nav.Link>
