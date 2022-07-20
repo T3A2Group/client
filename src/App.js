@@ -8,6 +8,7 @@ import FoodScreen from "./screens/ProductScreens/FoodScreen";
 import SpecialtyScreen from "./screens/ProductScreens/SpecialtyScreen";
 import TravelScreen from "./screens/ProductScreens/TravelScreen";
 import CartScreen from "./screens/CartScreen";
+import LoginScreen from "./screens/LoginScreen";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                 <Route path=":id" element={<CartScreen />} />
                 <Route path="" element={<CartScreen />} />
               </Route>
+              <Route path="/login" element={<LoginScreen />} />
             </Routes>
           </Container>
         </main>

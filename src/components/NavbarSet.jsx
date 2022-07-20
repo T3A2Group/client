@@ -1,15 +1,32 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
+import { NavDropdown } from "react-bootstrap";
+import { ReactComponent as Logo } from "../assets/Tasmania-Resort-Logo.svg";
 
 const NavbarSet = () => {
+  //need userInfo state to check if user login or not and depends on that to render component
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const logoutHandler = () => {
+    console.log("logout");
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>Tasmania Resort</Navbar.Brand>
+          <Navbar.Brand>
+            <Logo
+              className="d-inline-block align-top"
+              style={{ width: "40", height: "30" }}
+            />{" "}
+            Tasmania Resort
+          </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -43,12 +60,22 @@ const NavbarSet = () => {
                 <i className="fas fa-shopping-cart"></i> Cart
               </Nav.Link>
             </LinkContainer>
-
-            <LinkContainer to="/login">
-              <Nav.Link>
-                <i className="fas fa-user"></i> Sign In
-              </Nav.Link>
-            </LinkContainer>
+            {userInfo ? (
+              <NavDropdown title={userInfo.name} id="username">
+                <LinkContainer to="/profile">
+                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Item onClick={logoutHandler}>
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <LinkContainer to="/login">
+                <Nav.Link>
+                  <i className="fas fa-user"></i> Sign In
+                </Nav.Link>
+              </LinkContainer>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

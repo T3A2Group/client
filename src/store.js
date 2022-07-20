@@ -18,6 +18,7 @@ import {
   travelDetailsReducer,
 } from "./reducers/productsReducers/travelReducers";
 import { cartReducer } from "./reducers/cartReducers";
+import { userLoginReducer } from "./reducers/userReducers";
 
 const reducer = {
   villaList: villaListReducer,
@@ -31,22 +32,28 @@ const reducer = {
   travelDetails: travelDetailsReducer,
 
   cart: cartReducer,
+
+  userLogin: userLoginReducer,
 };
 
+//get cart Items from local storage,this is for preload state,even user fresh the page, cart item still in there if there is any
 const cartItemsFromStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
+// get userInfo from local storage,this is for preload state,even user fresh the page, user still in login status
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
 
-const initialState = {
+const preloadedState = {
   cart: { cartItems: cartItemsFromStorage },
+  userLogin: { userInfo: userInfoFromStorage }, //so initial userInfo will always comes from local storage,if there is any
 };
-
-// const middleware = [thunk];
 
 const store = configureStore({
   reducer,
-  initialState,
-  devTools: process.env.NODE_ENV !== "production",
+  preloadedState,
+  devTools: process.env.NODE_ENV !== "production", //=> only show devTools when in production
 });
 
 export default store;
