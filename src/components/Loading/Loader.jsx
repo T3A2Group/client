@@ -1,6 +1,7 @@
 import React from "react";
 import { Spinner } from "react-bootstrap";
 
+//the component just for spinner loading
 const Loader = ({ color }) => {
   return (
     <Spinner
