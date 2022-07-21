@@ -18,7 +18,12 @@ import {
   travelDetailsReducer,
 } from "./reducers/productsReducers/travelReducers";
 import { cartReducer } from "./reducers/cartReducers";
-import { userLoginReducer } from "./reducers/userReducers";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userUpdateProfileReducer,
+} from "./reducers/userReducers";
 
 const reducer = {
   villaList: villaListReducer,
@@ -34,6 +39,9 @@ const reducer = {
   cart: cartReducer,
 
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 };
 
 //get cart Items from local storage,this is for preload state,even user fresh the page, cart item still in there if there is any

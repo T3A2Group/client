@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -6,14 +7,19 @@ import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
 import { NavDropdown } from "react-bootstrap";
 import { ReactComponent as Logo } from "../assets/Tasmania-Resort-Logo.svg";
+import { logout } from "../actions/userActions";
 
 const NavbarSet = () => {
   //need userInfo state to check if user login or not and depends on that to render component
+  const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
-    console.log("logout");
+    // console.log("logout");
+    dispatch(logout());
+    nagivateTo("/login"); //when user logout, nagivate to login page again
   };
 
   return (
@@ -61,7 +67,20 @@ const NavbarSet = () => {
               </Nav.Link>
             </LinkContainer>
             {userInfo ? (
-              <NavDropdown title={userInfo.name} id="username">
+              <NavDropdown
+                title={
+                  <>
+                    <img
+                      className="user_image"
+                      src="https://i.ibb.co/r3xBmkW/avatar.png"
+                      alt="user pic"
+                      style={{ width: "20px", height: "20px" }}
+                    />{" "}
+                    {userInfo.name}
+                  </>
+                }
+                id="username"
+              >
                 <LinkContainer to="/profile">
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </LinkContainer>

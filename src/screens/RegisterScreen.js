@@ -5,43 +5,67 @@ import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import Message from "../components/Loading/Message";
 import Progresser from "../components/Loading/Progresser";
-import { login } from "../actions/userActions";
+import { register } from "../actions/userActions";
 
-const LoginScreen = () => {
-  //=> user login email and password state
+const RegisterScreen = () => {
+  //=> user register name, email, password and confirmPassword state
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const location = useLocation();
   const navigateTo = useNavigate();
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { loading, error, userInfo } = userLogin; // three of these distructures comes from user reducers
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister; // three of these distructures comes from user reducers
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (userInfo) {
-      navigateTo(redirect); //if user login,then redirect
+      navigateTo(redirect); //if user register,then redirect
     }
   }, [navigateTo, userInfo, redirect]);
 
   //form event handler
+  const nameHandler = (e) => setName(e.target.value);
   const emailHandler = (e) => setEmail(e.target.value);
   const passwordHandler = (e) => setPassword(e.target.value);
+  const confirmPasswordHandler = (e) => setConfirmPassword(e.target.value);
   const submithandler = (e) => {
     e.preventDefault();
-    //Dispatch login
-    dispatch(login(email, password));
+    //Dispatch register
+    if (password !== confirmPassword) {
+      setMessage(
+        "Passwords do not match,Your Confirm Password needs to same as Your Password"
+      );
+    } else {
+      dispatch(register(name, email, password));
+    }
   };
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>Sign Up</h1>
+      {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Progresser />}
       <Form onSubmit={submithandler}>
+        {/* user name input */}
+        <Form.Group controlId="name">
+          <Form.Label>User Name</Form.Label>
+          <Form.Control
+            type="name"
+            placeholder="Please Enter Your username"
+            onChange={nameHandler}
+            value={name}
+            autoComplete="on"
+          ></Form.Control>
+        </Form.Group>
+
         {/* user email input */}
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -66,21 +90,33 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
 
+        {/* user password input */}
+        <Form.Group controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Please Confirm Your Password"
+            onChange={confirmPasswordHandler}
+            value={confirmPassword}
+            autoComplete="on"
+          ></Form.Control>
+        </Form.Group>
+
         <Button
           type="submit"
           variant="btn btn-outline-primary"
           className="my-3"
         >
-          Sign In
+          Register
         </Button>
       </Form>
 
       <Row className="py-3">
         <Col>
-          No Account Yet?
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+          Already Have an Account?
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
             {" "}
-            Sign Up
+            Log In
           </Link>
         </Col>
       </Row>
@@ -88,4 +124,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
