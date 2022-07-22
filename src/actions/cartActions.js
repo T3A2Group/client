@@ -5,7 +5,7 @@ import {
   CART_REMOVE_ITEM,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
-} from "../constants/CartConstants";
+} from "../constants/cartConstants";
 
 //we can get category,id,qty from URL
 export const addToCart = (category, id, qty) => async (dispatch, getState) => {

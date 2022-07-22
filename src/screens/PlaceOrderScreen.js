@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Loading/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { ListSubheader } from "@mui/material";
+import { createOrder } from "../actions/orderActions";
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const nagivateTo = useNavigate();
 
   //mimic real business, calculate prices:start
   const addDecimals = (num) => {
@@ -35,8 +36,30 @@ const PlaceOrderScreen = () => {
   );
   //calculate prices:end
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      nagivateTo(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [nagivateTo, success]);
+  //dispatch cart and orderCart properties into createOrder action:
+  //   console.log(cart);
+  //   console.log(orderCart);
   const placeOrderHandler = () => {
-    console.log("order dispatched!");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: orderCart.itemsPrice,
+        shippingPrice: orderCart.shippingPrice,
+        taxPrice: orderCart.taxPrice,
+        totalPrice: orderCart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -99,12 +122,14 @@ const PlaceOrderScreen = () => {
               <ListGroup.Item>
                 <h2>Order Summary</h2>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
                   <Col>${orderCart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
@@ -116,18 +141,25 @@ const PlaceOrderScreen = () => {
                   </Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>GST</Col>
                   <Col>${orderCart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
                   <Col>${orderCart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
+              <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
+              </ListGroup.Item>
+
               <ListGroup.Item className="d-grid gap-2">
                 <Button
                   type="button"
