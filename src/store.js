@@ -24,6 +24,7 @@ import {
   userDetailsReducer,
   userUpdateProfileReducer,
 } from "./reducers/userReducers";
+import { orderCreateReducer } from "./reducers/orderReducers";
 
 const reducer = {
   villaList: villaListReducer,
@@ -42,6 +43,8 @@ const reducer = {
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+
+  orderCreate: orderCreateReducer,
 };
 
 //get cart Items from local storage,this is for preload state,even user fresh the page, cart item still in there if there is any
@@ -52,9 +55,16 @@ const cartItemsFromStorage = localStorage.getItem("cartItems")
 const userInfoFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
+// get shipping address from local storage, this is for preload state,even user fresh the page, shipping address still in login status
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : {};
 
 const preloadedState = {
-  cart: { cartItems: cartItemsFromStorage },
+  cart: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
   userLogin: { userInfo: userInfoFromStorage }, //so initial userInfo will always comes from local storage,if there is any
 };
 

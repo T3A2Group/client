@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Hearder from "./components/Hearder";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
@@ -11,9 +12,13 @@ import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ShippingScreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+//toastify lab import start
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//toastify lab import end
 
 const App = () => {
   return (
@@ -35,6 +40,9 @@ const App = () => {
               <Route path="/login" element={<LoginScreen />} />
               <Route path="/register" element={<RegisterScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/shipping" element={<ShippingScreen />} />
+              <Route path="/payment" element={<PaymentScreen />} />
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
             </Routes>
           </Container>
         </main>

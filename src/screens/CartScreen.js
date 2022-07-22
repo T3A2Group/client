@@ -46,7 +46,7 @@ const CartScreen = () => {
 
   //checkout hander
   const checkoutHander = () => {
-    navigateTo("/login?redirect=shipping");
+    navigateTo("/login?redirect=/shipping");
   };
 
   return (
