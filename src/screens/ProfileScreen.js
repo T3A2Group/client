@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Loading/Message";
 import Progresser from "../components/Loading/Progresser";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
+import { listMyOrders } from "../actions/orderActions";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ProfileScreen = () => {
   //=> user name, email, password and confirmPassword state
@@ -27,6 +29,9 @@ const ProfileScreen = () => {
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { success } = userUpdateProfile; // success comes from user reducers/userUpdateProfileReducer
+
+  const orderMyList = useSelector((state) => state.orderMyList);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderMyList; // three of these distructures comes from order reducers/orderMyListReducer
   //end!
 
   useEffect(() => {
@@ -36,6 +41,7 @@ const ProfileScreen = () => {
       if (!user || !user.name || success) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails("profile")); //in this case, profile will pass into userActions/getUserDetails, and the id will be the profile
+        dispatch(listMyOrders());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -130,7 +136,69 @@ const ProfileScreen = () => {
           </Button>
         </Form>
       </Col>
-      <Col lg={8}>My Orders</Col>
+      <Col lg={8}>
+        <h2>My Orders</h2>
+        {loadingOrders ? (
+          <Progresser />
+        ) : errorOrders ? (
+          <Message variant="danger">{errorOrders}</Message>
+        ) : (
+          <Table striped bordered hover responsive className="table-sm">
+            <thead>
+              <tr className="table-info">
+                <th>Order ID</th>
+                <th>Purchased DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>STATUS</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id} className="table-light">
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>${order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      <i
+                        className="fa-solid fa-check"
+                        style={{ color: "green" }}
+                      ></i>
+                    ) : (
+                      <i
+                        className="fa-solid fa-xmark"
+                        style={{ color: "red" }}
+                      ></i>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDispatched ? (
+                      order.dispatchedAt.substring(0, 10)
+                    ) : (
+                      <i
+                        className="fa-solid fa-xmark"
+                        style={{ color: "red" }}
+                      ></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button
+                        variant="light"
+                        className="btn btn-outline-primary btn-sm"
+                      >
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Col>
     </Row>
   );
 };
