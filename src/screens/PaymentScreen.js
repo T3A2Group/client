@@ -43,14 +43,14 @@ const PaymentScreen = () => {
               value="PayPal"
               onChange={paymentHandler}
             ></Form.Check>
-            <Form.Check
+            {/* <Form.Check
               type="radio"
-              label="Stripe"
+              label="Stripe(still working on it)"
               id="Stripe"
               name="paymentMethod"
               value="Stripe"
               onChange={paymentHandler}
-            ></Form.Check>
+            ></Form.Check> */}
           </Col>
         </Form.Group>
         <Button type="submit" variant="primary" className="my-3">

@@ -149,10 +149,14 @@ const PlaceOrderScreen = () => {
                 </Row>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className="text-primary">
                 <Row>
-                  <Col>Total</Col>
-                  <Col>${orderCart.totalPrice}</Col>
+                  <Col>
+                    <strong>Total</strong>
+                  </Col>
+                  <Col>
+                    <strong>${orderCart.totalPrice}</strong>
+                  </Col>
                 </Row>
               </ListGroup.Item>
 

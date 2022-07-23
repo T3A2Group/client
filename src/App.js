@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Hearder from "./components/Hearder";
@@ -15,40 +15,60 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
 //toastify lab import start
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //toastify lab import end
+//import react-paypal-js and axios for payment
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import axios from "axios";
 
 const App = () => {
+  const [clientID, setClientID] = useState("");
+  useEffect(() => {
+    const getClientId = async () => {
+      const { data: clientId } = await axios.get("/api/config/paypal");
+      setClientID(clientId);
+    };
+    if (!window.paypal) {
+      getClientId();
+    }
+  }, []);
+
   return (
     <>
-      <Router>
-        <Hearder />
-        <main className="py-3">
-          <Container>
-            <Routes>
-              <Route path="/" element={<HomeScreen />} />
-              <Route path="/villa/:id" element={<VillaScreen />} />
-              <Route path="/food/:id" element={<FoodScreen />} />
-              <Route path="/specialty/:id" element={<SpecialtyScreen />} />
-              <Route path="/travel/:id" element={<TravelScreen />} />
-              <Route path="/cart">
-                <Route path=":id" element={<CartScreen />} />
-                <Route path="" element={<CartScreen />} />
-              </Route>
-              <Route path="/login" element={<LoginScreen />} />
-              <Route path="/register" element={<RegisterScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
-              <Route path="/shipping" element={<ShippingScreen />} />
-              <Route path="/payment" element={<PaymentScreen />} />
-              <Route path="/placeorder" element={<PlaceOrderScreen />} />
-            </Routes>
-          </Container>
-        </main>
-        <Footer />
-        <ToastContainer />
-      </Router>
+      {clientID && (
+        <PayPalScriptProvider options={{ "client-id": clientID }}>
+          <Router>
+            <Hearder />
+            <main className="py-3">
+              <Container>
+                <Routes>
+                  <Route path="/" element={<HomeScreen />} />
+                  <Route path="/villa/:id" element={<VillaScreen />} />
+                  <Route path="/food/:id" element={<FoodScreen />} />
+                  <Route path="/specialty/:id" element={<SpecialtyScreen />} />
+                  <Route path="/travel/:id" element={<TravelScreen />} />
+                  <Route path="/cart">
+                    <Route path=":id" element={<CartScreen />} />
+                    <Route path="" element={<CartScreen />} />
+                  </Route>
+                  <Route path="/login" element={<LoginScreen />} />
+                  <Route path="/register" element={<RegisterScreen />} />
+                  <Route path="/profile" element={<ProfileScreen />} />
+                  <Route path="/shipping" element={<ShippingScreen />} />
+                  <Route path="/payment" element={<PaymentScreen />} />
+                  <Route path="/placeorder" element={<PlaceOrderScreen />} />
+                  <Route path="/order/:id" element={<OrderScreen />} />
+                </Routes>
+              </Container>
+            </main>
+            <Footer />
+            <ToastContainer />
+          </Router>
+        </PayPalScriptProvider>
+      )}
     </>
   );
 };
