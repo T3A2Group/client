@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Hearder from "./components/Hearder";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
 import VillaScreen from "./screens/ProductScreens/VillaScreen";
@@ -41,7 +41,7 @@ const App = () => {
       {clientID && (
         <PayPalScriptProvider options={{ "client-id": clientID }}>
           <Router>
-            <Hearder />
+            <Header />
             <main className="py-3">
               <Container>
                 <Routes>

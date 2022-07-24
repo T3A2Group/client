@@ -1,7 +1,7 @@
 import React from "react";
 import NavbarSet from "./NavbarSet";
 
-const Hearder = () => {
+const Header = () => {
   return (
     <header>
       <NavbarSet />
@@ -9,4 +9,4 @@ const Hearder = () => {
   );
 };
 
-export default Hearder;
+export default Header;
