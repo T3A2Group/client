@@ -95,6 +95,36 @@ const NavbarSet = () => {
                 </Nav.Link>
               </LinkContainer>
             )}
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown
+                title={
+                  <>
+                    <i className="fa-solid fa-toolbox"></i> Admin
+                  </>
+                }
+                id="adminmenu"
+              >
+                <LinkContainer to="/admin/userlist">
+                  <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist/villa">
+                  <NavDropdown.Item>Modify Villas</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist/food">
+                  <NavDropdown.Item>Modify Food</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist/specialty">
+                  <NavDropdown.Item>Modify Specialties</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist/travel">
+                  <NavDropdown.Item>Modify Travel</NavDropdown.Item>
+                </LinkContainer>
+
+                <LinkContainer to="/admin/ordertlist">
+                  <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -41,7 +41,7 @@ const VillaScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/">
+      <Link className="btn btn-dark my-3" to="/villa">
         Go Back
       </Link>
       {loading ? (

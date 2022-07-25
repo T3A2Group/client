@@ -39,7 +39,7 @@ const TravelScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/">
+      <Link className="btn btn-dark my-3" to="/travel">
         Go Back
       </Link>
       {loading ? (

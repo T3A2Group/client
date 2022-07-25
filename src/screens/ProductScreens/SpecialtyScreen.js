@@ -39,7 +39,7 @@ const SpecialtyScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/">
+      <Link className="btn btn-dark my-3" to="/specialty">
         Go Back
       </Link>
       {loading ? (
