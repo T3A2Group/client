@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Row,
   Col,
@@ -39,7 +39,6 @@ const TravelScreen = () => {
 
   return (
     <>
-
       <Button className="btn btn-dark my-3" onClick={() => navigateTo(-1)}>
         Go Back
       </Button>
