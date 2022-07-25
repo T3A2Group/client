@@ -25,6 +25,7 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from "axios";
 import VillaListScreen from "./screens/ProductScreens/VillaListScreen";
 import FoodListScreen from "./screens/ProductScreens/FoodListScreen";
+import SpecialtyListScreen from "./screens/ProductScreens/SpecialtyListScreen";
 
 const App = () => {
   const [clientID, setClientID] = useState("");
@@ -52,6 +53,7 @@ const App = () => {
                   <Route path="/villa/:id" element={<VillaScreen />} />
                   <Route path="/food" element={<FoodListScreen />} />
                   <Route path="/food/:id" element={<FoodScreen />} />
+                  <Route path="/specialty" element={<SpecialtyListScreen />} />
                   <Route path="/specialty/:id" element={<SpecialtyScreen />} />
                   <Route path="/travel/:id" element={<TravelScreen />} />
                   <Route path="/cart">
