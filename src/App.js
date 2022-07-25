@@ -23,6 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 //import react-paypal-js and axios for payment
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from "axios";
+import VillaListScreen from "./screens/ProductScreens/VillaListScreen";
 
 const App = () => {
   const [clientID, setClientID] = useState("");
@@ -46,6 +47,7 @@ const App = () => {
               <Container>
                 <Routes>
                   <Route path="/" element={<HomeScreen />} />
+                  <Route path="/villa" element={<VillaListScreen />} />
                   <Route path="/villa/:id" element={<VillaScreen />} />
                   <Route path="/food/:id" element={<FoodScreen />} />
                   <Route path="/specialty/:id" element={<SpecialtyScreen />} />
