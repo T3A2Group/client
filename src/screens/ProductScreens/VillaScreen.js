@@ -41,9 +41,10 @@ const VillaScreen = () => {
 
   return (
     <>
-      <Link className="btn btn-dark my-3" to="/villa">
+
+      <Button className="btn btn-dark my-3" onClick={() => navigateTo(-1)}>
         Go Back
-      </Link>
+      </Button>
       {loading ? (
         <Loader />
       ) : error ? (

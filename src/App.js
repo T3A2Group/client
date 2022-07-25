@@ -33,6 +33,10 @@ import "react-toastify/dist/ReactToastify.css";
 //import react-paypal-js and axios for payment
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from "axios";
+import VillaListScreen from "./screens/ProductScreens/VillaListScreen";
+import FoodListScreen from "./screens/ProductScreens/FoodListScreen";
+import SpecialtyListScreen from "./screens/ProductScreens/SpecialtyListScreen";
+import TravelListScreen from "./screens/ProductScreens/TravelListScreen";
 
 const App = () => {
   const [clientID, setClientID] = useState("");
