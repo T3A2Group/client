@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import ListEachVilla from "../../components/Products/ListEachVilla";
 // import products from "../products";  //fetch it from backend
-import { Row, Col, Button } from "react-bootstrap";
+
+import { Row, Col } from "react-bootstrap";
+
 import Container from "react-bootstrap/Container";
 
 //use react redux to lift up all villas state, start:
@@ -50,4 +52,6 @@ const VillaListScreen = () => {
   );
 };
 
+
 export default VillaListScreen;
+

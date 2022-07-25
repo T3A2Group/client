@@ -46,4 +46,6 @@ const FoodListScreen = () => {
   );
 };
 
+
 export default FoodListScreen;
+

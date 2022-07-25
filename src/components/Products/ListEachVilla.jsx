@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const ListEachVilla = ({ villa }) => {
   return (
     <Card className="my-3 p-3 rounded">
+
         <Row>
             <Col lg={4} className='row align-items-center'>
                 <Link to={`/villa/${villa._id}`}>
@@ -43,6 +44,7 @@ const ListEachVilla = ({ villa }) => {
                 </Link>
             </Col>
         </Row>
+
     </Card>
   );
 };

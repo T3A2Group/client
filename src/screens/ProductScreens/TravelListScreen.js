@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import ListEachTravel from "../../components/Products/ListEachTravel";
-
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
 import Container from "react-bootstrap/Container";

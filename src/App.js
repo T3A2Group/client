@@ -16,6 +16,16 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import UserListScreen from "./screens/UserListScreen";
+import UserEditScreen from "./screens/UserEditScreen";
+import VillaListScreen from "./screens/ProductScreens/VillaListScreen";
+import FoodListScreen from "./screens/ProductScreens/FoodListScreen";
+import SpecialtyListScreen from "./screens/ProductScreens/SpecialtyListScreen";
+import TravelListScreen from "./screens/ProductScreens/TravelListScreen";
+import AdminVillaListScreen from "./screens/AdminProductListScreens/AdminVillaListScreen";
+import AdminFoodListScreen from "./screens/AdminProductListScreens/AdminFoodListScreen";
+import AdminSpecialtyListScreen from "./screens/AdminProductListScreens/AdminSpecialtyListScreen";
+import AdminTravelListScreen from "./screens/AdminProductListScreens/AdminTravelListScreen";
 //toastify lab import start
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -69,6 +79,27 @@ const App = () => {
                   <Route path="/payment" element={<PaymentScreen />} />
                   <Route path="/placeorder" element={<PlaceOrderScreen />} />
                   <Route path="/order/:id" element={<OrderScreen />} />
+                  <Route path="/admin/userlist" element={<UserListScreen />} />
+                  <Route
+                    path="/admin/user/:id/edit"
+                    element={<UserEditScreen />}
+                  />
+                  <Route
+                    path="/admin/productlist/villa"
+                    element={<AdminVillaListScreen />}
+                  />
+                  <Route
+                    path="/admin/productlist/food"
+                    element={<AdminFoodListScreen />}
+                  />
+                  <Route
+                    path="/admin/productlist/specialty"
+                    element={<AdminSpecialtyListScreen />}
+                  />
+                  <Route
+                    path="/admin/productlist/travel"
+                    element={<AdminTravelListScreen />}
+                  />
                 </Routes>
               </Container>
             </main>
