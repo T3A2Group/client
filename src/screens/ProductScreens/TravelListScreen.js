@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import EachTravel from "../../components/Products/EachTravel";
+import ListEachTravel from "../../components/Products/ListEachTravel";
+
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
@@ -26,7 +27,7 @@ const TravelListScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Travel Plan</h1>
+        <h1>Our Travel Packages</h1>
         {travelList.loading ? (
           <Loader color={"#A10035"} />
         ) : travelList.error ? (
@@ -34,8 +35,8 @@ const TravelListScreen = () => {
         ) : (
           <Row>
             {travelList.travel.map((travel) => (
-              <Col key={travel._id} sm={12} md={6} lg={4} xl={3}>
-                <EachTravel travel={travel} />
+              <Col key={travel._id} md={12}>
+                <ListEachTravel travel={travel} />
               </Col>
             ))}
           </Row>

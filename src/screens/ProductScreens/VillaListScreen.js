@@ -26,7 +26,7 @@ const VillaListScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Villas</h1>
+        <h1>Our Villas</h1>
         {villaList.loading ? (
           <Loader color={"#FFE7BF"} />
         ) : villaList.error ? (

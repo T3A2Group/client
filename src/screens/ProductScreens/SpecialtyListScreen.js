@@ -27,7 +27,7 @@ const SpecialtyListScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Specialties</h1>
+        <h1>Our Specialties</h1>
         {specialtyList.loading ? (
           <Loader color={"#FF869E"} />
         ) : specialtyList.error ? (

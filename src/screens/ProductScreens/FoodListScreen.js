@@ -27,7 +27,7 @@ const FoodListScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Food</h1>
+        <h1>Our Restaurant</h1>
         {foodList.loading ? (
           <Loader color={"#FFC4C4"} />
         ) : foodList.error ? (
