@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import EachVilla from "../../components/Products/EachVilla";
+import ListEachVilla from "../../components/Products/ListEachVilla";
 // import products from "../products";  //fetch it from backend
 import { Row, Col, Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
@@ -34,8 +34,8 @@ const VillaListScreen = () => {
         ) : (
           <Row>
             {villaList.villas.map((villa) => (
-              <Col key={villa._id} sm={12} md={6} lg={4} xl={3}>
-                <EachVilla villa={villa} />
+              <Col key={villa._id} md={12}>
+                <ListEachVilla villa={villa} />
               </Col>
             ))}
           </Row>
