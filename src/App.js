@@ -26,6 +26,7 @@ import axios from "axios";
 import VillaListScreen from "./screens/ProductScreens/VillaListScreen";
 import FoodListScreen from "./screens/ProductScreens/FoodListScreen";
 import SpecialtyListScreen from "./screens/ProductScreens/SpecialtyListScreen";
+import TravelListScreen from "./screens/ProductScreens/TravelListScreen";
 
 const App = () => {
   const [clientID, setClientID] = useState("");
@@ -55,6 +56,7 @@ const App = () => {
                   <Route path="/food/:id" element={<FoodScreen />} />
                   <Route path="/specialty" element={<SpecialtyListScreen />} />
                   <Route path="/specialty/:id" element={<SpecialtyScreen />} />
+                  <Route path="/travel" element={<TravelListScreen />} />
                   <Route path="/travel/:id" element={<TravelScreen />} />
                   <Route path="/cart">
                     <Route path=":id" element={<CartScreen />} />
