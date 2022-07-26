@@ -5,16 +5,26 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listSpecialties } from "../../actions/productActions/specialtyActions";
+import Loader from "../../components/Loading/Loader";
+import {
+  listSpecialties,
+  deleteSpecialty,
+} from "../../actions/productActions/specialtyActions";
 
 const AdminSpecialtyListScreen = () => {
   const nagivateTo = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const specialtyId = id;
 
   const specialtyList = useSelector((state) => state.specialtyList);
   const { loading, error, specialties } = specialtyList;
+
+  const specialtyDelete = useSelector((state) => state.specialtyDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = specialtyDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -26,11 +36,11 @@ const AdminSpecialtyListScreen = () => {
     } else {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo]);
+  }, [dispatch, nagivateTo, userInfo, successDelete]);
 
-  const deletHandler = (specialtyId) => {
+  const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
-      //delete products
+      dispatch(deleteSpecialty(id));
     }
   };
 
@@ -53,6 +63,8 @@ const AdminSpecialtyListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

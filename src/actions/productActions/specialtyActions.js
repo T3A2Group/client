@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import {
   SPECIALTY_LIST_REQUEST,
   SPECIALTY_LIST_SUCCESS,
@@ -6,6 +7,9 @@ import {
   SPECIALTY_DETAILS_REQUEST,
   SPECIALTY_DETAILS_SUCCESS,
   SPECIALTY_DETAILS_FAIL,
+  SPECIALTY_DELETE_REQUEST,
+  SPECIALTY_DELETE_SUCCESS,
+  SPECIALTY_DELETE_FAIL,
 } from "../../constants/productsConstant/specialtyConstants";
 
 export const listSpecialties = () => async (dispatch) => {
@@ -32,6 +36,36 @@ export const listSpecialtyDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SPECIALTY_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can delete each specialty product
+export const deleteSpecialty = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SPECIALTY_DELETE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.delete(`/api/specialty/${id}`, config);
+    dispatch({
+      type: SPECIALTY_DELETE_SUCCESS,
+    });
+    toast(`🗑 ${data.message} Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: SPECIALTY_DELETE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

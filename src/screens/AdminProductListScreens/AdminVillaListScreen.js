@@ -5,16 +5,26 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listVillas } from "../../actions/productActions/villaActions";
+import Loader from "../../components/Loading/Loader";
+import {
+  listVillas,
+  deleteVilla,
+} from "../../actions/productActions/villaActions";
 
 const AdminVillaListScreen = () => {
   const nagivateTo = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const villaId = id;
 
   const villaList = useSelector((state) => state.villaList);
   const { loading, error, villas } = villaList;
+
+  const villaDelete = useSelector((state) => state.villaDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = villaDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -26,11 +36,11 @@ const AdminVillaListScreen = () => {
     } else {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo]);
+  }, [dispatch, nagivateTo, userInfo, successDelete]);
 
-  const deletHandler = (villaId) => {
+  const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
-      //delete products
+      dispatch(deleteVilla(id));
     }
   };
 
@@ -50,6 +60,8 @@ const AdminVillaListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (
