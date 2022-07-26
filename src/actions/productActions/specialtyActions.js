@@ -10,6 +10,9 @@ import {
   SPECIALTY_DELETE_REQUEST,
   SPECIALTY_DELETE_SUCCESS,
   SPECIALTY_DELETE_FAIL,
+  SPECIALTY_CREATE_REQUEST,
+  SPECIALTY_CREATE_SUCCESS,
+  SPECIALTY_CREATE_FAIL,
 } from "../../constants/productsConstant/specialtyConstants";
 
 export const listSpecialties = () => async (dispatch) => {
@@ -66,6 +69,37 @@ export const deleteSpecialty = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: SPECIALTY_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can create new specialty product
+export const createSpecialty = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SPECIALTY_CREATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/specialty`, {}, config);
+    dispatch({
+      type: SPECIALTY_CREATE_SUCCESS,
+      payload: data,
+    });
+    toast(`🌞 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: SPECIALTY_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -65,7 +65,7 @@ const TravelScreen = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>Price : ${travel.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  Description : ${travel.description}
+                  Description : {travel.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>

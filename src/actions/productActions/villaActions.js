@@ -10,6 +10,9 @@ import {
   VILLA_DELETE_REQUEST,
   VILLA_DELETE_SUCCESS,
   VILLA_DELETE_FAIL,
+  VILLA_CREATE_REQUEST,
+  VILLA_CREATE_SUCCESS,
+  VILLA_CREATE_FAIL,
 } from "../../constants/productsConstant/villaConstants";
 
 export const listVillas = () => async (dispatch) => {
@@ -66,6 +69,37 @@ export const deleteVilla = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: VILLA_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can create new villa product
+export const createVilla = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: VILLA_CREATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/villa`, {}, config);
+    dispatch({
+      type: VILLA_CREATE_SUCCESS,
+      payload: data,
+    });
+    toast(`🌞 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: VILLA_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

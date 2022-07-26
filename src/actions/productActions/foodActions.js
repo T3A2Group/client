@@ -10,6 +10,9 @@ import {
   FOOD_DELETE_REQUEST,
   FOOD_DELETE_SUCCESS,
   FOOD_DELETE_FAIL,
+  FOOD_CREATE_REQUEST,
+  FOOD_CREATE_SUCCESS,
+  FOOD_CREATE_FAIL,
 } from "../../constants/productsConstant/foodConstants";
 
 export const listFood = () => async (dispatch) => {
@@ -66,6 +69,37 @@ export const deleteFood = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: FOOD_DELETE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can create new food product
+export const createFood = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FOOD_CREATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.post(`/api/food`, {}, config);
+    dispatch({
+      type: FOOD_CREATE_SUCCESS,
+      payload: data,
+    });
+    toast(`🌞 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: FOOD_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

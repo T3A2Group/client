@@ -8,6 +8,10 @@ import {
   VILLA_DELETE_REQUEST,
   VILLA_DELETE_SUCCESS,
   VILLA_DELETE_FAIL,
+  VILLA_CREATE_REQUEST,
+  VILLA_CREATE_SUCCESS,
+  VILLA_CREATE_FAIL,
+  VILLA_CREATE_RESET,
 } from "../../constants/productsConstant/villaConstants";
 
 //=> for home screen villa product list state
@@ -50,6 +54,22 @@ export const villaDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case VILLA_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//=> for create new villa product
+export const villaCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case VILLA_CREATE_REQUEST:
+      return { loading: true };
+    case VILLA_CREATE_SUCCESS:
+      return { loading: false, success: true, villa: action.payload };
+    case VILLA_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case VILLA_CREATE_RESET:
+      return {};
     default:
       return state;
   }

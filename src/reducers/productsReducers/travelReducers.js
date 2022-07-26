@@ -8,6 +8,10 @@ import {
   TRAVEL_DELETE_REQUEST,
   TRAVEL_DELETE_SUCCESS,
   TRAVEL_DELETE_FAIL,
+  TRAVEL_CREATE_REQUEST,
+  TRAVEL_CREATE_SUCCESS,
+  TRAVEL_CREATE_FAIL,
+  TRAVEL_CREATE_RESET,
 } from "../../constants/productsConstant/travelConstants";
 
 //=> for home screen travel product list state
@@ -50,6 +54,22 @@ export const travelDeleteReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case TRAVEL_DELETE_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//=> for create new travel plan product
+export const travelCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TRAVEL_CREATE_REQUEST:
+      return { loading: true };
+    case TRAVEL_CREATE_SUCCESS:
+      return { loading: false, success: true, travel: action.payload };
+    case TRAVEL_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case TRAVEL_CREATE_RESET:
+      return {};
     default:
       return state;
   }

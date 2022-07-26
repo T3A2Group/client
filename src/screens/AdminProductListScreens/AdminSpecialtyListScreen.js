@@ -9,7 +9,9 @@ import Loader from "../../components/Loading/Loader";
 import {
   listSpecialties,
   deleteSpecialty,
+  createSpecialty,
 } from "../../actions/productActions/specialtyActions";
+import { SPECIALTY_CREATE_RESET } from "../../constants/productsConstant/specialtyConstants";
 
 const AdminSpecialtyListScreen = () => {
   const nagivateTo = useNavigate();
@@ -26,17 +28,36 @@ const AdminSpecialtyListScreen = () => {
     success: successDelete,
   } = specialtyDelete;
 
+  const specialtyCreate = useSelector((state) => state.specialtyCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    specialty: createdSpecialty,
+  } = specialtyCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    dispatch({ type: SPECIALTY_CREATE_RESET });
     //only admin user can check villa list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listSpecialties());
-    } else {
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo, successDelete]);
+    if (successCreate) {
+      nagivateTo(`/admin/specialty/${createdSpecialty._id}/edit`);
+    } else {
+      dispatch(listSpecialties());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdSpecialty,
+  ]);
 
   const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
@@ -46,6 +67,7 @@ const AdminSpecialtyListScreen = () => {
 
   const createSpecialtyHandler = (specialty) => {
     //CREATE Specialty
+    dispatch(createSpecialty());
   };
 
   return (
@@ -65,6 +87,8 @@ const AdminSpecialtyListScreen = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

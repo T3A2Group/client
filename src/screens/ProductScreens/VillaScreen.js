@@ -67,7 +67,7 @@ const VillaScreen = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>Price : ${villa.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  Description : ${villa.description}
+                  Description : {villa.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>

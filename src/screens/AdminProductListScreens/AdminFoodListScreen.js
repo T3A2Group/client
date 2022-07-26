@@ -6,7 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
 import Loader from "../../components/Loading/Loader";
-import { listFood, deleteFood } from "../../actions/productActions/foodActions";
+import {
+  listFood,
+  deleteFood,
+  createFood,
+} from "../../actions/productActions/foodActions";
+import { FOOD_CREATE_RESET } from "../../constants/productsConstant/foodConstants";
 
 const AdminFoodListScreen = () => {
   const nagivateTo = useNavigate();
@@ -23,17 +28,36 @@ const AdminFoodListScreen = () => {
     success: successDelete,
   } = foodDelete;
 
+  const foodCreate = useSelector((state) => state.foodCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    food: createdFood,
+  } = foodCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    dispatch({ type: FOOD_CREATE_RESET });
     //only admin user can check food list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listFood());
-    } else {
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo, successDelete]);
+    if (successCreate) {
+      nagivateTo(`/admin/food/${createdFood._id}/edit`);
+    } else {
+      dispatch(listFood());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdFood,
+  ]);
 
   const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
@@ -43,6 +67,7 @@ const AdminFoodListScreen = () => {
 
   const createFoodHandler = (food) => {
     //CREATE Food
+    dispatch(createFood());
   };
 
   return (
@@ -59,6 +84,8 @@ const AdminFoodListScreen = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

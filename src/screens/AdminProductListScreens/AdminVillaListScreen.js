@@ -9,7 +9,9 @@ import Loader from "../../components/Loading/Loader";
 import {
   listVillas,
   deleteVilla,
+  createVilla,
 } from "../../actions/productActions/villaActions";
+import { VILLA_CREATE_RESET } from "../../constants/productsConstant/villaConstants";
 
 const AdminVillaListScreen = () => {
   const nagivateTo = useNavigate();
@@ -26,17 +28,37 @@ const AdminVillaListScreen = () => {
     success: successDelete,
   } = villaDelete;
 
+  const villaCreate = useSelector((state) => state.villaCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    villa: createdVilla,
+  } = villaCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    dispatch({ type: VILLA_CREATE_RESET });
+
     //only admin user can check villa list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listVillas());
-    } else {
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo, successDelete]);
+    if (successCreate) {
+      nagivateTo(`/admin/villa/${createdVilla._id}/edit`);
+    } else {
+      dispatch(listVillas());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdVilla,
+  ]);
 
   const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
@@ -44,8 +66,9 @@ const AdminVillaListScreen = () => {
     }
   };
 
-  const createVillaHandler = (villa) => {
+  const createVillaHandler = () => {
     //CREATE VILLA
+    dispatch(createVilla());
   };
 
   return (
@@ -62,6 +85,8 @@ const AdminVillaListScreen = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

@@ -9,7 +9,9 @@ import Loader from "../../components/Loading/Loader";
 import {
   listTravel,
   deleteTravel,
+  createTravel,
 } from "../../actions/productActions/travelActions";
+import { TRAVEL_CREATE_RESET } from "../../constants/productsConstant/travelConstants";
 
 const AdminTravelListScreen = () => {
   const nagivateTo = useNavigate();
@@ -26,17 +28,36 @@ const AdminTravelListScreen = () => {
     success: successDelete,
   } = travelDelete;
 
+  const travelCreate = useSelector((state) => state.travelCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    travel: createdTravel,
+  } = travelCreate;
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    dispatch({ type: TRAVEL_CREATE_RESET });
     //only admin user can check villa list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listTravel());
-    } else {
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo, successDelete]);
+    if (successCreate) {
+      nagivateTo(`/admin/travel/${createdTravel._id}/edit`);
+    } else {
+      dispatch(listTravel());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdTravel,
+  ]);
 
   const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
@@ -46,6 +67,7 @@ const AdminTravelListScreen = () => {
 
   const createTravelHandler = (travel) => {
     //CREATE Travel
+    dispatch(createTravel());
   };
 
   return (
@@ -65,6 +87,8 @@ const AdminTravelListScreen = () => {
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (
