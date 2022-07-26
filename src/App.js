@@ -3,6 +3,10 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+// for searchbar
+import ToolBar from "./components/ToolBar";
+import Searchbar from "./components/Searchbar";
+
 import HomeScreen from "./screens/HomeScreen";
 import VillaScreen from "./screens/ProductScreens/VillaScreen";
 import FoodScreen from "./screens/ProductScreens/FoodScreen";
@@ -34,8 +38,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from "axios";
 
+
 const App = () => {
   const [clientID, setClientID] = useState("");
+
+
   useEffect(() => {
     const getClientId = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal");
@@ -46,12 +53,22 @@ const App = () => {
     }
   }, []);
 
+  // for floating search bar
+  const[searchbar, setSearchbar] = useState(false);
+  const toggleSearchbar = () => {
+    setSearchbar((prevState) => !prevState)
+  }
+  
   return (
     <>
       {clientID && (
         <PayPalScriptProvider options={{ "client-id": clientID }}>
           <Router>
             <Header />
+
+            <ToolBar  openSearchbar={toggleSearchbar}/>
+            <Searchbar searchbar={searchbar} closeSearchbar={toggleSearchbar}/>
+
             <main className="py-3">
               <Container>
                 <Routes>
