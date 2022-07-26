@@ -5,37 +5,69 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listFood } from "../../actions/productActions/foodActions";
+import Loader from "../../components/Loading/Loader";
+import {
+  listFood,
+  deleteFood,
+  createFood,
+} from "../../actions/productActions/foodActions";
+import { FOOD_CREATE_RESET } from "../../constants/productsConstant/foodConstants";
 
 const AdminFoodListScreen = () => {
   const nagivateTo = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const foodId = id;
 
   const foodList = useSelector((state) => state.foodList);
   const { loading, error, food } = foodList;
+
+  const foodDelete = useSelector((state) => state.foodDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = foodDelete;
+
+  const foodCreate = useSelector((state) => state.foodCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    food: createdFood,
+  } = foodCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    //only admin user can check villa list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listFood());
-    } else {
+    dispatch({ type: FOOD_CREATE_RESET });
+    //only admin user can check food list, if user is not admin, then redirect to login page
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo]);
+    if (successCreate) {
+      nagivateTo(`/admin/food/${createdFood._id}/edit`);
+    } else {
+      dispatch(listFood());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdFood,
+  ]);
 
-  const deletHandler = (foodId) => {
+  const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
-      //delete products
+      dispatch(deleteFood(id));
     }
   };
 
   const createFoodHandler = (food) => {
     //CREATE Food
+    dispatch(createFood());
   };
 
   return (
@@ -50,6 +82,10 @@ const AdminFoodListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

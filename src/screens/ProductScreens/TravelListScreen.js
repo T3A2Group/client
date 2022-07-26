@@ -26,7 +26,7 @@ const TravelListScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Our Travel Packages</h1>
+        <h1>Our Travel Plans</h1>
         {travelList.loading ? (
           <Loader color={"#A10035"} />
         ) : travelList.error ? (

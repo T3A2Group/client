@@ -5,37 +5,69 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listSpecialties } from "../../actions/productActions/specialtyActions";
+import Loader from "../../components/Loading/Loader";
+import {
+  listSpecialties,
+  deleteSpecialty,
+  createSpecialty,
+} from "../../actions/productActions/specialtyActions";
+import { SPECIALTY_CREATE_RESET } from "../../constants/productsConstant/specialtyConstants";
 
 const AdminSpecialtyListScreen = () => {
   const nagivateTo = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const specialtyId = id;
 
   const specialtyList = useSelector((state) => state.specialtyList);
   const { loading, error, specialties } = specialtyList;
+
+  const specialtyDelete = useSelector((state) => state.specialtyDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = specialtyDelete;
+
+  const specialtyCreate = useSelector((state) => state.specialtyCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    specialty: createdSpecialty,
+  } = specialtyCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
+    dispatch({ type: SPECIALTY_CREATE_RESET });
     //only admin user can check villa list, if user is not admin, then redirect to login page
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listSpecialties());
-    } else {
+    if (!userInfo.isAdmin) {
       nagivateTo("/login");
     }
-  }, [dispatch, nagivateTo, userInfo]);
+    if (successCreate) {
+      nagivateTo(`/admin/specialty/${createdSpecialty._id}/edit`);
+    } else {
+      dispatch(listSpecialties());
+    }
+  }, [
+    dispatch,
+    nagivateTo,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdSpecialty,
+  ]);
 
-  const deletHandler = (specialtyId) => {
+  const deletHandler = (id) => {
     if (window.confirm("Are your sure?")) {
-      //delete products
+      dispatch(deleteSpecialty(id));
     }
   };
 
   const createSpecialtyHandler = (specialty) => {
     //CREATE Specialty
+    dispatch(createSpecialty());
   };
 
   return (
@@ -53,6 +85,10 @@ const AdminSpecialtyListScreen = () => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Progresser />
       ) : error ? (

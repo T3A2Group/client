@@ -70,7 +70,7 @@ const FoodScreen = () => {
                   Category : {food.category}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  Description : ${food.description}
+                  Description : {food.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
