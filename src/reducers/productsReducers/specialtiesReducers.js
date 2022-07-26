@@ -5,6 +5,13 @@ import {
   SPECIALTY_DETAILS_REQUEST,
   SPECIALTY_DETAILS_SUCCESS,
   SPECIALTY_DETAILS_FAIL,
+  SPECIALTY_DELETE_REQUEST,
+  SPECIALTY_DELETE_SUCCESS,
+  SPECIALTY_DELETE_FAIL,
+  SPECIALTY_CREATE_REQUEST,
+  SPECIALTY_CREATE_SUCCESS,
+  SPECIALTY_CREATE_FAIL,
+  SPECIALTY_CREATE_RESET,
 } from "../../constants/productsConstant/specialtyConstants";
 
 //=> for home screen specialty product list state
@@ -33,6 +40,36 @@ export const specialtyDetailsReducer = (
       return { loading: false, specialty: action.payload };
     case SPECIALTY_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//=> for delete each specialty product
+export const specialtyDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SPECIALTY_DELETE_REQUEST:
+      return { loading: true };
+    case SPECIALTY_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case SPECIALTY_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+//=> for create new specialty product
+export const specialtyCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SPECIALTY_CREATE_REQUEST:
+      return { loading: true };
+    case SPECIALTY_CREATE_SUCCESS:
+      return { loading: false, success: true, specialty: action.payload };
+    case SPECIALTY_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case SPECIALTY_CREATE_RESET:
+      return {};
     default:
       return state;
   }

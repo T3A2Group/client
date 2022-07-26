@@ -4,18 +4,26 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
   villaListReducer,
   villaDetailsReducer,
+  villaDeleteReducer,
+  villaCreateReducer,
 } from "./reducers/productsReducers/villaReducers";
 import {
   foodListReducer,
   foodDetailsReducer,
+  foodDeleteReducer,
+  foodCreateReducer,
 } from "./reducers/productsReducers/foodReducers";
 import {
   specialtyListReducer,
   specialtyDetailsReducer,
+  specialtyDeleteReducer,
+  specialtyCreateReducer,
 } from "./reducers/productsReducers/specialtiesReducers";
 import {
   travelListReducer,
   travelDetailsReducer,
+  travelDeleteReducer,
+  travelCreateReducer,
 } from "./reducers/productsReducers/travelReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -44,6 +52,16 @@ const reducer = {
   foodDetails: foodDetailsReducer,
   specialtyDetails: specialtyDetailsReducer,
   travelDetails: travelDetailsReducer,
+
+  villaDelete: villaDeleteReducer,
+  foodDelete: foodDeleteReducer,
+  specialtyDelete: specialtyDeleteReducer,
+  travelDelete: travelDeleteReducer,
+
+  villaCreate: villaCreateReducer,
+  foodCreate: foodCreateReducer,
+  specialtyCreate: specialtyCreateReducer,
+  travelCreate: travelCreateReducer,
 
   cart: cartReducer,
 

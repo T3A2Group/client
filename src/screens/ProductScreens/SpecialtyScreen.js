@@ -65,7 +65,7 @@ const SpecialtyScreen = () => {
                 </ListGroup.Item>
                 <ListGroup.Item>Price : ${specialty.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  Description : ${specialty.description}
+                  Description : {specialty.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
