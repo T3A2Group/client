@@ -72,7 +72,7 @@ const NavbarSet = () => {
                   <>
                     <img
                       className="user_image"
-                      src="https://i.ibb.co/r3xBmkW/avatar.png"
+                      src={userInfo.profilePicture}
                       alt="user pic"
                       style={{ width: "20px", height: "20px" }}
                     />{" "}
