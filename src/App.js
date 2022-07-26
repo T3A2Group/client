@@ -26,6 +26,10 @@ import AdminVillaListScreen from "./screens/AdminProductListScreens/AdminVillaLi
 import AdminFoodListScreen from "./screens/AdminProductListScreens/AdminFoodListScreen";
 import AdminSpecialtyListScreen from "./screens/AdminProductListScreens/AdminSpecialtyListScreen";
 import AdminTravelListScreen from "./screens/AdminProductListScreens/AdminTravelListScreen";
+import VillaEditScreen from "./screens/ProductsEditScreens/VillaEditScreen";
+import FoodEditScreen from "./screens/ProductsEditScreens/FoodEditScreen";
+import SpecialtyEditScreen from "./screens/ProductsEditScreens/SpecialtyScreen";
+import TravelEditScreen from "./screens/ProductsEditScreens/TravelEditScreen";
 //toastify lab import start
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -95,6 +99,22 @@ const App = () => {
                   <Route
                     path="/admin/productlist/travel"
                     element={<AdminTravelListScreen />}
+                  />
+                  <Route
+                    path="/admin/villa/:id/edit"
+                    element={<VillaEditScreen />}
+                  />
+                  <Route
+                    path="/admin/food/:id/edit"
+                    element={<FoodEditScreen />}
+                  />
+                  <Route
+                    path="/admin/specialty/:id/edit"
+                    element={<SpecialtyEditScreen />}
+                  />
+                  <Route
+                    path="/admin/travel/:id/edit"
+                    element={<TravelEditScreen />}
                   />
                 </Routes>
               </Container>

@@ -97,7 +97,7 @@ const AdminTravelListScreen = () => {
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>
-              <th>Travel Package ID</th>
+              <th>Travel Plan ID</th>
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
