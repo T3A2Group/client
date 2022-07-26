@@ -70,6 +70,19 @@ const ProfileScreen = () => {
   return (
     <Row>
       <Col lg={4}>
+        <Row>
+          <Col md={8}>
+        <h1>Hello {userInfo.name}!</h1>
+          </Col>
+          <Col md={4}>
+          <img
+            className="user_image"
+            src={userInfo.profilePicture}
+            alt="user pic"
+            style={{ width: "100px", height: "100px" }}
+            />
+          </Col>
+        </Row>
         <h2>User Profile</h2>
         {message && <Message variant="danger">{message}</Message>}
         {/* {success && (
