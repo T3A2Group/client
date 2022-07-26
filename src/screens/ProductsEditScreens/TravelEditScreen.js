@@ -18,7 +18,7 @@ const TravelEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
-  const [attractions, setAttractions] = useState([]);
+  const [attractions, setAttractions] = useState({ name: "", briefInfo: "" });
   const [type, setType] = useState("");
 
   const dispatch = useDispatch();
@@ -50,6 +50,11 @@ const TravelEditScreen = () => {
   const countInStockHandler = (e) => setCountInStock(e.target.value);
   const descriptionHandler = (e) => setDescription(e.target.value);
   const durationHandler = (e) => setDuration(e.target.value);
+  const attractionsHandler = (e) =>
+    setAttractions({
+      ...attractions,
+      [e.target.name]: e.target.value,
+    });
   // const attractionsHandler = (newValue) => {
   //   console.log("attractionsHandler", attractions);
   //   const changedItem = attractions.find((x) => x._id === id);
@@ -172,13 +177,30 @@ const TravelEditScreen = () => {
             {/* 8. travel acctractions input */}
             <p>Attractions</p>
             <Form.Group controlId="acctractions" className="my-3">
-              {attractions.map((attraction, idx) => (
+              {/* <Form.Label>{attractions.name}</Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Enter Attractions Name"
+                onChange={attractionsHandler}
+                value={attractions.name}
+                autoComplete="off"
+                name="name"
+              ></Form.Control>
+              <Form.Control
+                type="text"
+                placeholder="Enter Attractions BriefInfo"
+                onChange={attractionsHandler}
+                value={attractions.briefInfo}
+                autoComplete="off"
+                name="briefInfo"
+              ></Form.Control>
+              {/* {attractions.map((attraction, idx) => (
                 <div
                   // data-testid={`${attraction._id}_${idx}`}
                   key={`${attraction._id}_${idx}`}
                 >
-                  <Form.Label>{attraction.name}</Form.Label>
-                  {/* <Form.Control
+                  <Form.Label>{attraction.name}</Form.Label> */}
+              {/* <Form.Control
                     type="text"
                     placeholder="Enter BriefInfo"
                     onChange={(e) => {
@@ -195,7 +217,7 @@ const TravelEditScreen = () => {
                     name="briefInfo"
                     autoComplete="off"
                   ></Form.Control> */}
-                  {/* <Form.Control
+              {/* <Form.Control
                     key={attraction._id}
                     type="text"
                     placeholder="Enter BriefInfo"
@@ -214,8 +236,8 @@ const TravelEditScreen = () => {
                     name="briefInfo"
                     autoComplete="off"
                   ></Form.Control> */}
-                </div>
-              ))}
+              {/* </div> */}
+              {/* ))} */}
             </Form.Group>
 
             {/* 9. travel type input */}
