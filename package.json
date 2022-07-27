@@ -1,6 +1,6 @@
 {
   "name": "tasmania-resort-client",
-  "proxy": "https://staging-tasmania-resort.herokuapp.com",
+  "proxy": "http://127.0.0.1:4000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
