@@ -120,7 +120,7 @@ const NavbarSet = () => {
                   <NavDropdown.Item>Modify Travel</NavDropdown.Item>
                 </LinkContainer>
 
-                <LinkContainer to="/admin/ordertlist">
+                <LinkContainer to="/admin/orderlist">
                   <NavDropdown.Item>Orders</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

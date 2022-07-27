@@ -44,6 +44,8 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderMyListReducer,
+  orderListReducer,
+  orderDispatchReducer,
 } from "./reducers/orderReducers";
 
 const reducer = {
@@ -86,6 +88,9 @@ const reducer = {
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
+
+  orderList: orderListReducer,
+  orderDispatch: orderDispatchReducer,
 };
 
 //get cart Items from local storage,this is for preload state,even user fresh the page, cart item still in there if there is any

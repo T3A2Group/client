@@ -13,6 +13,12 @@ import {
   ORDER_MY_LIST_REQUEST,
   ORDER_MY_LIST_SUCCESS,
   ORDER_MY_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_DISPATCH_REQUEST,
+  ORDER_DISPATCH_SUCCESS,
+  ORDER_DISPATCH_FAIL,
 } from "../constants/orderConstants";
 import { CART_CLEAR_ITEMS } from "../constants/cartConstants";
 import { logout } from "./userActions";
@@ -130,7 +136,7 @@ export const payOrder =
     }
   };
 
-//for client order list
+//for client get their own order list
 export const listMyOrders = () => async (dispatch, getState) => {
   try {
     //first for order payment request
@@ -154,6 +160,73 @@ export const listMyOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_MY_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//for Admin get all client orders list
+export const listOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_LIST_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/orders`, config);
+
+    dispatch({
+      type: ORDER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//for Admin dispatch order
+export const dispatchOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DISPATCH_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/dispatch`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_DISPATCH_SUCCESS,
+      payload: data,
+    });
+    toast("🍀 Great! The order is dispatched successfully!");
+  } catch (error) {
+    dispatch({
+      type: ORDER_DISPATCH_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

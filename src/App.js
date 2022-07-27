@@ -34,6 +34,7 @@ import VillaEditScreen from "./screens/ProductsEditScreens/VillaEditScreen";
 import FoodEditScreen from "./screens/ProductsEditScreens/FoodEditScreen";
 import SpecialtyEditScreen from "./screens/ProductsEditScreens/SpecialtyScreen";
 import TravelEditScreen from "./screens/ProductsEditScreens/TravelEditScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 //toastify lab import start
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,10 +43,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import axios from "axios";
 
-
 const App = () => {
   const [clientID, setClientID] = useState("");
-
 
   useEffect(() => {
     const getClientId = async () => {
@@ -58,11 +57,11 @@ const App = () => {
   }, []);
 
   // for floating search bar
-  const[searchbar, setSearchbar] = useState(false);
+  const [searchbar, setSearchbar] = useState(false);
   const toggleSearchbar = () => {
-    setSearchbar((prevState) => !prevState)
-  }
-  
+    setSearchbar((prevState) => !prevState);
+  };
+
   return (
     <>
       {clientID && (
@@ -70,8 +69,8 @@ const App = () => {
           <Router>
             <Header />
 
-            <ToolBar  openSearchbar={toggleSearchbar}/>
-            <Searchbar searchbar={searchbar} closeSearchbar={toggleSearchbar}/>
+            <ToolBar openSearchbar={toggleSearchbar} />
+            <Searchbar searchbar={searchbar} closeSearchbar={toggleSearchbar} />
 
             <main className="py-3">
               <Container>
@@ -116,6 +115,10 @@ const App = () => {
                   <Route
                     path="/admin/productlist/travel"
                     element={<AdminTravelListScreen />}
+                  />
+                  <Route
+                    path="/admin/orderlist"
+                    element={<OrderListScreen />}
                   />
                   <Route
                     path="/admin/villa/:id/edit"
