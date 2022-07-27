@@ -47,15 +47,15 @@ const App = () => {
   const [clientID, setClientID] = useState("");
 
 
-  useEffect(() => {
-    const getClientId = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      setClientID(clientId);
-    };
-    if (!window.paypal) {
-      getClientId();
-    }
-  }, []);
+  // useEffect(() => {
+  //   const getClientId = async () => {
+  //     const { data: clientId } = await axios.get("/api/config/paypal");
+  //     setClientID(clientId);
+  //   };
+  //   if (!window.paypal) {
+  //     getClientId();
+  //   }
+  // }, []);
 
   // for floating search bar
   const[searchbar, setSearchbar] = useState(false);
