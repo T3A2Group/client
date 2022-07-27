@@ -65,8 +65,8 @@ const App = () => {
   
   return (
     <>
-      {clientID && (
-        <PayPalScriptProvider options={{ "client-id": clientID }}>
+      {/* {clientID && (
+        <PayPalScriptProvider options={{ "client-id": clientID }}> */}
           <Router>
             <Header />
 
@@ -139,8 +139,8 @@ const App = () => {
             <Footer />
             <ToastContainer />
           </Router>
-        </PayPalScriptProvider>
-      )}
+        {/* </PayPalScriptProvider>
+      )} */}
     </>
   );
 };
