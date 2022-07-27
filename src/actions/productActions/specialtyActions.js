@@ -13,6 +13,9 @@ import {
   SPECIALTY_CREATE_REQUEST,
   SPECIALTY_CREATE_SUCCESS,
   SPECIALTY_CREATE_FAIL,
+  SPECIALTY_UPDATE_REQUEST,
+  SPECIALTY_UPDATE_SUCCESS,
+  SPECIALTY_UPDATE_FAIL,
 } from "../../constants/productsConstant/specialtyConstants";
 
 export const listSpecialties = () => async (dispatch) => {
@@ -100,6 +103,47 @@ export const createSpecialty = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: SPECIALTY_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can update specialty product
+export const updateSpecialty = (specialty) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SPECIALTY_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/specialty/${specialty._id}`,
+      specialty,
+      config
+    );
+
+    dispatch({
+      type: SPECIALTY_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: SPECIALTY_DETAILS_SUCCESS,
+      payload: data,
+    });
+    toast(`🎁 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: SPECIALTY_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

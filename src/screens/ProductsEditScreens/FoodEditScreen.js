@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listFoodDetails } from "../../actions/productActions/foodActions";
+import {
+  listFoodDetails,
+  updateFood,
+} from "../../actions/productActions/foodActions";
+import { FOOD_UPDATE_RESET } from "../../constants/productsConstant/foodConstants";
 
 const FoodEditScreen = () => {
   //=> for each food details
@@ -20,23 +24,36 @@ const FoodEditScreen = () => {
   const [type, setType] = useState("");
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const foodDetails = useSelector((state) => state.foodDetails);
   const { loading, error, food } = foodDetails;
 
+  const foodUpdate = useSelector((state) => state.foodUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = foodUpdate;
+
   useEffect(() => {
-    if (!food.name || food._id !== foodId) {
-      dispatch(listFoodDetails(foodId));
+    if (successUpdate) {
+      dispatch({ type: FOOD_UPDATE_RESET });
+      nagivateTo("/admin/productlist/food");
     } else {
-      setName(food.name);
-      setPrice(food.price);
-      setImage(food.image);
-      setCategory(food.category);
-      setCountInStock(food.countInStock);
-      setDescription(food.description);
-      setType(food.type);
+      if (!food.name || food._id !== foodId) {
+        dispatch(listFoodDetails(foodId));
+      } else {
+        setName(food.name);
+        setPrice(food.price);
+        setImage(food.image);
+        setCategory(food.category);
+        setCountInStock(food.countInStock);
+        setDescription(food.description);
+        setType(food.type);
+      }
     }
-  }, [dispatch, foodId, food]);
+  }, [dispatch, foodId, food, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -50,6 +67,18 @@ const FoodEditScreen = () => {
   const submithandler = (e) => {
     e.preventDefault();
     //update food
+    dispatch(
+      updateFood({
+        _id: foodId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        type,
+      })
+    );
   };
 
   return (
@@ -63,6 +92,8 @@ const FoodEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Food</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (

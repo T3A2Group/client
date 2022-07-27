@@ -13,6 +13,9 @@ import {
   FOOD_CREATE_REQUEST,
   FOOD_CREATE_SUCCESS,
   FOOD_CREATE_FAIL,
+  FOOD_UPDATE_REQUEST,
+  FOOD_UPDATE_SUCCESS,
+  FOOD_UPDATE_FAIL,
 } from "../../constants/productsConstant/foodConstants";
 
 export const listFood = () => async (dispatch) => {
@@ -100,6 +103,43 @@ export const createFood = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: FOOD_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can update food product
+export const updateFood = (food) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: FOOD_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/food/${food._id}`, food, config);
+
+    dispatch({
+      type: FOOD_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: FOOD_DETAILS_SUCCESS,
+      payload: data,
+    });
+    toast(`🥗 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: FOOD_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

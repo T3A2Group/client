@@ -13,6 +13,9 @@ import {
   TRAVEL_CREATE_REQUEST,
   TRAVEL_CREATE_SUCCESS,
   TRAVEL_CREATE_FAIL,
+  TRAVEL_UPDATE_REQUEST,
+  TRAVEL_UPDATE_SUCCESS,
+  TRAVEL_UPDATE_FAIL,
 } from "../../constants/productsConstant/travelConstants";
 
 export const listTravel = () => async (dispatch) => {
@@ -100,6 +103,47 @@ export const createTravel = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: TRAVEL_CREATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Admin can update travel plan product
+export const updateTravel = (travel) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TRAVEL_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(
+      `/api/travel/${travel._id}`,
+      travel,
+      config
+    );
+
+    dispatch({
+      type: TRAVEL_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: TRAVEL_DETAILS_SUCCESS,
+      payload: data,
+    });
+    toast(`🏝 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: TRAVEL_UPDATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

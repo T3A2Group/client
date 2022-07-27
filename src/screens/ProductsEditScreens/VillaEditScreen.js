@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listVillaDetails } from "../../actions/productActions/villaActions";
+import {
+  listVillaDetails,
+  updateVilla,
+} from "../../actions/productActions/villaActions";
+import { VILLA_UPDATE_RESET } from "../../constants/productsConstant/villaConstants";
 
 const VillaEditScreen = () => {
   //=> for each villa details
@@ -22,25 +26,38 @@ const VillaEditScreen = () => {
   const [type, setType] = useState("");
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const villaDetails = useSelector((state) => state.villaDetails);
   const { loading, error, villa } = villaDetails;
 
+  const villaUpdate = useSelector((state) => state.villaUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = villaUpdate;
+
   useEffect(() => {
-    if (!villa.name || villa._id !== villaId) {
-      dispatch(listVillaDetails(villaId));
+    if (successUpdate) {
+      dispatch({ type: VILLA_UPDATE_RESET });
+      nagivateTo("/admin/productlist/villa");
     } else {
-      setName(villa.name);
-      setPrice(villa.price);
-      setImage(villa.image);
-      setCategory(villa.category);
-      setCountInStock(villa.countInStock);
-      setDescription(villa.description);
-      setRoomNums(villa.roomNums);
-      setMaxPeople(villa.maxPeople);
-      setType(villa.type);
+      if (!villa.name || villa._id !== villaId) {
+        dispatch(listVillaDetails(villaId));
+      } else {
+        setName(villa.name);
+        setPrice(villa.price);
+        setImage(villa.image);
+        setCategory(villa.category);
+        setCountInStock(villa.countInStock);
+        setDescription(villa.description);
+        setRoomNums(villa.roomNums);
+        setMaxPeople(villa.maxPeople);
+        setType(villa.type);
+      }
     }
-  }, [dispatch, villaId, villa]);
+  }, [dispatch, villaId, villa, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -56,6 +73,20 @@ const VillaEditScreen = () => {
   const submithandler = (e) => {
     e.preventDefault();
     //update villa
+    dispatch(
+      updateVilla({
+        _id: villaId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        roomNums,
+        maxPeople,
+        type,
+      })
+    );
   };
 
   return (
@@ -69,6 +100,8 @@ const VillaEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Villa</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (

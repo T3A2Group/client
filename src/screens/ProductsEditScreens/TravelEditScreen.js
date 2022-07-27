@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listTravelDetails } from "../../actions/productActions/travelActions";
+import {
+  listTravelDetails,
+  updateTravel,
+} from "../../actions/productActions/travelActions";
+import { TRAVEL_UPDATE_RESET } from "../../constants/productsConstant/travelConstants";
 
 const TravelEditScreen = () => {
   //=> for each travel details
@@ -22,25 +26,38 @@ const TravelEditScreen = () => {
   const [type, setType] = useState("");
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const travelDetails = useSelector((state) => state.travelDetails);
   const { loading, error, travel } = travelDetails;
 
+  const travelUpdate = useSelector((state) => state.travelUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = travelUpdate;
+
   useEffect(() => {
-    if (!travel.name || travel._id !== travelId) {
-      dispatch(listTravelDetails(travelId));
+    if (successUpdate) {
+      dispatch({ type: TRAVEL_UPDATE_RESET });
+      nagivateTo("/admin/productlist/travel");
     } else {
-      setName(travel.name);
-      setPrice(travel.price);
-      setImage(travel.image);
-      setCategory(travel.category);
-      setCountInStock(travel.countInStock);
-      setDescription(travel.description);
-      setDuration(travel.duration);
-      setAttractions(travel.attractions);
-      setType(travel.type);
+      if (!travel.name || travel._id !== travelId) {
+        dispatch(listTravelDetails(travelId));
+      } else {
+        setName(travel.name);
+        setPrice(travel.price);
+        setImage(travel.image);
+        setCategory(travel.category);
+        setCountInStock(travel.countInStock);
+        setDescription(travel.description);
+        setDuration(travel.duration);
+        setAttractions(travel.attractions);
+        setType(travel.type);
+      }
     }
-  }, [dispatch, travelId, travel]);
+  }, [dispatch, travelId, travel, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -71,6 +88,20 @@ const TravelEditScreen = () => {
   const submithandler = (e) => {
     e.preventDefault();
     //update travel
+    dispatch(
+      updateTravel({
+        _id: travelId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        duration,
+        attractions,
+        type,
+      })
+    );
   };
 
   return (
@@ -84,6 +115,8 @@ const TravelEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Travel Plan</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (
