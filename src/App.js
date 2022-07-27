@@ -47,15 +47,15 @@ const App = () => {
   const [clientID, setClientID] = useState("");
 
 
-  // useEffect(() => {
-  //   const getClientId = async () => {
-  //     const { data: clientId } = await axios.get("/api/config/paypal");
-  //     setClientID(clientId);
-  //   };
-  //   if (!window.paypal) {
-  //     getClientId();
-  //   }
-  // }, []);
+  useEffect(() => {
+    const getClientId = async () => {
+      const { data: clientId } = await axios.get("/api/config/paypal");
+      setClientID(clientId);
+    };
+    if (!window.paypal) {
+      getClientId();
+    }
+  }, []);
 
   // for floating search bar
   const[searchbar, setSearchbar] = useState(false);
@@ -65,8 +65,8 @@ const App = () => {
   
   return (
     <>
-      {/* {clientID && (
-        <PayPalScriptProvider options={{ "client-id": clientID }}> */}
+      {clientID && (
+        <PayPalScriptProvider options={{ "client-id": clientID }}>
           <Router>
             <Header />
 
@@ -139,8 +139,8 @@ const App = () => {
             <Footer />
             <ToastContainer />
           </Router>
-        {/* </PayPalScriptProvider>
-      )} */}
+        </PayPalScriptProvider>
+      )}
     </>
   );
 };
