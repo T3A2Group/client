@@ -4,6 +4,7 @@ import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Loading/Message";
 import Progresser from "../components/Loading/Progresser";
+import UploadImage from "../components/UploadImage";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import { listMyOrders } from "../actions/orderActions";
@@ -71,7 +72,7 @@ const ProfileScreen = () => {
     <Row>
       <Col lg={4}>
         <Row>
-          <Col md={8}>
+          {/* <Col md={8}>
         <h1>Hello {userInfo.name}!</h1>
           </Col>
           <Col md={4}>
@@ -81,6 +82,9 @@ const ProfileScreen = () => {
             alt="user pic"
             style={{ width: "100px", height: "100px" }}
             />
+          </Col> */}
+          <Col>
+            <UploadImage />
           </Col>
         </Row>
         <h2>User Profile</h2>
