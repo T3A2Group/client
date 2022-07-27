@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listTravelDetails } from "../../actions/productActions/travelActions";
+import {
+  listTravelDetails,
+  updateTravel,
+} from "../../actions/productActions/travelActions";
+import { TRAVEL_UPDATE_RESET } from "../../constants/productsConstant/travelConstants";
+import axios from "axios";
 
 const TravelEditScreen = () => {
   //=> for each travel details
@@ -18,29 +23,43 @@ const TravelEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [duration, setDuration] = useState("");
-  const [attractions, setAttractions] = useState([]);
+  const [attractions, setAttractions] = useState({ name: "", briefInfo: "" });
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const travelDetails = useSelector((state) => state.travelDetails);
   const { loading, error, travel } = travelDetails;
 
+  const travelUpdate = useSelector((state) => state.travelUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = travelUpdate;
+
   useEffect(() => {
-    if (!travel.name || travel._id !== travelId) {
-      dispatch(listTravelDetails(travelId));
+    if (successUpdate) {
+      dispatch({ type: TRAVEL_UPDATE_RESET });
+      nagivateTo("/admin/productlist/travel");
     } else {
-      setName(travel.name);
-      setPrice(travel.price);
-      setImage(travel.image);
-      setCategory(travel.category);
-      setCountInStock(travel.countInStock);
-      setDescription(travel.description);
-      setDuration(travel.duration);
-      setAttractions(travel.attractions);
-      setType(travel.type);
+      if (!travel.name || travel._id !== travelId) {
+        dispatch(listTravelDetails(travelId));
+      } else {
+        setName(travel.name);
+        setPrice(travel.price);
+        setImage(travel.image);
+        setCategory(travel.category);
+        setCountInStock(travel.countInStock);
+        setDescription(travel.description);
+        setDuration(travel.duration);
+        setAttractions(travel.attractions);
+        setType(travel.type);
+      }
     }
-  }, [dispatch, travelId, travel]);
+  }, [dispatch, travelId, travel, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -50,22 +69,51 @@ const TravelEditScreen = () => {
   const countInStockHandler = (e) => setCountInStock(e.target.value);
   const descriptionHandler = (e) => setDescription(e.target.value);
   const durationHandler = (e) => setDuration(e.target.value);
-  // const attractionsHandler = (newValue) => {
-  //   console.log("attractionsHandler", attractions);
-  //   const changedItem = attractions.find((x) => x._id === id);
-  //   console.log("changeItem", changedItem);
-  //   console.log("newValue", newValue);
-  //   // changedItem.briefInfo = newValue;
-  //   // const value = e.target.value;
-  //   // console.log([e.target.name]);
-  //   // console.log(value);
-  //   // setAttractions([...attractions, { [e.target.name]: value }]);
-  // };
+  const attractionsHandler = (e) =>
+    setAttractions({
+      ...attractions,
+      [e.target.name]: e.target.value,
+    });
   const typeHandler = (e) => setType(e.target.value);
+
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submithandler = (e) => {
     e.preventDefault();
     //update travel
+    dispatch(
+      updateTravel({
+        _id: travelId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        duration,
+        attractions,
+        type,
+      })
+    );
   };
 
   return (
@@ -79,6 +127,8 @@ const TravelEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Travel Plan</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (
@@ -119,6 +169,13 @@ const TravelEditScreen = () => {
                 value={image}
                 autoComplete="off"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. travel category input */}
@@ -172,50 +229,23 @@ const TravelEditScreen = () => {
             {/* 8. travel acctractions input */}
             <p>Attractions</p>
             <Form.Group controlId="acctractions" className="my-3">
-              {attractions.map((attraction, idx) => (
-                <div
-                  // data-testid={`${attraction._id}_${idx}`}
-                  key={`${attraction._id}_${idx}`}
-                >
-                  <Form.Label>{attraction.name}</Form.Label>
-                  {/* <Form.Control
-                    type="text"
-                    placeholder="Enter BriefInfo"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      console.log([e.target.name]);
-                      console.log(value);
-                      setAttractions(...attractions, {
-                        ...attraction,
-                        [e.target.name]: value,
-                      });
-                      // attractionsHandler()
-                    }}
-                    value={attraction.briefInfo}
-                    name="briefInfo"
-                    autoComplete="off"
-                  ></Form.Control> */}
-                  {/* <Form.Control
-                    key={attraction._id}
-                    type="text"
-                    placeholder="Enter BriefInfo"
-                    onChange={(e) => {
-                      console.log([e.target.name]);
-                      console.log(attraction);
-                      setAttractions([
-                        ...attractions,
-                        {
-                          ...attraction,
-                          [e.target.name]: e.target.value,
-                        },
-                      ]);
-                    }}
-                    value={attraction.briefInfo}
-                    name="briefInfo"
-                    autoComplete="off"
-                  ></Form.Control> */}
-                </div>
-              ))}
+              {/* <Form.Label>{attractions.name}</Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Enter Attractions Name"
+                onChange={attractionsHandler}
+                value={attractions.name}
+                autoComplete="off"
+                name="name"
+              ></Form.Control>
+              <Form.Control
+                type="text"
+                placeholder="Enter Attractions BriefInfo"
+                onChange={attractionsHandler}
+                value={attractions.briefInfo}
+                autoComplete="off"
+                name="briefInfo"
+              ></Form.Control>
             </Form.Group>
 
             {/* 9. travel type input */}

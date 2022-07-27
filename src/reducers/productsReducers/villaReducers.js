@@ -12,6 +12,10 @@ import {
   VILLA_CREATE_SUCCESS,
   VILLA_CREATE_FAIL,
   VILLA_CREATE_RESET,
+  VILLA_UPDATE_REQUEST,
+  VILLA_UPDATE_SUCCESS,
+  VILLA_UPDATE_FAIL,
+  VILLA_UPDATE_RESET,
 } from "../../constants/productsConstant/villaConstants";
 
 //=> for home screen villa product list state
@@ -70,6 +74,22 @@ export const villaCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case VILLA_CREATE_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+//=> for update villa product
+export const villaUpdateReducer = (state = { villa: {} }, action) => {
+  switch (action.type) {
+    case VILLA_UPDATE_REQUEST:
+      return { loading: true };
+    case VILLA_UPDATE_SUCCESS:
+      return { loading: false, success: true, villa: action.payload };
+    case VILLA_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case VILLA_UPDATE_RESET:
+      return { villa: {} };
     default:
       return state;
   }

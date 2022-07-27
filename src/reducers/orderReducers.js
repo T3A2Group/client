@@ -14,6 +14,13 @@ import {
   ORDER_MY_LIST_SUCCESS,
   ORDER_MY_LIST_FAIL,
   ORDER_MY_LIST_RESET,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_DISPATCH_REQUEST,
+  ORDER_DISPATCH_SUCCESS,
+  ORDER_DISPATCH_FAIL,
+  ORDER_DISPATCH_RESET,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -106,6 +113,50 @@ export const orderMyListReducer = (state = { orders: [] }, action) => {
       };
     case ORDER_MY_LIST_RESET:
       return { orders: [] };
+    default:
+      return state;
+  }
+};
+
+export const orderListReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ORDER_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        orders: action.payload,
+      };
+    case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderDispatchReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DISPATCH_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_DISPATCH_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_DISPATCH_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case ORDER_DISPATCH_RESET:
+      return {};
     default:
       return state;
   }

@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Loading/Message";
 import Progresser from "../components/Loading/Progresser";
 import Loader from "../components/Loading/Loader";
-import { getOrderDetails, payOrder } from "../actions/orderActions";
+import {
+  getOrderDetails,
+  payOrder,
+  dispatchOrder,
+} from "../actions/orderActions";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_PAY_RESET,
+  ORDER_DISPATCH_RESET,
+} from "../constants/orderConstants";
 
 const OrderScreen = () => {
+  const nagivateTo = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
   const orderId = id;
@@ -20,6 +28,13 @@ const OrderScreen = () => {
   //grab order pay state to check payment status,have to rename loading and success cause above has same name.
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
+
+  //For admin order dispatch
+  const orderDispatch = useSelector((state) => state.orderDispatch);
+  const { loading: loadingDispatch, success: successDispatch } = orderDispatch;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   if (!loading) {
     //for order items gross price start:
@@ -38,12 +53,24 @@ const OrderScreen = () => {
   const [{ isPending, isResolved, isRejected }] = usePayPalScriptReducer();
 
   useEffect(() => {
+    if (!userInfo) {
+      nagivateTo("/login");
+    }
     // update order screen data if user switch between orders.
-    if (!order || order._id !== orderId || successPay) {
+    if (!order || order._id !== orderId || successPay || successDispatch) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DISPATCH_RESET });
       dispatch(getOrderDetails(orderId));
     }
-  }, [dispatch, order, orderId, successPay]);
+  }, [
+    dispatch,
+    order,
+    orderId,
+    successPay,
+    successDispatch,
+    nagivateTo,
+    userInfo,
+  ]);
 
   const createOrder = (data, actions) => {
     return actions.order.create({
@@ -59,6 +86,10 @@ const OrderScreen = () => {
     return actions.order.capture().then((details) => {
       dispatch(payOrder(orderId, details));
     });
+  };
+
+  const dispatchHandler = () => {
+    dispatch(dispatchOrder(order));
   };
 
   return loading ? (
@@ -87,7 +118,7 @@ const OrderScreen = () => {
               </p>
               {order.isDispatched ? (
                 <Message variant="success">
-                  Paid On {order.dispatchedAt}
+                  Dispatch On {order.dispatchedAt}
                 </Message>
               ) : (
                 <Message variant="info">Waiting For Dispatch...</Message>
@@ -198,6 +229,21 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+              {loadingDispatch && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDispatched && (
+                  <ListGroup.Item className="d-grid gap-2">
+                    <Button
+                      type="button"
+                      className="btn btn-outline-warning lg"
+                      onClick={dispatchHandler}
+                    >
+                      Mark as Dispatch
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>

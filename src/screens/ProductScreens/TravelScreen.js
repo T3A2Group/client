@@ -78,13 +78,23 @@ const TravelScreen = () => {
                   <ListGroup.Item className="text-success">
                     Attractions:
                   </ListGroup.Item>
-                  {travel.attractions &&
+                  {/* {travel.attractions &&
                     travel.attractions.map((attraction, index) => (
                       <ListGroup.Item className="text-success" key={index}>
                         {`Day ${index + 1}`}: {attraction.name}
                         {attraction.briefInfo}
                       </ListGroup.Item>
-                    ))}
+                    ))} */}
+                  {travel.attractions && (
+                    <div>
+                      <ListGroup.Item className="text-success">
+                        {travel.attractions.name}
+                      </ListGroup.Item>
+                      <ListGroup.Item className="text-success">
+                        {travel.attractions.briefInfo}
+                      </ListGroup.Item>
+                    </div>
+                  )}
                   <ListGroup.Item className="text-success">
                     Duration: {travel.duration}
                   </ListGroup.Item>

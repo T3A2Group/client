@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listVillaDetails } from "../../actions/productActions/villaActions";
+import {
+  listVillaDetails,
+  updateVilla,
+} from "../../actions/productActions/villaActions";
+import { VILLA_UPDATE_RESET } from "../../constants/productsConstant/villaConstants";
+import axios from "axios";
 
 const VillaEditScreen = () => {
   //=> for each villa details
@@ -20,27 +25,41 @@ const VillaEditScreen = () => {
   const [roomNums, setRoomNums] = useState(0);
   const [maxPeople, setMaxPeople] = useState(0);
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const villaDetails = useSelector((state) => state.villaDetails);
   const { loading, error, villa } = villaDetails;
 
+  const villaUpdate = useSelector((state) => state.villaUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = villaUpdate;
+
   useEffect(() => {
-    if (!villa.name || villa._id !== villaId) {
-      dispatch(listVillaDetails(villaId));
+    if (successUpdate) {
+      dispatch({ type: VILLA_UPDATE_RESET });
+      nagivateTo("/admin/productlist/villa");
     } else {
-      setName(villa.name);
-      setPrice(villa.price);
-      setImage(villa.image);
-      setCategory(villa.category);
-      setCountInStock(villa.countInStock);
-      setDescription(villa.description);
-      setRoomNums(villa.roomNums);
-      setMaxPeople(villa.maxPeople);
-      setType(villa.type);
+      if (!villa.name || villa._id !== villaId) {
+        dispatch(listVillaDetails(villaId));
+      } else {
+        setName(villa.name);
+        setPrice(villa.price);
+        setImage(villa.image);
+        setCategory(villa.category);
+        setCountInStock(villa.countInStock);
+        setDescription(villa.description);
+        setRoomNums(villa.roomNums);
+        setMaxPeople(villa.maxPeople);
+        setType(villa.type);
+      }
     }
-  }, [dispatch, villaId, villa]);
+  }, [dispatch, villaId, villa, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -53,9 +72,44 @@ const VillaEditScreen = () => {
   const maxPeopleHandler = (e) => setMaxPeople(e.target.value);
   const typeHandler = (e) => setType(e.target.value);
 
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   const submithandler = (e) => {
     e.preventDefault();
     //update villa
+    dispatch(
+      updateVilla({
+        _id: villaId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        roomNums,
+        maxPeople,
+        type,
+      })
+    );
   };
 
   return (
@@ -69,6 +123,8 @@ const VillaEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Villa</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (
@@ -109,6 +165,13 @@ const VillaEditScreen = () => {
                 value={image}
                 autoComplete="on"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. villa category input */}
