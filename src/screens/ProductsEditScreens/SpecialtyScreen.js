@@ -10,6 +10,7 @@ import {
   updateSpecialty,
 } from "../../actions/productActions/specialtyActions";
 import { SPECIALTY_UPDATE_RESET } from "../../constants/productsConstant/specialtyConstants";
+import axios from "axios";
 
 const SpecialtyEditScreen = () => {
   //=> for each specialty details
@@ -22,6 +23,7 @@ const SpecialtyEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
   const nagivateTo = useNavigate();
@@ -63,6 +65,27 @@ const SpecialtyEditScreen = () => {
   const countInStockHandler = (e) => setCountInStock(e.target.value);
   const descriptionHandler = (e) => setDescription(e.target.value);
   const typeHandler = (e) => setType(e.target.value);
+
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submithandler = (e) => {
     e.preventDefault();
@@ -134,6 +157,13 @@ const SpecialtyEditScreen = () => {
                 value={image}
                 autoComplete="on"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. specialty category input */}

@@ -10,6 +10,7 @@ import {
   updateVilla,
 } from "../../actions/productActions/villaActions";
 import { VILLA_UPDATE_RESET } from "../../constants/productsConstant/villaConstants";
+import axios from "axios";
 
 const VillaEditScreen = () => {
   //=> for each villa details
@@ -24,6 +25,7 @@ const VillaEditScreen = () => {
   const [roomNums, setRoomNums] = useState(0);
   const [maxPeople, setMaxPeople] = useState(0);
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
   const nagivateTo = useNavigate();
@@ -69,6 +71,27 @@ const VillaEditScreen = () => {
   const roomNumsHandler = (e) => setRoomNums(e.target.value);
   const maxPeopleHandler = (e) => setMaxPeople(e.target.value);
   const typeHandler = (e) => setType(e.target.value);
+
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submithandler = (e) => {
     e.preventDefault();
@@ -142,6 +165,13 @@ const VillaEditScreen = () => {
                 value={image}
                 autoComplete="on"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. villa category input */}

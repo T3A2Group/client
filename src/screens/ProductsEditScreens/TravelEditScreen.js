@@ -10,6 +10,7 @@ import {
   updateTravel,
 } from "../../actions/productActions/travelActions";
 import { TRAVEL_UPDATE_RESET } from "../../constants/productsConstant/travelConstants";
+import axios from "axios";
 
 const TravelEditScreen = () => {
   //=> for each travel details
@@ -24,6 +25,7 @@ const TravelEditScreen = () => {
   const [duration, setDuration] = useState("");
   const [attractions, setAttractions] = useState({ name: "", briefInfo: "" });
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
   const nagivateTo = useNavigate();
@@ -72,18 +74,28 @@ const TravelEditScreen = () => {
       ...attractions,
       [e.target.name]: e.target.value,
     });
-  // const attractionsHandler = (newValue) => {
-  //   console.log("attractionsHandler", attractions);
-  //   const changedItem = attractions.find((x) => x._id === id);
-  //   console.log("changeItem", changedItem);
-  //   console.log("newValue", newValue);
-  //   // changedItem.briefInfo = newValue;
-  //   // const value = e.target.value;
-  //   // console.log([e.target.name]);
-  //   // console.log(value);
-  //   // setAttractions([...attractions, { [e.target.name]: value }]);
-  // };
   const typeHandler = (e) => setType(e.target.value);
+
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
 
   const submithandler = (e) => {
     e.preventDefault();
@@ -157,6 +169,13 @@ const TravelEditScreen = () => {
                 value={image}
                 autoComplete="off"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. travel category input */}
@@ -227,50 +246,6 @@ const TravelEditScreen = () => {
                 autoComplete="off"
                 name="briefInfo"
               ></Form.Control>
-              {/* {attractions.map((attraction, idx) => (
-                <div
-                  // data-testid={`${attraction._id}_${idx}`}
-                  key={`${attraction._id}_${idx}`}
-                >
-                  <Form.Label>{attraction.name}</Form.Label> */}
-              {/* <Form.Control
-                    type="text"
-                    placeholder="Enter BriefInfo"
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      console.log([e.target.name]);
-                      console.log(value);
-                      setAttractions(...attractions, {
-                        ...attraction,
-                        [e.target.name]: value,
-                      });
-                      // attractionsHandler()
-                    }}
-                    value={attraction.briefInfo}
-                    name="briefInfo"
-                    autoComplete="off"
-                  ></Form.Control> */}
-              {/* <Form.Control
-                    key={attraction._id}
-                    type="text"
-                    placeholder="Enter BriefInfo"
-                    onChange={(e) => {
-                      console.log([e.target.name]);
-                      console.log(attraction);
-                      setAttractions([
-                        ...attractions,
-                        {
-                          ...attraction,
-                          [e.target.name]: e.target.value,
-                        },
-                      ]);
-                    }}
-                    value={attraction.briefInfo}
-                    name="briefInfo"
-                    autoComplete="off"
-                  ></Form.Control> */}
-              {/* </div> */}
-              {/* ))} */}
             </Form.Group>
 
             {/* 9. travel type input */}
