@@ -1,4 +1,4 @@
-import backend from "../../utils/axiosCreate";
+import backend from "../../utils/setBaseUrl";
 import { toast } from "react-toastify";
 import {
   VILLA_LIST_REQUEST,

@@ -40,7 +40,7 @@ import "react-toastify/dist/ReactToastify.css";
 //toastify lab import end
 //import react-paypal-js and axios for payment
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import backend from "./utils/axiosCreate";
+import backend from "./utils/setBaseUrl";
 
 
 const App = () => {
