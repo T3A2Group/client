@@ -11,12 +11,13 @@ const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const nagivateTo = useNavigate();
-
+  
   //mimic real business, calculate prices:start
   const addDecimals = (num) => {
     return Number((Math.round(num * 100) / 100).toFixed(2));
   };
   const orderCart = {};
+  
   //=> gross total order items price
   orderCart.itemsPrice = addDecimals(
     Number(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
@@ -47,9 +48,11 @@ const PlaceOrderScreen = () => {
     }
     // eslint-disable-next-line
   }, [nagivateTo, success]);
+
   //dispatch cart and orderCart properties into createOrder action:
-  //   console.log(cart);
-  //   console.log(orderCart);
+    // console.log(cart.cartItems);
+    console.log(orderCart);
+
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
