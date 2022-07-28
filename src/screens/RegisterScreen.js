@@ -67,7 +67,7 @@ const RegisterScreen = () => {
         </Form.Group>
 
         {/* user email input */}
-        <Form.Group controlId="email">
+        <Form.Group controlId="email" className="my-3">
           <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
@@ -79,7 +79,7 @@ const RegisterScreen = () => {
         </Form.Group>
 
         {/* user password input */}
-        <Form.Group controlId="password">
+        <Form.Group controlId="password" className="my-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
@@ -91,7 +91,7 @@ const RegisterScreen = () => {
         </Form.Group>
 
         {/* user password input */}
-        <Form.Group controlId="confirmPassword">
+        <Form.Group controlId="confirmPassword" className="my-3">
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"

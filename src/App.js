@@ -3,10 +3,6 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-// for searchbar
-import ToolBar from "./components/ToolBar";
-import Searchbar from "./components/Searchbar";
-
 import HomeScreen from "./screens/HomeScreen";
 import VillaScreen from "./screens/ProductScreens/VillaScreen";
 import FoodScreen from "./screens/ProductScreens/FoodScreen";
@@ -56,21 +52,12 @@ const App = () => {
     }
   }, []);
 
-  // for floating search bar
-  const [searchbar, setSearchbar] = useState(false);
-  const toggleSearchbar = () => {
-    setSearchbar((prevState) => !prevState);
-  };
-
   return (
     <>
       {clientID && (
         <PayPalScriptProvider options={{ "client-id": clientID }}>
           <Router>
             <Header />
-
-            <ToolBar openSearchbar={toggleSearchbar} />
-            <Searchbar searchbar={searchbar} closeSearchbar={toggleSearchbar} />
 
             <main className="py-3">
               <Container>
@@ -135,6 +122,22 @@ const App = () => {
                   <Route
                     path="/admin/travel/:id/edit"
                     element={<TravelEditScreen />}
+                  />
+                  <Route
+                    path="/search/villa/:keyword"
+                    element={<VillaListScreen />}
+                  />
+                  <Route
+                    path="/search/food/:keyword"
+                    element={<FoodListScreen />}
+                  />
+                  <Route
+                    path="/search/specialty/:keyword"
+                    element={<SpecialtyListScreen />}
+                  />
+                  <Route
+                    path="/search/travel/:keyword"
+                    element={<TravelListScreen />}
                   />
                 </Routes>
               </Container>

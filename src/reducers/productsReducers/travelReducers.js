@@ -16,6 +16,10 @@ import {
   TRAVEL_UPDATE_SUCCESS,
   TRAVEL_UPDATE_FAIL,
   TRAVEL_UPDATE_RESET,
+  TRAVEL_CREATE_REVIEW_REQUEST,
+  TRAVEL_CREATE_REVIEW_SUCCESS,
+  TRAVEL_CREATE_REVIEW_FAIL,
+  TRAVEL_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/travelConstants";
 
 //=> for home screen travel product list state
@@ -90,6 +94,22 @@ export const travelUpdateReducer = (state = { travel: {} }, action) => {
       return { loading: false, error: action.payload };
     case TRAVEL_UPDATE_RESET:
       return { travel: {} };
+    default:
+      return state;
+  }
+};
+
+//=> for client can create travel plan review
+export const travelReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TRAVEL_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case TRAVEL_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case TRAVEL_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case TRAVEL_CREATE_REVIEW_RESET:
+      return {};
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ import { TRAVEL_CREATE_RESET } from "../../constants/productsConstant/travelCons
 const AdminTravelListScreen = () => {
   const nagivateTo = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
+  // const { id } = useParams();
 
   const travelList = useSelector((state) => state.travelList);
   const { loading, error, travel } = travelList;

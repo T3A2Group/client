@@ -7,6 +7,7 @@ import {
   villaDeleteReducer,
   villaCreateReducer,
   villaUpdateReducer,
+  villaReviewCreateReducer,
 } from "./reducers/productsReducers/villaReducers";
 import {
   foodListReducer,
@@ -14,6 +15,7 @@ import {
   foodDeleteReducer,
   foodCreateReducer,
   foodUpdateReducer,
+  foodReviewCreateReducer,
 } from "./reducers/productsReducers/foodReducers";
 import {
   specialtyListReducer,
@@ -21,6 +23,7 @@ import {
   specialtyDeleteReducer,
   specialtyCreateReducer,
   specialtyUpdateReducer,
+  specialtyReviewCreateReducer,
 } from "./reducers/productsReducers/specialtiesReducers";
 import {
   travelListReducer,
@@ -28,6 +31,7 @@ import {
   travelDeleteReducer,
   travelCreateReducer,
   travelUpdateReducer,
+  travelReviewCreateReducer,
 } from "./reducers/productsReducers/travelReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -73,6 +77,11 @@ const reducer = {
   foodUpdate: foodUpdateReducer,
   specialtyUpdate: specialtyUpdateReducer,
   travelUpdate: travelUpdateReducer,
+
+  villaReviewCreate: villaReviewCreateReducer,
+  foodReviewCreate: foodReviewCreateReducer,
+  specialtyReviewCreate: specialtyReviewCreateReducer,
+  travelReviewCreate: travelReviewCreateReducer,
 
   cart: cartReducer,
 
