@@ -16,6 +16,10 @@ import {
   FOOD_UPDATE_REQUEST,
   FOOD_UPDATE_SUCCESS,
   FOOD_UPDATE_FAIL,
+  FOOD_CREATE_REVIEW_REQUEST,
+  FOOD_CREATE_REVIEW_SUCCESS,
+  FOOD_CREATE_REVIEW_FAIL,
+  FOOD_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/foodConstants";
 
 export const listFood = () => async (dispatch) => {
@@ -39,6 +43,7 @@ export const listFoodDetails = (id) => async (dispatch) => {
     dispatch({ type: FOOD_DETAILS_REQUEST });
     const { data } = await axios.get(`/api/food/${id}`);
     dispatch({ type: FOOD_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: FOOD_CREATE_REVIEW_RESET });
   } catch (error) {
     dispatch({
       type: FOOD_DETAILS_FAIL,
@@ -147,3 +152,40 @@ export const updateFood = (food) => async (dispatch, getState) => {
     });
   }
 };
+
+//Client can leave comment for food product
+export const createFoodReview =
+  (foodId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: FOOD_CREATE_REVIEW_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `/api/food/${foodId}/reviews`,
+        review,
+        config
+      );
+
+      dispatch({
+        type: FOOD_CREATE_REVIEW_SUCCESS,
+      });
+      toast(`🤗 ${data.message}`);
+    } catch (error) {
+      dispatch({
+        type: FOOD_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

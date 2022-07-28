@@ -16,6 +16,10 @@ import {
   SPECIALTY_UPDATE_REQUEST,
   SPECIALTY_UPDATE_SUCCESS,
   SPECIALTY_UPDATE_FAIL,
+  SPECIALTY_CREATE_REVIEW_REQUEST,
+  SPECIALTY_CREATE_REVIEW_SUCCESS,
+  SPECIALTY_CREATE_REVIEW_FAIL,
+  SPECIALTY_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/specialtyConstants";
 
 export const listSpecialties = () => async (dispatch) => {
@@ -39,6 +43,7 @@ export const listSpecialtyDetails = (id) => async (dispatch) => {
     dispatch({ type: SPECIALTY_DETAILS_REQUEST });
     const { data } = await axios.get(`/api/specialty/${id}`);
     dispatch({ type: SPECIALTY_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: SPECIALTY_CREATE_REVIEW_RESET });
   } catch (error) {
     dispatch({
       type: SPECIALTY_DETAILS_FAIL,
@@ -151,3 +156,40 @@ export const updateSpecialty = (specialty) => async (dispatch, getState) => {
     });
   }
 };
+
+//Client can leave comment for specialty product
+export const createSpecialtyReview =
+  (specialtyId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `/api/specialty/${specialtyId}/reviews`,
+        review,
+        config
+      );
+
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_SUCCESS,
+      });
+      toast(`🤗 ${data.message}`);
+    } catch (error) {
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
