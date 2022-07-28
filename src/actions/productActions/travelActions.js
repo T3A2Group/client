@@ -22,21 +22,23 @@ import {
   TRAVEL_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/travelConstants";
 
-export const listTravel = () => async (dispatch) => {
-  try {
-    dispatch({ type: TRAVEL_LIST_REQUEST });
-    const { data } = await axios.get("/api/travel");
-    dispatch({ type: TRAVEL_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: TRAVEL_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listTravel =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: TRAVEL_LIST_REQUEST });
+      const { data } = await axios.get(`/api/travel?keyword=${keyword}`);
+      dispatch({ type: TRAVEL_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: TRAVEL_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listTravelDetails = (id) => async (dispatch) => {
   try {

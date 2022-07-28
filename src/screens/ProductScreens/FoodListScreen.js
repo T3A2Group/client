@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import EachFood from "../../components/Products/EachFood";
+
+//for search bar
+import { useParams } from "react-router-dom";
+import ToolBar from "../../components/ToolBar";
+import Searchbar from "../../components/Searchbar";
 
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
@@ -19,13 +24,31 @@ const FoodListScreen = () => {
   const dispatch = useDispatch();
   const foodList = useSelector((state) => state.foodList);
 
-  //for villas,food,specialties,and travelPlan state update
+  //for product search
+  const params = useParams();
+  const keyword = params.keyword;
+
+  //for food  state update
   useEffect(() => {
-    dispatch(listFood());
-  }, [dispatch]);
+    dispatch(listFood(keyword));
+  }, [dispatch, keyword]);
+
+  // for floating search bar
+  const [searchbar, setSearchbar] = useState(false);
+  const toggleSearchbar = () => {
+    setSearchbar((prevState) => !prevState);
+  };
 
   return (
     <>
+      <ToolBar openSearchbar={toggleSearchbar} />
+      <Searchbar
+        searchbar={searchbar}
+        closeSearchbar={toggleSearchbar}
+        category="food"
+        className="fa-solid fa-utensils"
+      />
+
       <Container className="my-3">
         <h1>Our Restaurant</h1>
         {foodList.loading ? (
@@ -46,6 +69,4 @@ const FoodListScreen = () => {
   );
 };
 
-
 export default FoodListScreen;
-

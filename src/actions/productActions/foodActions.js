@@ -22,21 +22,23 @@ import {
   FOOD_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/foodConstants";
 
-export const listFood = () => async (dispatch) => {
-  try {
-    dispatch({ type: FOOD_LIST_REQUEST });
-    const { data } = await axios.get("/api/food");
-    dispatch({ type: FOOD_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: FOOD_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listFood =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: FOOD_LIST_REQUEST });
+      const { data } = await axios.get(`/api/food?keyword=${keyword}`);
+      dispatch({ type: FOOD_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: FOOD_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listFoodDetails = (id) => async (dispatch) => {
   try {

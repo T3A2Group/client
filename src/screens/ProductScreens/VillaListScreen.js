@@ -1,6 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ListEachVilla from "../../components/Products/ListEachVilla";
 // import products from "../products";  //fetch it from backend
+
+// for searchbar
+import ToolBar from "../../components/ToolBar";
+import Searchbar from "../../components/Searchbar";
 
 import { Row, Col } from "react-bootstrap";
 
@@ -20,13 +25,30 @@ const VillaListScreen = () => {
   const dispatch = useDispatch();
   const villaList = useSelector((state) => state.villaList);
 
-  //for villas,food,specialties,and travelPlan state update
+  //for product search
+  const params = useParams();
+  const keyword = params.keyword;
+
+  //for villas state update
   useEffect(() => {
-    dispatch(listVillas());
-  }, [dispatch]);
+    dispatch(listVillas(keyword));
+  }, [dispatch, keyword]);
+
+  // for floating search bar
+  const [searchbar, setSearchbar] = useState(false);
+  const toggleSearchbar = () => {
+    setSearchbar((prevState) => !prevState);
+  };
 
   return (
     <>
+      <ToolBar openSearchbar={toggleSearchbar} />
+      <Searchbar
+        searchbar={searchbar}
+        closeSearchbar={toggleSearchbar}
+        category="villa"
+        className="fa-solid fa-bed"
+      />
       <Container className="my-3">
         <h1>Our Villas</h1>
         {villaList.loading ? (
@@ -52,6 +74,4 @@ const VillaListScreen = () => {
   );
 };
 
-
 export default VillaListScreen;
-

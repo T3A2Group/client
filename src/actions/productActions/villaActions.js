@@ -22,21 +22,23 @@ import {
   VILLA_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/villaConstants";
 
-export const listVillas = () => async (dispatch) => {
-  try {
-    dispatch({ type: VILLA_LIST_REQUEST });
-    const { data } = await axios.get("/api/villa");
-    dispatch({ type: VILLA_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: VILLA_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listVillas =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: VILLA_LIST_REQUEST });
+      const { data } = await axios.get(`/api/villa?keyword=${keyword}`);
+      dispatch({ type: VILLA_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: VILLA_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listVillaDetails = (id) => async (dispatch) => {
   try {

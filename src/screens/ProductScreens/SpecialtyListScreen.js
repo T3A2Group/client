@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import EachSpecialty from "../../components/Products/EachSpecialty";
+
+//for search bar
+import { useParams } from "react-router-dom";
+import ToolBar from "../../components/ToolBar";
+import Searchbar from "../../components/Searchbar";
 
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
@@ -19,13 +24,30 @@ const SpecialtyListScreen = () => {
   const dispatch = useDispatch();
   const specialtyList = useSelector((state) => state.specialtyList);
 
-  //for villas,food,specialties,and travelPlan state update
+  //for product search
+  const params = useParams();
+  const keyword = params.keyword;
+
+  //for specialties state update
   useEffect(() => {
-    dispatch(listSpecialties());
-  }, [dispatch]);
+    dispatch(listSpecialties(keyword));
+  }, [dispatch, keyword]);
+
+  // for floating search bar
+  const [searchbar, setSearchbar] = useState(false);
+  const toggleSearchbar = () => {
+    setSearchbar((prevState) => !prevState);
+  };
 
   return (
     <>
+      <ToolBar openSearchbar={toggleSearchbar} />
+      <Searchbar
+        searchbar={searchbar}
+        closeSearchbar={toggleSearchbar}
+        category="specialty"
+        className="fa-solid fa-gifts"
+      />
       <Container className="my-3">
         <h1>Our Specialties</h1>
         {specialtyList.loading ? (
