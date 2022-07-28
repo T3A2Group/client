@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from "../../utils/axiosCreate";
 import { toast } from "react-toastify";
 import {
   TRAVEL_LIST_REQUEST,
@@ -18,7 +18,7 @@ import {
 export const listTravel = () => async (dispatch) => {
   try {
     dispatch({ type: TRAVEL_LIST_REQUEST });
-    const { data } = await axios.get("/api/travel");
+    const { data } = await backend.get("/api/travel");
     dispatch({ type: TRAVEL_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -34,7 +34,7 @@ export const listTravel = () => async (dispatch) => {
 export const listTravelDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: TRAVEL_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/travel/${id}`);
+    const { data } = await backend.get(`/api/travel/${id}`);
     dispatch({ type: TRAVEL_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -61,7 +61,7 @@ export const deleteTravel = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/travel/${id}`, config);
+    const { data } = await backend.delete(`/api/travel/${id}`, config);
     dispatch({
       type: TRAVEL_DELETE_SUCCESS,
     });
@@ -91,7 +91,7 @@ export const createTravel = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/travel`, {}, config);
+    const { data } = await backend.post(`/api/travel`, {}, config);
     dispatch({
       type: TRAVEL_CREATE_SUCCESS,
       payload: data,

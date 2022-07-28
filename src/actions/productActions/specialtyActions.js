@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from "../../utils/axiosCreate";
 import { toast } from "react-toastify";
 import {
   SPECIALTY_LIST_REQUEST,
@@ -18,7 +18,7 @@ import {
 export const listSpecialties = () => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_LIST_REQUEST });
-    const { data } = await axios.get("/api/specialty");
+    const { data } = await backend.get("/api/specialty");
     dispatch({ type: SPECIALTY_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -34,7 +34,7 @@ export const listSpecialties = () => async (dispatch) => {
 export const listSpecialtyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/specialty/${id}`);
+    const { data } = await backend.get(`/api/specialty/${id}`);
     dispatch({ type: SPECIALTY_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -61,7 +61,7 @@ export const deleteSpecialty = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/specialty/${id}`, config);
+    const { data } = await backend.delete(`/api/specialty/${id}`, config);
     dispatch({
       type: SPECIALTY_DELETE_SUCCESS,
     });
@@ -91,7 +91,7 @@ export const createSpecialty = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/specialty`, {}, config);
+    const { data } = await backend.post(`/api/specialty`, {}, config);
     dispatch({
       type: SPECIALTY_CREATE_SUCCESS,
       payload: data,

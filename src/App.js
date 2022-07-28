@@ -40,7 +40,7 @@ import "react-toastify/dist/ReactToastify.css";
 //toastify lab import end
 //import react-paypal-js and axios for payment
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import axios from "axios";
+import backend from "./utils/axiosCreate";
 
 
 const App = () => {
@@ -49,7 +49,7 @@ const App = () => {
 
   useEffect(() => {
     const getClientId = async () => {
-      const { data: clientId } = await axios.get("/api/config/paypal");
+      const { data: clientId } = await backend.get("/api/config/paypal");
       setClientID(clientId);
     };
     if (!window.paypal) {
