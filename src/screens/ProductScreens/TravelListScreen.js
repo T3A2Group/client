@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ListEachTravel from "../../components/Products/ListEachTravel";
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
+
+//for search bar
+import { useParams } from "react-router-dom";
+import ToolBar from "../../components/ToolBar";
+import Searchbar from "../../components/Searchbar";
 
 //use react redux to lift up all products state, start:
 import { useDispatch, useSelector } from "react-redux";
@@ -18,13 +23,30 @@ const TravelListScreen = () => {
   const dispatch = useDispatch();
   const travelList = useSelector((state) => state.travelList);
 
-  //for villas,food,specialties,and travelPlan state update
+  //for product search
+  const params = useParams();
+  const keyword = params.keyword;
+
+  //for travelPlan state update
   useEffect(() => {
-    dispatch(listTravel());
-  }, [dispatch]);
+    dispatch(listTravel(keyword));
+  }, [dispatch, keyword]);
+
+  // for floating search bar
+  const [searchbar, setSearchbar] = useState(false);
+  const toggleSearchbar = () => {
+    setSearchbar((prevState) => !prevState);
+  };
 
   return (
     <>
+      <ToolBar openSearchbar={toggleSearchbar} />
+      <Searchbar
+        searchbar={searchbar}
+        closeSearchbar={toggleSearchbar}
+        category="travel"
+        className="fa-solid fa-map-location-dot"
+      />
       <Container className="my-3">
         <h1>Our Travel Plans</h1>
         {travelList.loading ? (

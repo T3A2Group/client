@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   Row,
   Col,
@@ -11,11 +11,13 @@ import {
   Form,
 } from "react-bootstrap";
 import Rating from "../../components/Rating";
-// import products from "../products"; //same as in HomeScreen component.,use axios to fetch data
-import { useParams } from "react-router-dom";
-// import redux stuffs for each villa component
+// import redux stuffs for each specialty component
 import { useDispatch, useSelector } from "react-redux";
-import { listSpecialtyDetails } from "../../actions/productActions/specialtyActions";
+import {
+  listSpecialtyDetails,
+  createSpecialtyReview,
+} from "../../actions/productActions/specialtyActions";
+import { SPECIALTY_CREATE_REVIEW_RESET } from "../../constants/productsConstant/specialtyConstants";
 import Loader from "../../components/Loading/Loader";
 import Message from "../../components/Loading/Message";
 
@@ -23,18 +25,48 @@ const SpecialtyScreen = () => {
   const { id } = useParams();
   const [specialtyQty, setSpecialtyQty] = useState(1); ////set food qty state, this is component state
   const navigateTo = useNavigate(); //for cart qty url
-
   const dispatch = useDispatch();
+
+  //for specialty product comments state:
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   const specialtyDetails = useSelector((state) => state.specialtyDetails);
   const { loading, error, specialty } = specialtyDetails;
 
+  const specialtyReviewCreate = useSelector(
+    (state) => state.specialtyReviewCreate
+  );
+  const { success: successSpecialtyReview, error: errorSpecialtyReview } =
+    specialtyReviewCreate;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
+    if (successSpecialtyReview) {
+      setRating(0);
+      setComment("");
+      dispatch({ type: SPECIALTY_CREATE_REVIEW_RESET });
+    }
+
     dispatch(listSpecialtyDetails(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, successSpecialtyReview]);
 
   // event handler: for add to cart
   const addToCartHandler = () => {
     navigateTo(`/cart/${id}?category=specialty&qty=${specialtyQty}`);
+  };
+
+  // review form sumbit handler:
+  const reviewSubmitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createSpecialtyReview(id, {
+        rating,
+        comment,
+      })
+    );
   };
 
   return (
@@ -152,6 +184,73 @@ const SpecialtyScreen = () => {
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
+            </Col>
+          </Row>
+          <Row className="my-2">
+            <Col lg={6}>
+              <h2>Reviews</h2>
+              {specialty.reviews.length === 0 && <Message>No Reviews</Message>}
+              <ListGroup>
+                {specialty.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <Rating value={parseInt(review.rating)} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
+                {!specialty.reviews.some(
+                  (rev) => rev.user === userInfo?._id
+                ) && (
+                  <ListGroup.Item>
+                    <h5>Write a Customer Reivew</h5>
+                    {errorSpecialtyReview && (
+                      <Message variant="danger">{errorSpecialtyReview}</Message>
+                    )}
+                    {userInfo ? (
+                      <Form onSubmit={reviewSubmitHandler}>
+                        <Form.Group controlId="rating" className="my-3">
+                          <Form.Label className="text-primary">
+                            Rating
+                          </Form.Label>
+                          <Form.Control
+                            as="select"
+                            value={rating}
+                            onChange={(e) => setRating(e.target.value)}
+                          >
+                            <option value="">Select Rate</option>
+                            <option value="1">1 - Poor</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="3">3 - Good</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="5">5 - Excellent</option>
+                          </Form.Control>
+                        </Form.Group>
+                        <Form.Group
+                          controlId="comment"
+                          className="text-primary"
+                        >
+                          <Form.Label>Comments</Form.Label>
+                          <Form.Control
+                            as="textarea"
+                            row="3"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                          ></Form.Control>
+                        </Form.Group>
+                        <Button type="submit" className="my-2">
+                          Submit
+                        </Button>
+                      </Form>
+                    ) : (
+                      <Message>
+                        Please <Link to="/login">Sign in</Link> to write a
+                        review
+                      </Message>
+                    )}
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
             </Col>
           </Row>
         </Container>
