@@ -38,18 +38,20 @@ const HomeScreen = () => {
   return (
     <>
       <Container className="my-3">
-        <h1>Villas</h1>
+        <h1>Popular Villas</h1>
         {villaList.loading ? (
           <Loader color={"#FFE7BF"} />
         ) : villaList.error ? (
           <Message variant="danger">{villaList.error}</Message>
         ) : (
           <Row>
-            {villaList.villas.map((villa) => (
-              <Col key={villa._id} sm={12} md={6} lg={4} xl={3}>
-                <EachVilla villa={villa} />
-              </Col>
-            ))}
+            {villaList.villas
+              .filter((villa) => villa.rating >= 4.5)
+              .map((v) => (
+                <Col key={v._id} sm={12} md={6} lg={4} xl={3}>
+                  <EachVilla villa={v} />
+                </Col>
+              ))}
           </Row>
         )}
         {/* <Row className="justify-content-md-center">
@@ -60,35 +62,39 @@ const HomeScreen = () => {
       </Container>
 
       <Container className="my-3">
-        <h1>Food</h1>
+        <h1>Favourite Food</h1>
         {foodList.loading ? (
           <Loader color={"#FFC4C4"} />
         ) : foodList.error ? (
           <Message variant="danger">{foodList.error}</Message>
         ) : (
           <Row>
-            {foodList.food.map((food) => (
-              <Col key={food._id} sm={12} md={6} lg={4} xl={3}>
-                <EachFood food={food} />
-              </Col>
-            ))}
+            {foodList.food
+              .filter((food) => food.rating >= 4.5)
+              .map((f) => (
+                <Col key={f._id} sm={12} md={6} lg={4} xl={3}>
+                  <EachFood food={f} />
+                </Col>
+              ))}
           </Row>
         )}
       </Container>
 
       <Container className="my-3">
-        <h1>Specialties</h1>
+        <h1>Great Specialties</h1>
         {specialtyList.loading ? (
           <Loader color={"#FF869E"} />
         ) : specialtyList.error ? (
           <Message variant="danger">{specialtyList.error}</Message>
         ) : (
           <Row>
-            {specialtyList.specialties.map((specialty) => (
-              <Col key={specialty._id} sm={12} md={6} lg={4} xl={3}>
-                <EachSpecialty specialty={specialty} />
-              </Col>
-            ))}
+            {specialtyList.specialties
+              .filter((specialty) => specialty.rating >= 4.5)
+              .map((s) => (
+                <Col key={s._id} sm={12} md={6} lg={4} xl={3}>
+                  <EachSpecialty specialty={s} />
+                </Col>
+              ))}
           </Row>
         )}
       </Container>
@@ -101,11 +107,13 @@ const HomeScreen = () => {
           <Message variant="danger">{travelList.error}</Message>
         ) : (
           <Row>
-            {travelList.travel.map((travel) => (
-              <Col key={travel._id} sm={12} md={6} lg={4} xl={3}>
-                <EachTravel travel={travel} />
-              </Col>
-            ))}
+            {travelList.travel
+              .filter((travel) => travel.rating >= 4.5)
+              .map((t) => (
+                <Col key={t._id} sm={12} md={6} lg={4} xl={3}>
+                  <EachTravel travel={t} />
+                </Col>
+              ))}
           </Row>
         )}
       </Container>
