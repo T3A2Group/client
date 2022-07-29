@@ -4,7 +4,7 @@ import EachFood from "../components/Products/EachFood";
 import EachSpecialty from "../components/Products/EachSpecialty";
 import EachTravel from "../components/Products/EachTravel";
 // import products from "../products";  //fetch it from backend
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 
 //use react redux to lift up all products state, start:
@@ -57,7 +57,10 @@ const HomeScreen = () => {
         )}
         <Row className="row justify-content-center">
           <Col xs="auto" lg="3" md="auto">
-            <Link to='/villa' style={{ textDecoration: 'none' }}><strong>Explore More Villas </strong><i class="fa-solid fa-angles-right"></i></Link>
+            <Link to="/villa" style={{ textDecoration: "none" }}>
+              <strong>Explore More Villas </strong>
+              <i className="fa-solid fa-angles-right"></i>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -81,7 +84,10 @@ const HomeScreen = () => {
         )}
         <Row className="row justify-content-center">
           <Col xs="auto" lg="3" md="auto">
-            <Link to='/food' style={{ textDecoration: 'none' }}><strong>Explore More Food </strong><i class="fa-solid fa-angles-right"></i></Link>
+            <Link to="/food" style={{ textDecoration: "none" }}>
+              <strong>Explore More Food </strong>
+              <i className="fa-solid fa-angles-right"></i>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -105,7 +111,10 @@ const HomeScreen = () => {
         )}
         <Row className="row justify-content-center">
           <Col xs="auto" lg="3" md="auto">
-            <Link to='/specialty' style={{ textDecoration: 'none' }}><strong>Explore More Specialties </strong><i class="fa-solid fa-angles-right"></i></Link>
+            <Link to="/specialty" style={{ textDecoration: "none" }}>
+              <strong>Explore More Specialties </strong>
+              <i className="fa-solid fa-angles-right"></i>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -129,7 +138,10 @@ const HomeScreen = () => {
         )}
         <Row className="row justify-content-center">
           <Col xs="auto" lg="3" md="auto">
-            <Link to='/travel' style={{ textDecoration: 'none' }}><strong>Explore More Travel Plans </strong><i class="fa-solid fa-angles-right"></i></Link>
+            <Link to="/travel" style={{ textDecoration: "none" }}>
+              <strong>Explore More Travel Plans </strong>
+              <i className="fa-solid fa-angles-right"></i>
+            </Link>
           </Col>
         </Row>
       </Container>
