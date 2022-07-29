@@ -10,7 +10,7 @@ import {
   updateTravel,
 } from "../../actions/productActions/travelActions";
 import { TRAVEL_UPDATE_RESET } from "../../constants/productsConstant/travelConstants";
-import backend from "../../utils/setBaseUrl";
+import tasResApi from "../../config/api";
 
 const TravelEditScreen = () => {
   //=> for each travel details
@@ -88,7 +88,7 @@ const TravelEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await backend.post("/api/upload", formData, config);
+      const { data } = await tasResApi.post("/api/upload", formData, config);
       setImage(data);
       setUploading(false);
     } catch (error) {

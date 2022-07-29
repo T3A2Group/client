@@ -1,4 +1,4 @@
-import backend from "../../utils/setBaseUrl";
+import tasResApi from "../../config/api";
 import { toast } from "react-toastify";
 import {
   FOOD_LIST_REQUEST,
@@ -27,7 +27,7 @@ export const listFood =
   async (dispatch) => {
     try {
       dispatch({ type: FOOD_LIST_REQUEST });
-      const { data } = await backend.get(`/api/food?keyword=${keyword}`);
+      const { data } = await tasResApi.get(`/api/food?keyword=${keyword}`);
       dispatch({ type: FOOD_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -43,7 +43,7 @@ export const listFood =
 export const listFoodDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: FOOD_DETAILS_REQUEST });
-    const { data } = await backend.get(`/api/food/${id}`);
+    const { data } = await tasResApi.get(`/api/food/${id}`);
     dispatch({ type: FOOD_DETAILS_SUCCESS, payload: data });
     dispatch({ type: FOOD_CREATE_REVIEW_RESET });
   } catch (error) {
@@ -71,7 +71,7 @@ export const deleteFood = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.delete(`/api/food/${id}`, config);
+    const { data } = await tasResApi.delete(`/api/food/${id}`, config);
     dispatch({
       type: FOOD_DELETE_SUCCESS,
     });
@@ -101,7 +101,7 @@ export const createFood = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.post(`/api/food`, {}, config);
+    const { data } = await tasResApi.post(`/api/food`, {}, config);
     dispatch({
       type: FOOD_CREATE_SUCCESS,
       payload: data,
@@ -133,7 +133,7 @@ export const updateFood = (food) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.put(`/api/food/${food._id}`, food, config);
+    const { data } = await tasResApi.put(`/api/food/${food._id}`, food, config);
 
     dispatch({
       type: FOOD_UPDATE_SUCCESS,
@@ -171,7 +171,7 @@ export const createFoodReview =
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await backend.post(
+      const { data } = await tasResApi.post(
         `/api/food/${foodId}/reviews`,
         review,
         config

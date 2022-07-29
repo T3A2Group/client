@@ -10,7 +10,7 @@ import {
   updateVilla,
 } from "../../actions/productActions/villaActions";
 import { VILLA_UPDATE_RESET } from "../../constants/productsConstant/villaConstants";
-import backend from "../../utils/setBaseUrl";
+import tasResApi from "../../config/api";
 
 const VillaEditScreen = () => {
   //=> for each villa details
@@ -84,7 +84,7 @@ const VillaEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await backend.post("/api/upload", formData, config);
+      const { data } = await tasResApi.post("/api/upload", formData, config);
       setImage(data);
       setUploading(false);
     } catch (error) {

@@ -1,4 +1,4 @@
-import backend from "../utils/setBaseUrl";
+import tasResApi from "../config/api";
 import { toast } from "react-toastify";
 import {
   ORDER_CREATE_REQUEST,
@@ -39,7 +39,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.post(`/api/orders`, order, config);
+    const { data } = await tasResApi.post(`/api/orders`, order, config);
     //when order create request success
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -81,7 +81,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.get(`/api/orders/${id}`, config);
+    const { data } = await tasResApi.get(`/api/orders/${id}`, config);
     //when get order details request success
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -115,7 +115,7 @@ export const payOrder =
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await backend.put(
+      const { data } = await tasResApi.put(
         `/api/orders/${orderId}/pay`,
         paymentResult,
         config
@@ -151,7 +151,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.get(`/api/orders/myorders`, config);
+    const { data } = await tasResApi.get(`/api/orders/myorders`, config);
     //when order list request success
     dispatch({
       type: ORDER_MY_LIST_SUCCESS,
@@ -182,7 +182,7 @@ export const listOrders = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.get(`/api/orders`, config);
+    const { data } = await tasResApi.get(`/api/orders`, config);
 
     dispatch({
       type: ORDER_LIST_SUCCESS,
@@ -213,7 +213,7 @@ export const dispatchOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.put(
+    const { data } = await tasResApi.put(
       `/api/orders/${order._id}/dispatch`,
       {},
       config

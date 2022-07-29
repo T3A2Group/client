@@ -1,4 +1,4 @@
-import backend from '../utils/setBaseUrl'
+import tasResApi from '../config/api'
 import { toast } from "react-toastify";
 import {
   CART_ADD_ITEM,
@@ -9,11 +9,11 @@ import {
 
 //we can get category,id,qty from URL
 export const addToCart = (category, id, qty) => async (dispatch, getState) => {
-  const { data } = await backend.get(`/api/${category}/${id}`);
+  const { data } = await tasResApi.get(`/api/${category}/${id}`);
   // console.log(data);
-  //   const { foodData } = await backend.get(`/api/food/${id}`);
-  //   const { specialtyData } = await backend.get(`/api/specialties/${id}`);
-  //   const { travelData } = await backend.get(`/api/travel/${id}`);
+  //   const { foodData } = await tasResApi.get(`/api/food/${id}`);
+  //   const { specialtyData } = await tasResApi.get(`/api/specialties/${id}`);
+  //   const { travelData } = await tasResApi.get(`/api/travel/${id}`);
 
   dispatch({
     type: CART_ADD_ITEM,
@@ -22,7 +22,7 @@ export const addToCart = (category, id, qty) => async (dispatch, getState) => {
       product: data._id,
       name: data.name,
       category: data.category,
-      image: data.image[0], //only want grab first image from the image array(can find in backend model)
+      image: data.image[0], //only want grab first image from the image array(can find in tasResApi model)
       price: data.price,
       countInStock: data.countInStock,
       qty,

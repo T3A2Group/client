@@ -10,7 +10,7 @@ import {
   updateSpecialty,
 } from "../../actions/productActions/specialtyActions";
 import { SPECIALTY_UPDATE_RESET } from "../../constants/productsConstant/specialtyConstants";
-import backend from "../../utils/setBaseUrl";
+import tasResApi from "../../config/api";
 
 const SpecialtyEditScreen = () => {
   //=> for each specialty details
@@ -78,7 +78,7 @@ const SpecialtyEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await backend.post("/api/upload", formData, config);
+      const { data } = await tasResApi.post("/api/upload", formData, config);
       setImage(data);
       setUploading(false);
     } catch (error) {
