@@ -4,7 +4,7 @@ import EachFood from "../components/Products/EachFood";
 import EachSpecialty from "../components/Products/EachSpecialty";
 import EachTravel from "../components/Products/EachTravel";
 // import products from "../products";  //fetch it from backend
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 
 //use react redux to lift up all products state, start:
@@ -18,6 +18,7 @@ import { listTravel } from "../actions/productActions/travelActions";
 //import message and loader component
 import Message from "../components/Loading/Message";
 import Loader from "../components/Loading/Loader";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
   //config react redux
@@ -54,11 +55,11 @@ const HomeScreen = () => {
               ))}
           </Row>
         )}
-        {/* <Row className="justify-content-md-center">
-          <Col xs="auto" lg="2" md="auto">
-            <Button className="btn btn-success">Explore More</Button>
+        <Row className="row justify-content-center">
+          <Col xs="auto" lg="3" md="auto">
+            <Link to='/villa' style={{ textDecoration: 'none' }}><strong>Explore More Villas </strong><i class="fa-solid fa-angles-right"></i></Link>
           </Col>
-        </Row> */}
+        </Row>
       </Container>
 
       <Container className="my-3">
@@ -78,6 +79,11 @@ const HomeScreen = () => {
               ))}
           </Row>
         )}
+        <Row className="row justify-content-center">
+          <Col xs="auto" lg="3" md="auto">
+            <Link to='/food' style={{ textDecoration: 'none' }}><strong>Explore More Food </strong><i class="fa-solid fa-angles-right"></i></Link>
+          </Col>
+        </Row>
       </Container>
 
       <Container className="my-3">
@@ -97,6 +103,11 @@ const HomeScreen = () => {
               ))}
           </Row>
         )}
+        <Row className="row justify-content-center">
+          <Col xs="auto" lg="3" md="auto">
+            <Link to='/specialty' style={{ textDecoration: 'none' }}><strong>Explore More Specialties </strong><i class="fa-solid fa-angles-right"></i></Link>
+          </Col>
+        </Row>
       </Container>
 
       <Container className="my-3">
@@ -116,6 +127,11 @@ const HomeScreen = () => {
               ))}
           </Row>
         )}
+        <Row className="row justify-content-center">
+          <Col xs="auto" lg="3" md="auto">
+            <Link to='/travel' style={{ textDecoration: 'none' }}><strong>Explore More Travel Plans </strong><i class="fa-solid fa-angles-right"></i></Link>
+          </Col>
+        </Row>
       </Container>
     </>
   );
