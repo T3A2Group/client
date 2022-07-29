@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../../components/FormContainer";
 import Message from "../../components/Loading/Message";
 import Progresser from "../../components/Loading/Progresser";
-import { listSpecialtyDetails } from "../../actions/productActions/specialtyActions";
+import {
+  listSpecialtyDetails,
+  updateSpecialty,
+} from "../../actions/productActions/specialtyActions";
+import { SPECIALTY_UPDATE_RESET } from "../../constants/productsConstant/specialtyConstants";
+import axios from "axios";
 
 const SpecialtyEditScreen = () => {
   //=> for each specialty details
@@ -18,25 +23,39 @@ const SpecialtyEditScreen = () => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const dispatch = useDispatch();
+  const nagivateTo = useNavigate();
 
   const specialtyDetails = useSelector((state) => state.specialtyDetails);
   const { loading, error, specialty } = specialtyDetails;
 
+  const specialtyUpdate = useSelector((state) => state.specialtyUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = specialtyUpdate;
+
   useEffect(() => {
-    if (!specialty.name || specialty._id !== specialtyId) {
-      dispatch(listSpecialtyDetails(specialtyId));
+    if (successUpdate) {
+      dispatch({ type: SPECIALTY_UPDATE_RESET });
+      nagivateTo("/admin/productlist/specialty");
     } else {
-      setName(specialty.name);
-      setPrice(specialty.price);
-      setImage(specialty.image);
-      setCategory(specialty.category);
-      setCountInStock(specialty.countInStock);
-      setDescription(specialty.description);
-      setType(specialty.type);
+      if (!specialty.name || specialty._id !== specialtyId) {
+        dispatch(listSpecialtyDetails(specialtyId));
+      } else {
+        setName(specialty.name);
+        setPrice(specialty.price);
+        setImage(specialty.image);
+        setCategory(specialty.category);
+        setCountInStock(specialty.countInStock);
+        setDescription(specialty.description);
+        setType(specialty.type);
+      }
     }
-  }, [dispatch, specialtyId, specialty]);
+  }, [dispatch, specialtyId, specialty, successUpdate, nagivateTo]);
 
   //form event handler
   const nameHandler = (e) => setName(e.target.value);
@@ -47,9 +66,42 @@ const SpecialtyEditScreen = () => {
   const descriptionHandler = (e) => setDescription(e.target.value);
   const typeHandler = (e) => setType(e.target.value);
 
+  //for image file upload
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]; //get the first image from the array
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
   const submithandler = (e) => {
     e.preventDefault();
     //update specialty
+    dispatch(
+      updateSpecialty({
+        _id: specialtyId,
+        name,
+        price,
+        image,
+        category,
+        countInStock,
+        description,
+        type,
+      })
+    );
   };
 
   return (
@@ -63,6 +115,8 @@ const SpecialtyEditScreen = () => {
 
       <FormContainer>
         <h1>Edit Specialty</h1>
+        {loadingUpdate && <Progresser />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
           <Progresser />
         ) : error ? (
@@ -103,6 +157,13 @@ const SpecialtyEditScreen = () => {
                 value={image}
                 autoComplete="on"
               ></Form.Control>
+              <Form.Control
+                type="file"
+                // controlId="image-file"
+                label="Choose File"
+                onChange={uploadFileHandler}
+              ></Form.Control>
+              {uploading && <Progresser />}
             </Form.Group>
 
             {/* 4. specialty category input */}

@@ -12,6 +12,14 @@ import {
   FOOD_CREATE_SUCCESS,
   FOOD_CREATE_FAIL,
   FOOD_CREATE_RESET,
+  FOOD_UPDATE_REQUEST,
+  FOOD_UPDATE_SUCCESS,
+  FOOD_UPDATE_FAIL,
+  FOOD_UPDATE_RESET,
+  FOOD_CREATE_REVIEW_REQUEST,
+  FOOD_CREATE_REVIEW_SUCCESS,
+  FOOD_CREATE_REVIEW_FAIL,
+  FOOD_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/foodConstants";
 
 //=> for home screen food product list state
@@ -69,6 +77,38 @@ export const foodCreateReducer = (state = {}, action) => {
     case FOOD_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case FOOD_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+//=> for update food product
+export const foodUpdateReducer = (state = { food: {} }, action) => {
+  switch (action.type) {
+    case FOOD_UPDATE_REQUEST:
+      return { loading: true };
+    case FOOD_UPDATE_SUCCESS:
+      return { loading: false, success: true, food: action.payload };
+    case FOOD_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case FOOD_UPDATE_RESET:
+      return { food: {} };
+    default:
+      return state;
+  }
+};
+
+//=> for client can create food review
+export const foodReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case FOOD_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case FOOD_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case FOOD_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case FOOD_CREATE_REVIEW_RESET:
       return {};
     default:
       return state;

@@ -6,24 +6,32 @@ import {
   villaDetailsReducer,
   villaDeleteReducer,
   villaCreateReducer,
+  villaUpdateReducer,
+  villaReviewCreateReducer,
 } from "./reducers/productsReducers/villaReducers";
 import {
   foodListReducer,
   foodDetailsReducer,
   foodDeleteReducer,
   foodCreateReducer,
+  foodUpdateReducer,
+  foodReviewCreateReducer,
 } from "./reducers/productsReducers/foodReducers";
 import {
   specialtyListReducer,
   specialtyDetailsReducer,
   specialtyDeleteReducer,
   specialtyCreateReducer,
+  specialtyUpdateReducer,
+  specialtyReviewCreateReducer,
 } from "./reducers/productsReducers/specialtiesReducers";
 import {
   travelListReducer,
   travelDetailsReducer,
   travelDeleteReducer,
   travelCreateReducer,
+  travelUpdateReducer,
+  travelReviewCreateReducer,
 } from "./reducers/productsReducers/travelReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -40,6 +48,8 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderMyListReducer,
+  orderListReducer,
+  orderDispatchReducer,
 } from "./reducers/orderReducers";
 
 const reducer = {
@@ -63,6 +73,16 @@ const reducer = {
   specialtyCreate: specialtyCreateReducer,
   travelCreate: travelCreateReducer,
 
+  villaUpdate: villaUpdateReducer,
+  foodUpdate: foodUpdateReducer,
+  specialtyUpdate: specialtyUpdateReducer,
+  travelUpdate: travelUpdateReducer,
+
+  villaReviewCreate: villaReviewCreateReducer,
+  foodReviewCreate: foodReviewCreateReducer,
+  specialtyReviewCreate: specialtyReviewCreateReducer,
+  travelReviewCreate: travelReviewCreateReducer,
+
   cart: cartReducer,
 
   userLogin: userLoginReducer,
@@ -77,6 +97,9 @@ const reducer = {
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMyList: orderMyListReducer,
+
+  orderList: orderListReducer,
+  orderDispatch: orderDispatchReducer,
 };
 
 //get cart Items from local storage,this is for preload state,even user fresh the page, cart item still in there if there is any

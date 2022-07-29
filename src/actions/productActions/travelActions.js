@@ -13,29 +13,39 @@ import {
   TRAVEL_CREATE_REQUEST,
   TRAVEL_CREATE_SUCCESS,
   TRAVEL_CREATE_FAIL,
+  TRAVEL_UPDATE_REQUEST,
+  TRAVEL_UPDATE_SUCCESS,
+  TRAVEL_UPDATE_FAIL,
+  TRAVEL_CREATE_REVIEW_REQUEST,
+  TRAVEL_CREATE_REVIEW_SUCCESS,
+  TRAVEL_CREATE_REVIEW_FAIL,
+  TRAVEL_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/travelConstants";
 
-export const listTravel = () => async (dispatch) => {
-  try {
-    dispatch({ type: TRAVEL_LIST_REQUEST });
-    const { data } = await backend.get("/api/travel");
-    dispatch({ type: TRAVEL_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: TRAVEL_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listTravel =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: TRAVEL_LIST_REQUEST });
+      const { data } = await backend.get(`/api/travel?keyword=${keyword}`);
+      dispatch({ type: TRAVEL_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: TRAVEL_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listTravelDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: TRAVEL_DETAILS_REQUEST });
     const { data } = await backend.get(`/api/travel/${id}`);
     dispatch({ type: TRAVEL_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: TRAVEL_CREATE_REVIEW_RESET });
   } catch (error) {
     dispatch({
       type: TRAVEL_DETAILS_FAIL,
@@ -107,3 +117,81 @@ export const createTravel = () => async (dispatch, getState) => {
     });
   }
 };
+
+//Admin can update travel plan product
+export const updateTravel = (travel) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: TRAVEL_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await backend.put(
+      `/api/travel/${travel._id}`,
+      travel,
+      config
+    );
+
+    dispatch({
+      type: TRAVEL_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: TRAVEL_DETAILS_SUCCESS,
+      payload: data,
+    });
+    toast(`🏝 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: TRAVEL_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Client can leave comment for travel plan product
+export const createTravelReview =
+  (travelId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: TRAVEL_CREATE_REVIEW_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await backend.post(
+        `/api/travel/${travelId}/reviews`,
+        review,
+        config
+      );
+
+      dispatch({
+        type: TRAVEL_CREATE_REVIEW_SUCCESS,
+      });
+      toast(`🤗 ${data.message}`);
+    } catch (error) {
+      dispatch({
+        type: TRAVEL_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

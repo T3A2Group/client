@@ -13,29 +13,39 @@ import {
   SPECIALTY_CREATE_REQUEST,
   SPECIALTY_CREATE_SUCCESS,
   SPECIALTY_CREATE_FAIL,
+  SPECIALTY_UPDATE_REQUEST,
+  SPECIALTY_UPDATE_SUCCESS,
+  SPECIALTY_UPDATE_FAIL,
+  SPECIALTY_CREATE_REVIEW_REQUEST,
+  SPECIALTY_CREATE_REVIEW_SUCCESS,
+  SPECIALTY_CREATE_REVIEW_FAIL,
+  SPECIALTY_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/specialtyConstants";
 
-export const listSpecialties = () => async (dispatch) => {
-  try {
-    dispatch({ type: SPECIALTY_LIST_REQUEST });
-    const { data } = await backend.get("/api/specialty");
-    dispatch({ type: SPECIALTY_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({
-      type: SPECIALTY_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+export const listSpecialties =
+  (keyword = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SPECIALTY_LIST_REQUEST });
+      const { data } = await backend.get(`/api/specialty?keyword=${keyword}`);
+      dispatch({ type: SPECIALTY_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: SPECIALTY_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const listSpecialtyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_DETAILS_REQUEST });
     const { data } = await backend.get(`/api/specialty/${id}`);
     dispatch({ type: SPECIALTY_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: SPECIALTY_CREATE_REVIEW_RESET });
   } catch (error) {
     dispatch({
       type: SPECIALTY_DETAILS_FAIL,
@@ -107,3 +117,81 @@ export const createSpecialty = () => async (dispatch, getState) => {
     });
   }
 };
+
+//Admin can update specialty product
+export const updateSpecialty = (specialty) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SPECIALTY_UPDATE_REQUEST,
+    });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await backend.put(
+      `/api/specialty/${specialty._id}`,
+      specialty,
+      config
+    );
+
+    dispatch({
+      type: SPECIALTY_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({
+      type: SPECIALTY_DETAILS_SUCCESS,
+      payload: data,
+    });
+    toast(`🎁 ${data.name} is Created Successfully!`);
+  } catch (error) {
+    dispatch({
+      type: SPECIALTY_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+//Client can leave comment for specialty product
+export const createSpecialtyReview =
+  (specialtyId, review) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_REQUEST,
+      });
+      const {
+        userLogin: { userInfo },
+      } = getState();
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await backend.post(
+        `/api/specialty/${specialtyId}/reviews`,
+        review,
+        config
+      );
+
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_SUCCESS,
+      });
+      toast(`🤗 ${data.message}`);
+    } catch (error) {
+      dispatch({
+        type: SPECIALTY_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

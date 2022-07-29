@@ -35,6 +35,7 @@ const NavbarSet = () => {
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
             <LinkContainer to="/villa">
@@ -120,7 +121,7 @@ const NavbarSet = () => {
                   <NavDropdown.Item>Modify Travel</NavDropdown.Item>
                 </LinkContainer>
 
-                <LinkContainer to="/admin/ordertlist">
+                <LinkContainer to="/admin/orderlist">
                   <NavDropdown.Item>Orders</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

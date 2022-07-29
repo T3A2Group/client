@@ -12,6 +12,14 @@ import {
   VILLA_CREATE_SUCCESS,
   VILLA_CREATE_FAIL,
   VILLA_CREATE_RESET,
+  VILLA_UPDATE_REQUEST,
+  VILLA_UPDATE_SUCCESS,
+  VILLA_UPDATE_FAIL,
+  VILLA_UPDATE_RESET,
+  VILLA_CREATE_REVIEW_REQUEST,
+  VILLA_CREATE_REVIEW_SUCCESS,
+  VILLA_CREATE_REVIEW_FAIL,
+  VILLA_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/villaConstants";
 
 //=> for home screen villa product list state
@@ -69,6 +77,38 @@ export const villaCreateReducer = (state = {}, action) => {
     case VILLA_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case VILLA_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+//=> for update villa product
+export const villaUpdateReducer = (state = { villa: {} }, action) => {
+  switch (action.type) {
+    case VILLA_UPDATE_REQUEST:
+      return { loading: true };
+    case VILLA_UPDATE_SUCCESS:
+      return { loading: false, success: true, villa: action.payload };
+    case VILLA_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case VILLA_UPDATE_RESET:
+      return { villa: {} };
+    default:
+      return state;
+  }
+};
+
+//=> for client can create villa review
+export const villaReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case VILLA_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case VILLA_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case VILLA_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case VILLA_CREATE_REVIEW_RESET:
       return {};
     default:
       return state;

@@ -12,6 +12,14 @@ import {
   SPECIALTY_CREATE_SUCCESS,
   SPECIALTY_CREATE_FAIL,
   SPECIALTY_CREATE_RESET,
+  SPECIALTY_UPDATE_REQUEST,
+  SPECIALTY_UPDATE_SUCCESS,
+  SPECIALTY_UPDATE_FAIL,
+  SPECIALTY_UPDATE_RESET,
+  SPECIALTY_CREATE_REVIEW_REQUEST,
+  SPECIALTY_CREATE_REVIEW_SUCCESS,
+  SPECIALTY_CREATE_REVIEW_FAIL,
+  SPECIALTY_CREATE_REVIEW_RESET,
 } from "../../constants/productsConstant/specialtyConstants";
 
 //=> for home screen specialty product list state
@@ -69,6 +77,38 @@ export const specialtyCreateReducer = (state = {}, action) => {
     case SPECIALTY_CREATE_FAIL:
       return { loading: false, error: action.payload };
     case SPECIALTY_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+//=> for update specialty product
+export const specialtyUpdateReducer = (state = { specialty: {} }, action) => {
+  switch (action.type) {
+    case SPECIALTY_UPDATE_REQUEST:
+      return { loading: true };
+    case SPECIALTY_UPDATE_SUCCESS:
+      return { loading: false, success: true, specialty: action.payload };
+    case SPECIALTY_UPDATE_FAIL:
+      return { loading: false, error: action.payload };
+    case SPECIALTY_UPDATE_RESET:
+      return { specialty: {} };
+    default:
+      return state;
+  }
+};
+
+//=> for client can create specialty review
+export const specialtyReviewCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case SPECIALTY_CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case SPECIALTY_CREATE_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case SPECIALTY_CREATE_REVIEW_FAIL:
+      return { loading: false, error: action.payload };
+    case SPECIALTY_CREATE_REVIEW_RESET:
       return {};
     default:
       return state;
