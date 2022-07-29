@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from '../utils/setBaseUrl'
 import { toast } from "react-toastify";
 import {
   CART_ADD_ITEM,
@@ -9,11 +9,11 @@ import {
 
 //we can get category,id,qty from URL
 export const addToCart = (category, id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`/api/${category}/${id}`);
+  const { data } = await backend.get(`/api/${category}/${id}`);
   // console.log(data);
-  //   const { foodData } = await axios.get(`/api/food/${id}`);
-  //   const { specialtyData } = await axios.get(`/api/specialties/${id}`);
-  //   const { travelData } = await axios.get(`/api/travel/${id}`);
+  //   const { foodData } = await backend.get(`/api/food/${id}`);
+  //   const { specialtyData } = await backend.get(`/api/specialties/${id}`);
+  //   const { travelData } = await backend.get(`/api/travel/${id}`);
 
   dispatch({
     type: CART_ADD_ITEM,

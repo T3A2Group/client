@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from "../utils/setBaseUrl";
 import { toast } from "react-toastify";
 import {
   USER_LOGIN_REQUEST,
@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
+    const { data } = await backend.post(
       "/api/users/login",
       { email, password },
       config
@@ -90,7 +90,7 @@ export const register = (name, email, password) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const { data } = await axios.post(
+    const { data } = await backend.post(
       "/api/users",
       { name, email, password },
       config
@@ -135,7 +135,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users/${id}`, config);
+    const { data } = await backend.get(`/api/users/${id}`, config);
     //after get user profile details success
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -168,7 +168,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/users/profile`, user, config);
+    const { data } = await backend.put(`/api/users/profile`, user, config);
     //after get user profile update details success
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -208,7 +208,7 @@ export const listUsers = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.get(`/api/users`, config);
+    const { data } = await backend.get(`/api/users`, config);
     //after get user list success
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -240,7 +240,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/users/${id}`, config);
+    const { data } = await backend.delete(`/api/users/${id}`, config);
     //after delete user success
     dispatch({
       type: USER_DELETE_SUCCESS,
@@ -273,7 +273,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+    const { data } = await backend.put(`/api/users/${user._id}`, user, config);
     //after update user success
     dispatch({
       type: USER_UPDATE_SUCCESS,

@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from "../../utils/setBaseUrl";
 import { toast } from "react-toastify";
 import {
   VILLA_LIST_REQUEST,
@@ -27,7 +27,7 @@ export const listVillas =
   async (dispatch) => {
     try {
       dispatch({ type: VILLA_LIST_REQUEST });
-      const { data } = await axios.get(`/api/villa?keyword=${keyword}`);
+      const { data } = await backend.get(`/api/villa?keyword=${keyword}`);
       dispatch({ type: VILLA_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -43,7 +43,7 @@ export const listVillas =
 export const listVillaDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: VILLA_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/villa/${id}`);
+    const { data } = await backend.get(`/api/villa/${id}`);
     dispatch({ type: VILLA_DETAILS_SUCCESS, payload: data });
     dispatch({ type: VILLA_CREATE_REVIEW_RESET });
   } catch (error) {
@@ -71,7 +71,7 @@ export const deleteVilla = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.delete(`/api/villa/${id}`, config);
+    const { data } = await backend.delete(`/api/villa/${id}`, config);
     dispatch({
       type: VILLA_DELETE_SUCCESS,
     });
@@ -101,7 +101,7 @@ export const createVilla = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/villa`, {}, config);
+    const { data } = await backend.post(`/api/villa`, {}, config);
     dispatch({
       type: VILLA_CREATE_SUCCESS,
       payload: data,
@@ -133,7 +133,7 @@ export const updateVilla = (villa) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.put(`/api/villa/${villa._id}`, villa, config);
+    const { data } = await backend.put(`/api/villa/${villa._id}`, villa, config);
 
     dispatch({
       type: VILLA_UPDATE_SUCCESS,
@@ -171,7 +171,7 @@ export const createVillaReview =
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.post(
+      const { data } = await backend.post(
         `/api/villa/${villaId}/reviews`,
         review,
         config

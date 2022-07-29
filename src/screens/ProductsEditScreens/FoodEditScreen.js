@@ -10,7 +10,7 @@ import {
   updateFood,
 } from "../../actions/productActions/foodActions";
 import { FOOD_UPDATE_RESET } from "../../constants/productsConstant/foodConstants";
-import axios from "axios";
+import backend from "../../utils/setBaseUrl";
 
 const FoodEditScreen = () => {
   //=> for each food details
@@ -78,7 +78,7 @@ const FoodEditScreen = () => {
           "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await backend.post("/api/upload", formData, config);
       setImage(data);
       setUploading(false);
     } catch (error) {
