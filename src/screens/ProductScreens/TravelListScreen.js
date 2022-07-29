@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import ListEachTravel from "../../components/Products/ListEachTravel";
 // import products from "../products";  //fetch it from backend
 import { Row, Col } from "react-bootstrap";
@@ -40,29 +41,34 @@ const TravelListScreen = () => {
 
   return (
     <>
-      <ToolBar openSearchbar={toggleSearchbar} />
-      <Searchbar
-        searchbar={searchbar}
-        closeSearchbar={toggleSearchbar}
-        category="travel"
-        className="fa-solid fa-map-location-dot"
-      />
-      <Container className="my-3">
-        <h1>Our Travel Plans</h1>
-        {travelList.loading ? (
-          <Loader color={"#A10035"} />
-        ) : travelList.error ? (
-          <Message variant="danger">{travelList.error}</Message>
-        ) : (
-          <Row>
-            {travelList.travel.map((travel) => (
-              <Col key={travel._id} md={12}>
-                <ListEachTravel travel={travel} />
-              </Col>
-            ))}
-          </Row>
-        )}
-      </Container>
+      <HelmetProvider>
+        <Helmet>
+          <title>Welcome to Tas Resort | Tours</title>
+        </Helmet>
+        <ToolBar openSearchbar={toggleSearchbar} />
+        <Searchbar
+          searchbar={searchbar}
+          closeSearchbar={toggleSearchbar}
+          category="travel"
+          className="fa-solid fa-map-location-dot"
+        />
+        <Container className="my-3">
+          <h1>Our Travel Plans</h1>
+          {travelList.loading ? (
+            <Loader color={"#A10035"} />
+          ) : travelList.error ? (
+            <Message variant="danger">{travelList.error}</Message>
+          ) : (
+            <Row>
+              {travelList.travel.map((travel) => (
+                <Col key={travel._id} md={12}>
+                  <ListEachTravel travel={travel} />
+                </Col>
+              ))}
+            </Row>
+          )}
+        </Container>
+      </HelmetProvider>
     </>
   );
 };

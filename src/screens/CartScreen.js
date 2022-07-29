@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -50,93 +51,98 @@ const CartScreen = () => {
   };
 
   return (
-    <Row className="mt-3">
-      <Col md={8}>
-        <h1>Shopping Cart</h1>
-        {cartItems.length === 0 ? (
-          <Message>
-            Your Cart is empty{" "}
-            <Link style={{ textDecoration: "none" }} to="/">
-              Go back
-            </Link>
-          </Message>
-        ) : (
-          <ListGroup
-            variant="flush"
-            className="mt-3"
-            style={{ border: "none" }}
-          >
-            {cartItems.map((item) => (
-              <ListGroup.Item key={item.product} className="mb-3">
-                <Row>
-                  <Col md={2}>
-                    <Image src={item.image} alt={item.name} fluid rounded />
-                  </Col>
-                  <Col md={3}>
-                    <Link
-                      style={{ textDecoration: "none" }}
-                      to={`/${item.category}/${item.product}`}
-                    >
-                      {item.name}
-                    </Link>
-                  </Col>
-                  <Col md={2}>${item.price}</Col>
-                  <Col md={2}>
-                    <Form.Control
-                      as="select"
-                      value={item.qty}
-                      onChange={(e) =>
-                        dispatch(
-                          addToCart(
-                            item.category,
-                            item.product,
-                            Number(e.target.value)
+    <HelmetProvider>
+      <Helmet>
+        <title>Welcome to Tas Resort | Cart</title>
+      </Helmet>
+      <Row className="mt-3">
+        <Col md={8}>
+          <h1>Shopping Cart</h1>
+          {cartItems.length === 0 ? (
+            <Message>
+              Your Cart is empty{" "}
+              <Link style={{ textDecoration: "none" }} to="/">
+                Go back
+              </Link>
+            </Message>
+          ) : (
+            <ListGroup
+              variant="flush"
+              className="mt-3"
+              style={{ border: "none" }}
+            >
+              {cartItems.map((item) => (
+                <ListGroup.Item key={item.product} className="mb-3">
+                  <Row>
+                    <Col md={2}>
+                      <Image src={item.image} alt={item.name} fluid rounded />
+                    </Col>
+                    <Col md={3}>
+                      <Link
+                        style={{ textDecoration: "none" }}
+                        to={`/${item.category}/${item.product}`}
+                      >
+                        {item.name}
+                      </Link>
+                    </Col>
+                    <Col md={2}>${item.price}</Col>
+                    <Col md={2}>
+                      <Form.Control
+                        as="select"
+                        value={item.qty}
+                        onChange={(e) =>
+                          dispatch(
+                            addToCart(
+                              item.category,
+                              item.product,
+                              Number(e.target.value)
+                            )
                           )
-                        )
-                      }
-                    >
-                      {[...Array(item.countInStock).keys()].map((i) => (
-                        <option key={i + 1} value={i + 1}>
-                          {i + 1}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Col>
-                  <Col md={2}>
-                    <Button
-                      type="button"
-                      variant="light"
-                      onClick={() => removeFromCartHandler(item.product)}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </Button>
-                  </Col>
-                </Row>
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Col>
+                    <Col md={2}>
+                      <Button
+                        type="button"
+                        variant="light"
+                        onClick={() => removeFromCartHandler(item.product)}
+                      >
+                        <i className="fas fa-trash"></i>
+                      </Button>
+                    </Col>
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          )}
+        </Col>
+        <Col md={4}>
+          <Card>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h2>Subtotal ({totalQty}) items</h2>${totalPrice}
               </ListGroup.Item>
-            ))}
-          </ListGroup>
-        )}
-      </Col>
-      <Col md={4}>
-        <Card>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Subtotal ({totalQty}) items</h2>${totalPrice}
-            </ListGroup.Item>
-            <ListGroup.Item className="d-grid gap-2">
-              <Button
-                type="button"
-                className="lg"
-                disabled={cartItems.length === 0}
-                onClick={checkoutHander}
-              >
-                Check Out
-              </Button>
-            </ListGroup.Item>
-          </ListGroup>
-        </Card>
-      </Col>
-    </Row>
+              <ListGroup.Item className="d-grid gap-2">
+                <Button
+                  type="button"
+                  className="lg"
+                  disabled={cartItems.length === 0}
+                  onClick={checkoutHander}
+                >
+                  Check Out
+                </Button>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+        </Col>
+      </Row>
+    </HelmetProvider>
   );
 };
 
