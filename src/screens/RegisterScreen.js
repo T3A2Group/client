@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,79 +49,84 @@ const RegisterScreen = () => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign Up</h1>
-      {message && <Message variant="danger">{message}</Message>}
-      {error && <Message variant="danger">{error}</Message>}
-      {loading && <Progresser />}
-      <Form onSubmit={submithandler}>
-        {/* user name input */}
-        <Form.Group controlId="name">
-          <Form.Label>User Name</Form.Label>
-          <Form.Control
-            type="name"
-            placeholder="Please Enter Your username"
-            onChange={nameHandler}
-            value={name}
-            autoComplete="on"
-          ></Form.Control>
-        </Form.Group>
+    <HelmetProvider>
+      <Helmet>
+        <title>Welcome to Tas Resort | Register</title>
+      </Helmet>
+      <FormContainer>
+        <h1>Sign Up</h1>
+        {message && <Message variant="danger">{message}</Message>}
+        {error && <Message variant="danger">{error}</Message>}
+        {loading && <Progresser />}
+        <Form onSubmit={submithandler}>
+          {/* user name input */}
+          <Form.Group controlId="name">
+            <Form.Label>User Name</Form.Label>
+            <Form.Control
+              type="name"
+              placeholder="Please Enter Your username"
+              onChange={nameHandler}
+              value={name}
+              autoComplete="on"
+            ></Form.Control>
+          </Form.Group>
 
-        {/* user email input */}
-        <Form.Group controlId="email" className="my-3">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Please Enter Your Email"
-            onChange={emailHandler}
-            value={email}
-            autoComplete="on"
-          ></Form.Control>
-        </Form.Group>
+          {/* user email input */}
+          <Form.Group controlId="email" className="my-3">
+            <Form.Label>Email Address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Please Enter Your Email"
+              onChange={emailHandler}
+              value={email}
+              autoComplete="on"
+            ></Form.Control>
+          </Form.Group>
 
-        {/* user password input */}
-        <Form.Group controlId="password" className="my-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Please Enter Your Password"
-            onChange={passwordHandler}
-            value={password}
-            autoComplete="on"
-          ></Form.Control>
-        </Form.Group>
+          {/* user password input */}
+          <Form.Group controlId="password" className="my-3">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Please Enter Your Password"
+              onChange={passwordHandler}
+              value={password}
+              autoComplete="on"
+            ></Form.Control>
+          </Form.Group>
 
-        {/* user password input */}
-        <Form.Group controlId="confirmPassword" className="my-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Please Confirm Your Password"
-            onChange={confirmPasswordHandler}
-            value={confirmPassword}
-            autoComplete="on"
-          ></Form.Control>
-        </Form.Group>
+          {/* user password input */}
+          <Form.Group controlId="confirmPassword" className="my-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Please Confirm Your Password"
+              onChange={confirmPasswordHandler}
+              value={confirmPassword}
+              autoComplete="on"
+            ></Form.Control>
+          </Form.Group>
 
-        <Button
-          type="submit"
-          variant="btn btn-outline-primary"
-          className="my-3"
-        >
-          Register
-        </Button>
-      </Form>
+          <Button
+            type="submit"
+            variant="btn btn-outline-primary"
+            className="my-3"
+          >
+            Register
+          </Button>
+        </Form>
 
-      <Row className="py-3">
-        <Col>
-          Already Have an Account?
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-            {" "}
-            Log In
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+        <Row className="py-3">
+          <Col>
+            Already Have an Account?
+            <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
+              {" "}
+              Log In
+            </Link>
+          </Col>
+        </Row>
+      </FormContainer>
+    </HelmetProvider>
   );
 };
 

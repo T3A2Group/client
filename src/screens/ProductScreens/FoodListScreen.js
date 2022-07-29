@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import EachFood from "../../components/Products/EachFood";
 
 //for search bar
@@ -73,63 +74,68 @@ const FoodListScreen = () => {
 
   return (
     <>
-      <ToolBar openSearchbar={toggleSearchbar} />
-      <Searchbar
-        searchbar={searchbar}
-        closeSearchbar={toggleSearchbar}
-        category="food"
-        className="fa-solid fa-utensils"
-      />
+      <HelmetProvider>
+        <Helmet>
+          <title>Welcome to Tas Resort | Food</title>
+        </Helmet>
+        <ToolBar openSearchbar={toggleSearchbar} />
+        <Searchbar
+          searchbar={searchbar}
+          closeSearchbar={toggleSearchbar}
+          category="food"
+          className="fa-solid fa-utensils"
+        />
 
-      <Container className="my-3">
-        <h1>Our Restaurant</h1>
-        {foodList.loading ? (
-          <Loader color={"#FFC4C4"} />
-        ) : foodList.error ? (
-          <Message variant="danger">{foodList.error}</Message>
-        ) : (
-          <Row>
-            <Carousel
-              additionalTransfrom={0}
-              arrows
-              autoPlaySpeed={3000}
-              centerMode={false}
-              className=""
-              containerClass="container"
-              dotListClass=""
-              draggable
-              focusOnSelect={false}
-              infinite
-              itemClass=""
-              keyBoardControl
-              minimumTouchDrag={80}
-              partialVisible
-              pauseOnHover
-              renderArrowsWhenDisabled={false}
-              renderButtonGroupOutside={false}
-              renderDotsOutside={false}
-              responsive={responsive}
-              rewind={false}
-              rewindWithAnimation={false}
-              rtl={false}
-              shouldResetAutoplay
-              showDots={false}
-              sliderClass=""
-              slidesToSlide={1}
-              swipeable
-            >
-              {foodList.food.map((food) => (
-                // <Col key={food._id} sm={12} md={6} lg={4} xl={3}>
-                <div key={food._id} className="mx-2">
-                  <EachFood food={food} />
-                </div>
+        <Container className="my-3">
+          <h1>Our Restaurant</h1>
+          {foodList.loading ? (
+            <Loader color={"#FFC4C4"} />
+          ) : foodList.error ? (
+            <Message variant="danger">{foodList.error}</Message>
+          ) : (
+            <Row>
+              <Carousel
+                additionalTransfrom={0}
+                arrows
+                autoPlaySpeed={3000}
+                centerMode={false}
+                className=""
+                containerClass="container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                partialVisible
+                pauseOnHover
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={responsive}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                shouldResetAutoplay
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
+              >
+                {foodList.food.map((food) => (
+                  // <Col key={food._id} sm={12} md={6} lg={4} xl={3}>
+                  <div key={food._id} className="mx-2">
+                    <EachFood food={food} />
+                  </div>
 
-                // </Col>
-              ))}
-            </Carousel>
-          </Row>
-        )}
-      </Container>
+                  // </Col>
+                ))}
+              </Carousel>
+            </Row>
+          )}
+        </Container>
+      </HelmetProvider>
     </>
   );
 };

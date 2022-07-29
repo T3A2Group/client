@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import EachSpecialty from "../../components/Products/EachSpecialty";
 
 //for search bar
@@ -73,59 +74,64 @@ const SpecialtyListScreen = () => {
 
   return (
     <>
-      <ToolBar openSearchbar={toggleSearchbar} />
-      <Searchbar
-        searchbar={searchbar}
-        closeSearchbar={toggleSearchbar}
-        category="specialty"
-        className="fa-solid fa-gifts"
-      />
-      <Container className="my-3">
-        <h1>Our Specialties</h1>
-        {specialtyList.loading ? (
-          <Loader color={"#FF869E"} />
-        ) : specialtyList.error ? (
-          <Message variant="danger">{specialtyList.error}</Message>
-        ) : (
-          <Row>
-            <Carousel
-              additionalTransfrom={0}
-              arrows
-              autoPlaySpeed={3000}
-              centerMode={false}
-              className=""
-              containerClass="container"
-              dotListClass=""
-              draggable
-              focusOnSelect={false}
-              infinite
-              itemClass=""
-              keyBoardControl
-              minimumTouchDrag={80}
-              partialVisible
-              pauseOnHover
-              renderArrowsWhenDisabled={false}
-              renderButtonGroupOutside={false}
-              renderDotsOutside={false}
-              responsive={responsive}
-              rewind={false}
-              rewindWithAnimation={false}
-              rtl={false}
-              shouldResetAutoplay
-              showDots={false}
-              sliderClass=""
-              slidesToSlide={1}
-              swipeable
-            >
-              {specialtyList.specialties.map((specialty) => (
-                <div key={specialty._id} className="mx-2">
-                  <EachSpecialty specialty={specialty} />
-                </div>
-              ))}
-            </Carousel>
-          </Row>
-        )}
-      </Container>
+      <HelmetProvider>
+        <Helmet>
+          <title>Welcome to Tas Resort | Gift</title>
+        </Helmet>
+        <ToolBar openSearchbar={toggleSearchbar} />
+        <Searchbar
+          searchbar={searchbar}
+          closeSearchbar={toggleSearchbar}
+          category="specialty"
+          className="fa-solid fa-gifts"
+        />
+        <Container className="my-3">
+          <h1>Our Specialties</h1>
+          {specialtyList.loading ? (
+            <Loader color={"#FF869E"} />
+          ) : specialtyList.error ? (
+            <Message variant="danger">{specialtyList.error}</Message>
+          ) : (
+            <Row>
+              <Carousel
+                additionalTransfrom={0}
+                arrows
+                autoPlaySpeed={3000}
+                centerMode={false}
+                className=""
+                containerClass="container"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                partialVisible
+                pauseOnHover
+                renderArrowsWhenDisabled={false}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={responsive}
+                rewind={false}
+                rewindWithAnimation={false}
+                rtl={false}
+                shouldResetAutoplay
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
+              >
+                {specialtyList.specialties.map((specialty) => (
+                  <div key={specialty._id} className="mx-2">
+                    <EachSpecialty specialty={specialty} />
+                  </div>
+                ))}
+              </Carousel>
+            </Row>
+          )}
+        </Container>
+      </HelmetProvider>
     </>
   );
 };
