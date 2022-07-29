@@ -39,14 +39,14 @@ import "react-toastify/dist/ReactToastify.css";
 //toastify lab import end
 //import react-paypal-js and axios for payment
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import backend from "./utils/setBaseUrl";
+import tasResApi from "./config/api";
 
 const App = () => {
   const [clientID, setClientID] = useState("");
 
   useEffect(() => {
     const getClientId = async () => {
-      const { data: clientId } = await backend.get("/api/config/paypal");
+      const { data: clientId } = await tasResApi.get("/api/config/paypal");
       setClientID(clientId);
     };
     if (!window.paypal) {

@@ -1,4 +1,4 @@
-import backend from "../../utils/setBaseUrl";
+import tasResApi from "../../config/api";
 import { toast } from "react-toastify";
 import {
   SPECIALTY_LIST_REQUEST,
@@ -27,7 +27,7 @@ export const listSpecialties =
   async (dispatch) => {
     try {
       dispatch({ type: SPECIALTY_LIST_REQUEST });
-      const { data } = await backend.get(`/api/specialty?keyword=${keyword}`);
+      const { data } = await tasResApi.get(`/api/specialty?keyword=${keyword}`);
       dispatch({ type: SPECIALTY_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -43,7 +43,7 @@ export const listSpecialties =
 export const listSpecialtyDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: SPECIALTY_DETAILS_REQUEST });
-    const { data } = await backend.get(`/api/specialty/${id}`);
+    const { data } = await tasResApi.get(`/api/specialty/${id}`);
     dispatch({ type: SPECIALTY_DETAILS_SUCCESS, payload: data });
     dispatch({ type: SPECIALTY_CREATE_REVIEW_RESET });
   } catch (error) {
@@ -71,7 +71,7 @@ export const deleteSpecialty = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.delete(`/api/specialty/${id}`, config);
+    const { data } = await tasResApi.delete(`/api/specialty/${id}`, config);
     dispatch({
       type: SPECIALTY_DELETE_SUCCESS,
     });
@@ -101,7 +101,7 @@ export const createSpecialty = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.post(`/api/specialty`, {}, config);
+    const { data } = await tasResApi.post(`/api/specialty`, {}, config);
     dispatch({
       type: SPECIALTY_CREATE_SUCCESS,
       payload: data,
@@ -133,7 +133,7 @@ export const updateSpecialty = (specialty) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await backend.put(
+    const { data } = await tasResApi.put(
       `/api/specialty/${specialty._id}`,
       specialty,
       config
@@ -175,7 +175,7 @@ export const createSpecialtyReview =
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await backend.post(
+      const { data } = await tasResApi.post(
         `/api/specialty/${specialtyId}/reviews`,
         review,
         config
