@@ -203,3 +203,4 @@ https://tasmania-resort.netlify.app/ (Please click to find more)
   - In your terminal, please run `$npm start` or `$yarn start` to start react.
   - If you seeded data in your server, please find users account details in backend: data folder, users.js
   - Have fun :blush:
+
