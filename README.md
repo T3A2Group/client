@@ -170,7 +170,7 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 
 ### Manual Test Logs
 
-https://tasmania-resort.netlify.app/ (Please click to find more)
+[Please click to find more](https://dent-beetle-c9a.notion.site/d21c3c894c28415d9caeba537722576c?v=43fbbca1288f4b13b3ad3fac40d7b5a0)
 
 ![Log overview](./docs/Manual-Test/Manual-Log-Overall.jpg)
 
@@ -203,4 +203,3 @@ https://tasmania-resort.netlify.app/ (Please click to find more)
   - In your terminal, please run `$npm start` or `$yarn start` to start react.
   - If you seeded data in your server, please find users account details in backend: data folder, users.js
   - Have fun :blush:
-
