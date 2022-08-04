@@ -316,7 +316,49 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 
 ---
 
-## :scroll: Project Management
+## :scroll: Project and Task Management
+
+We adopted an agile approach to manage this project with task management done through the use of a Trello board.
+
+In the initial planning phase of the project, we met with our client Tasmania Resort to gather their requirements for this project and collected user stories to help conceptualise ideas for features and functions.
+
+At the start of the development phase, we had a high level meeting to discuss how the project was going to be managed. We decided to continue using the agile approach of splitting the workflow into sprints based on the priority of tasks.
+
+We revisited the user stories in detail and decided to split the project into 4 sprints of 5 days each.
+
+- Sprint 1: Create MVP (minimum viable product).
+  In this sprint, we built the basic overall structure of the website consisting of all essential functions(all priority 1) and basic UI. We came across a couple of blockers such as how to best set up our product schemas. We called meetings to talk through these issues and were able to resolve these quickly which led to a successful delivery of the MVP by the end of sprint 1.
+
+  <img src="./docs/trello/sprint1.png">
+
+- Sprint 2: Priority 2 features and functions.
+  We tried to implement features that are ranked priority 2 during this sprint. We encountered some blockers that delayed our progress and by the second half of the sprint, we realised that we will need to review the remaining features to be implemented in this sprint as it was unlikely that we would be able to implement them all. Our team first had an internal discussion regarding which features may need to be put into the backlog to be worked on at a later date. Then we met with our client to communicate these delays and reprioritised tasks according to the client's preference. Our client was happy to leave the 'edit profile picture' feature to be implemented at a later date.
+
+  <img src="./docs/trello/sprint2.png">
+
+- Sprint 3: Refactor code, improve UI, manual, unit and integration tests, deployment
+  This sprint focuses on refining the end product which includes making the code more DRY, making further improvements to the UI, deploying the application and testing the application in development and production environments. We did not have major blockers in this sprint, however we did identify a couple of bugs in our business logic through testing. For example, a customer should only be allowed to leave a review for an item that they have actually purchased, not all products and basic inventory management (i.e. when an order is confirmed and marked as dispatched by admin, the level of stock for the products on the order will reduce accordingly). We were able to fix these before the end of the sprint and completed sprint 3 successfully.
+
+  <img src="./docs/trello/sprint3.png">
+
+- Sprint 4: Complete all documentation
+  In this sprint, we prepare for the delivery of the final product by tidying up and completing the documentation.
+
+  <img src="./docs/trello/sprint4.png">
+
+Before the start of each sprint, we had a sprint planning meeting to go over the goals and tasks of the upcoming sprint to ensure everyone in the team is on the same page with what our priorities are. Daily stand up meetings were also held to discuss the task that each of us were working on, whether anyone has any blocks and what will be worked on next. At the end of each sprint, review meetings are held where we ran through and demoed the completed features to ensure that everyone (including our mock client Tasmania Resort) understand the work done and ensure our mock client is happy with the product.
+
+In terms of task management, we added all tasks that we could think of to the 'to-do' column. When a card is assigned to a team member and is ready to be worked on, it is moved to the 'doing' column with an estimated due date assigned to it. Tasks that cannot be finished within the specified sprint are moved to the 'backlog' column to be worked on at a later date. Once the team member is done with the task, the card is moved to the 'done' column.
+
+In each of the sprint planning meetings, we reviewed the cards to ensure that they were prioritised and marked accordingly. We ranked the tasks based on priority and difficulty. We marked tasks that have a high priorty and high difficulty level with a 'priority' tag and tried to tackle these early on in the sprint. Tasks that were identified as difficult but not essential to the overall progression of the project are marked as 'blocks', these cards are worked on at a later stage in each sprint and moved to the 'backlog' column if we are short on time. The straightforward and less complicated tasks are marked with an 'east to resolve' tag. As we added features and functions to the board, we progressively broke them down into individual tasks and assigned each task to a specific team member (or in some cases as described below, to multiple team members).
+
+Our team consist of a diverse range of talents. Lance is very well rounded in both frontend and backend so he worked on tasks across both of these areas, building a solid base application for the team to add functions and features to. Yun has substantial backend knowledge so the trickier backend tasks were allocated to him. Nora wanted to grow her knowledge in the frontend so we allocated more frontend tasks to her. However, all our team members wanted to solidify our knowledge in all areas of the development process, so we aimed to ensure that each team member had a relatively even exposure across each of these areas.
+
+For some of the more difficult tasks, or for those that were more difficult to split up into multiple smaller tasks we used a 'pair programming' approach (but with 3 people instead of 2) to ensure that all team members understood the codebase, and had the opoortunity to provide input on important parts of the code that would affect each of our individual tasks later. Lance was in the driver's seat for these pair programming sessions and was responsible for pushing the changes to Github.
+
+In our day to day workflow, the team member would open a new feature branch when they start working on a new feature, regular commits and pushes are made to the feature branch until the feature is ready to be merged into the main branch. At this time, the team member would open a pull request on Github and have the code reviewed by other team members. We would often have a quick meeting to run through the changes, and if no adjustments are required, the pull request is approved and the feature is merged into the main development branch. Otherwise, we would talk through the adjustments needed and merge the feature after the changes are made.
+
+As a team, we were able to coordinate and work together very well. As we are a small group of three, we were able to be flexible and cater to the needs of each team member. For example, when Nora was unwell, the team agreed to allocate simpler tasks to her while she was sick and when Yun was moving houses, we agreed to shift the workload from him for that period. Although we were all working from home which made it harder to physically chat about tasks, we all tried our best to keep communication open by using discord.
 
 ---
 
