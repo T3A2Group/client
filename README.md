@@ -16,11 +16,11 @@
 
 ### :honeybee: Our Team
 
-##### :seedling: Lance Liu
+##### :seedling: Lance Liu [Github Profile](https://github.com/lanceliumeng)
 
-##### :seedling: Nora Sun
+##### :seedling: Nora Sun [Github Profile](https://github.com/jssnora)
 
-##### :seedling: Yun Li
+##### :seedling: Yun Li [Github Profile](https://github.com/sam-lee-py)
 
 ---
 
@@ -162,6 +162,11 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
     user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
 </details>
 
+<details>
+    <summary><b>cypress ^10.4.0</b></summary>
+    Cypress is a purely JavaScript-based front-end testing tool built for the modern web. We use it to do unit test admin working flow and users working flow.
+</details>
+
 ### Server Side
 
 <details>
@@ -216,11 +221,6 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 <details>
     <summary><b>nodemon ^2.0.19</b></summary>
     Nodemon is a tool that helps develop Node. js based applications by automatically restarting the node application when file changes in the directory are detected. In our development environment, we use npm run server to trigger script nodemon server.js, then nodemon will help us automatically restarting the server when we change files (devDependency).
-</details>
-
-<details>
-    <summary><b>node-mocks-http ^1.11.0 </b></summary>
-    It is used for testing our web server that have code that requires mockups of the request and response objects (devDependency).
 </details>
 
 <details>
@@ -309,6 +309,8 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 ### Unit and Integration Tests
 
 - [Cypress Test Result Logs](https://github.com/T3A2Group/client/tree/main/cypress/testResult)
+- [Cypress Test Result Logs Link](https://dashboard.cypress.io/projects/9eyfka/runs/1/test-results?actions=%5B%5D&browsers=%5B%5D&groups=%5B%5D&isFlaky=%5B%5D&modificationDateRange=%7B%22startDate%22%3A%221970-01-01%22%2C%22endDate%22%3A%222038-01-19%22%7D&orderBy=EXECUTION_ORDER&oses=%5B%5D&specs=%5B%5D&statuses=%5B%5D&testingTypesEnum=%5B%5D)
+- [Cypress Test All Specs Videos](https://dashboard.cypress.io/projects/9eyfka/runs/1/specs)
 
 - [Client Side Test Result Screenshot](https://github.com/T3A2Group/client/blob/main/src/test/Unit-test-Screenshots.jpg)
 
