@@ -40,6 +40,8 @@ https://github.com/T3A2Group/server
 :open_file_folder: [More Docs](https://github.com/T3A2Group/T3A2_Part_A_Docs)
 https://github.com/T3A2Group/T3A2_Part_A_Docs
 
+:microphone: [Our Presentation File](https://www.canva.com/design/DAFIIJH6s_w/INyze_rft1E59K7u1TFxjg/view?utm_content=DAFIIJH6s_w&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
+
 ---
 
 ### Table of Contents
@@ -62,6 +64,7 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 - [:scroll: Project Management](#scroll-project-management)
 - [:feet: Help documentation](#feet-help-documentation)
   - [Steps to install the app](#steps-to-install-the-app)
+- [:pushpin: Limitations](#pushpin-limitations)
 
 ---
 
@@ -69,42 +72,171 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 
 ### Client Side
 
-- <b>paypal/react-paypal-js ^7.8.1 :</b> react-paypal-js provides a solution to developers to abstract away complexities around loading the JS SDK. It enforces best practices by default so buyers get the best possible user experience. In our app, we use the PayPalScriptProvider options prop to configure the JS SDK, and allows client can complete payment in Paypal sanbox environment.
-- <b>reduxjs/toolkit ^1.8.3 :</b> Includes utilities to simplify common use cases like store setup, creating reducers, immutable update logic, and more.Provides good defaults for store setup out of the box, and includes the most commonly used Redux addons built-in. In our app, we use redux to lift up 4 different products states, users states and order states to global state.
-- <b>react-redux ^8.0.2 :</b> React Redux is the official React binding for Redux. It allows React components to read data from a Redux Store, and dispatch Actions to the Store to update data. In our app, you will find we used useDispatch, useSelector to dispatch actions to each related component to update state data.
-- <b>axios ^0.27.2 :</b> Axios is a Javascript library used to perform HTTP requests for Nodejs and browsers. It supports the Promise API and makes it easy to send requests asynchronously. In our app, we use axios.create to create a new instance of axios with our config. Then our client, auth and admin system makes GET/POST/PUT/DELETE HTTP requests using the axios instance.
-- <b>react ^18.2.0 :</b> React is a free and open-source front-end JavaScript library for building user interfaces based on UI components. It is maintained by Meta and a community of individual developers and companies. Our application dynamic client side UI is built with the react labs.
-- <b>react-bootstrap ^2.4.0 :</b> React-Bootstrap is a component-based library that provides native Bootstrap components as pure React components. Our application UI layout is mainly used with React-Bootstrap.
-- <b>react-dom ^18.2.0 :</b> ReactDOM is a package that provides DOM specific methods that can be used at the top level of a web app to enable an efficient way of managing DOM elements of the web page. This enables our app can use render() method to render components in the browser.
-- <b>react-helmet ^6.1.0 :</b> React Helmet is a component to dynamically manage the document's head section. Some common use cases include setting the title , description , and meta tags for the document. In our app, when users go to each different main component, they will find each title also is different. For example, if user in the app home page, they can find the title: Welcome to Tas Resort | Home.
-- <b>react-helmet-async ^1.3.0 :</b> React Helmet Async is a component which lets us control our document head using their React component. We use this lab to fixed some console error issues.
-- <b>react-multi-carousel ^2.8.2 :</b> A lightweight production-ready Carousel that rocks supports multiple items and server-side rendering with no dependency. We mainly use it to make food list and specialty list screen UI layouts are different.
-- <b>react-router-bootstrap ^0.26.2 :</b> The lab is integration between React Router v6 and React Bootstrap. In our app, we use LinkContainer to wrap our react bootstrap element to make it behave like a react router Link.
-- <b>react-router-dom ^6.3.0 :</b> React Router DOM enables us to implement dynamic routing in our app. It allows for conditional rendering of our app's components in a single-page application based on the route being used in the URL. For example, in our different product screen component, we use navigateTo(-1) to allow users to click the go back button and always go gack to the previous page. If user clicks the product card to check product details from the home page, then when they click the go back button, they will go back to the home page, but if they check product details from the product list page, the go back button will take them back to the product list page.
-- <b>react-scripts 5.0.1 :</b> react-scripts are simply scripts to run the build tools required to transform React JSX syntax into plain JavaScript programmatically.
-- <b>react-toastify ^9.0.7 :</b> This lab allows us to add notifications to our app with ease. In our app, we mainly import this lab into action files, for example, when a user makes an order successfully, they will find a notification on the page, we think this can enhance the UI experience.
-- <b>redux-devtools-extension ^2.13.9 :</b> We use this lab for debugging our application's state changes. We have used this lab and chrome redux devtools in our development environment to monitor actions and states change.
-- <b>testing-library/jest-dom ^5.14.1 :</b> jest-dom is a companion library for Testing Library that provides custom DOM element matchers for Jest. In our app, we mainly use jest lab to do unit test in frontend.
-- <b>testing-library/react ^13.0.0 :</b> React Testing Library is a testing utility tool that's built to test the actual DOM tree rendered by React on the browser. The goal of the library is to us write tests that resemble how a user would use our application.
-- <b>testing-library/user-event ^13.2.1 :</b> user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
+<details>
+    <summary><b>paypal/react-paypal-js ^7.8.1</b></summary>
+    react-paypal-js provides a solution to developers to abstract away complexities around loading the JS SDK. It enforces best practices by default so buyers get the best possible user experience. In our app, we use the PayPalScriptProvider options prop to configure the JS SDK, and allows client can complete payment in Paypal sanbox environment.
+</details>
+
+<details>
+    <summary><b>reduxjs/toolkit ^1.8.3</b></summary>
+    Includes utilities to simplify common use cases like store setup, creating reducers, immutable update logic, and more.Provides good defaults for store setup out of the box, and includes the most commonly used Redux addons built-in. In our app, we use redux to lift up 4 different products states, users states and order states to global state.
+</details>
+
+<details>
+    <summary><b>react-redux ^8.0.2</b></summary>
+    React Redux is the official React binding for Redux. It allows React components to read data from a Redux Store, and dispatch Actions to the Store to update data. In our app, you will find we used useDispatch, useSelector to dispatch actions to each related component to update state data.
+</details>
+
+<details>
+    <summary><b>axios ^0.27.2</b></summary>
+    Axios is a Javascript library used to perform HTTP requests for Nodejs and browsers. It supports the Promise API and makes it easy to send requests asynchronously. In our app, we use axios.create to create a new instance of axios with our config. Then our client, auth and admin system makes GET/POST/PUT/DELETE HTTP requests using the axios instance.
+</details>
+
+<details>
+    <summary><b>react ^18.2.0</b> </summary>
+    React is a free and open-source front-end JavaScript library for building user interfaces based on UI components. It is maintained by Meta and a community of individual developers and companies. Our application dynamic client side UI is built with the react labs.
+</details>
+
+<details>
+    <summary><b>react-bootstrap ^2.4.0</b></summary>
+    React-Bootstrap is a component-based library that provides native Bootstrap components as pure React components. Our application UI layout is mainly used with React-Bootstrap.
+</details>
+  
+<details>
+    <summary><b>react-dom ^18.2.0</b></summary>
+    ReactDOM is a package that provides DOM specific methods that can be used at the top level of a web app to enable an efficient way of managing DOM elements of the web page. This enables our app can use render() method to render components in the browser.
+</details>
+
+<details>
+    <summary><b>react-helmet ^6.1.0 :</b></summary>
+    React Helmet is a component to dynamically manage the document's head section. Some common use cases include setting the title , description , and meta tags for the document. In our app, when users go to each different main component, they will find each title also is different. For example, if user in the app home page, they can find the title: Welcome to Tas Resort | Home.
+</details>
+
+<details>
+    <summary><b>react-helmet-async ^1.3.0</b></summary>
+    React Helmet Async is a component which lets us control our document head using their React component. We use this lab to fixed some console error issues.
+</details>
+
+<details>
+    <summary><b>react-multi-carousel ^2.8.2</b></summary>
+    A lightweight production-ready Carousel that rocks supports multiple items and server-side rendering with no dependency. We mainly use it to make food list and specialty list screen UI layouts are different.
+</details>
+
+<details>
+    <summary><b>react-router-bootstrap ^0.26.2</b></summary>
+    The lab is integration between React Router v6 and React Bootstrap. In our app, we use LinkContainer to wrap our react bootstrap element to make it behave like a react router Link.
+</details>
+
+<details>
+    <summary><b>react-router-dom ^6.3.0</b></summary>
+    React Router DOM enables us to implement dynamic routing in our app. It allows for conditional rendering of our app's components in a single-page application based on the route being used in the URL. For example, in our different product screen component, we use navigateTo(-1) to allow users to click the go back button and always go gack to the previous page. If user clicks the product card to check product details from the home page, then when they click the go back button, they will go back to the home page, but if they check product details from the product list page, the go back button will take them back to the product list page.
+</details>
+
+<details>
+    <summary><b>react-scripts 5.0.1</b></summary>
+    react-scripts are simply scripts to run the build tools required to transform React JSX syntax into plain JavaScript programmatically.
+</details>
+
+<details>
+    <summary><b>react-toastify ^9.0.7</b></summary>
+    This lab allows us to add notifications to our app with ease. In our app, we mainly import this lab into action files, for example, when a user makes an order successfully, they will find a notification on the page, we think this can enhance the UI experience.
+</details>
+
+<details>
+    <summary><b>redux-devtools-extension ^2.13.9</b></summary>
+    We use this lab for debugging our application's state changes. We have used this lab and chrome redux devtools in our development environment to monitor actions and states change.
+</details>
+
+<details>
+    <summary><b>testing-library/jest-dom ^5.14.1</b></summary>
+    jest-dom is a companion library for Testing Library that provides custom DOM element matchers for Jest. In our app, we mainly use jest lab to do unit test in frontend.
+</details>
+
+<details>
+    <summary><b>testing-library/react ^13.0.0</b></summary>
+    React Testing Library is a testing utility tool that's built to test the actual DOM tree rendered by React on the browser. The goal of the library is to us write tests that resemble how a user would use our application.
+</details>
+
+<details>
+    <summary><b>testing-library/user-event ^13.2.1</b></summary>
+    user-event is a companion library for Testing Library that simulates user interactions by dispatching the events that would happen if the interaction took place in a browser.
+</details>
 
 ### Server Side
 
-- <b>bcryptjs ^2.4.3 :</b> It helps to avoid the sensitive data being visible from anyone. For security reason, we use this module to storing of user's password as hashed password instead of plaintext.
-- <b>cors ^2.8.5 :</b> We use CORS to allow cross-origin access. CORS is a part of HTTP that lets our app server specify any other hosts from which a browser should permit loading of content.
-- <b>cloudinary ^1.30.1 :</b> The Cloudinary Node SDK allows us to quickly and easily integrate our application with Cloudinary. In our app, when user upload image from frontend, the image will be stored in cloud, our backend database only store the image cloud URL.
-- <b>dotenv ^16.0.1 :</b> DotEnv is a lightweight npm package that automatically loads environment variables from a . env file into the process. env object. In our app, we use it to config some sensitive data such as database and cloud keys.
-- <b>express ^4.18.1 :</b> Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. We used express framework to bulid our app backend server consist of routes, middlewares and modules.
-- <b>express-async-handler ^1.2.0 :</b> Simple middleware for handling exceptions inside of async express routes and passing them to us express error handlers. In our controllers, when using async handler wrap the async function with asynchandler, like asyncHandler(async fn()), so it saves us writing our own try/catch for async/await and passes error on to next.
-- <b>jsonwebtoken ^8.5.1 :</b>It is an implementation of JSON Web Tokens. We mainly use it to generate jwt and share security information(auth information) between two parties — a client and a server.
-- <b>mongoose ^6.4.4 :</b> Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node. js. We use it to manage relationships between data, provides schema validation, and translate between objects in code and the representation of those objects in MongoDB.
-- <b>morgan ^1.10.0 :</b> Morgan is a HTTP request logger middleware for Node. js. It simplifies the process of logging requests to our application. We only use it as a helper to check request logs in development environment.
-- <b>multer ^1.4.5-lts.1 :</b> Multer is a node. js middleware for handling multipart/form-data , which is primarily used for uploading files. We use it to handle upload images only at this stage.
-- <b>nodemon ^2.0.19 :</b> Nodemon is a tool that helps develop Node. js based applications by automatically restarting the node application when file changes in the directory are detected. In our development environment, we use npm run server to trigger script nodemon server.js, then nodemon will help us automatically restarting the server when we change files.
-- <b>node-mocks-http ^1.11.0 :</b> It is used for testing our web server that have code that requires mockups of the request and response objects.
-- <b>supertest ^6.2.4 :</b> It is a Node. js library that helps developers test APIs. We use it to test send requests (GET, POST, PUT, DELETE ) and fetch responses.
-- <b>jest ^28.1.3 :</b> Jest is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase. At server side, we use Jest for Unit Testing.
-- <b>babel-jest ^28.1.3 :</b> It is is automatically installed when installing Jest and will automatically transform files if a babel configuration exists in your project.
+<details>
+    <summary><b>bcryptjs ^2.4.3</b></summary>
+    It helps to avoid the sensitive data being visible from anyone. For security reason, we use this module to storing of user's password as hashed password instead of plaintext.
+</details>
+<details>
+    <summary><b>cors ^2.8.5</b></summary>
+    We use CORS to allow cross-origin access. CORS is a part of HTTP that lets our app server specify any other hosts from which a browser should permit loading of content.
+</details>
+
+<details>
+    <summary><b>cloudinary ^1.30.1</b></summary>
+    The Cloudinary Node SDK allows us to quickly and easily integrate our application with Cloudinary. In our app, when user upload image from frontend, the image will be stored in cloud, our backend database only store the image cloud URL.
+</details>
+
+<details>
+    <summary><b>dotenv ^16.0.1</b></summary>
+    DotEnv is a lightweight npm package that automatically loads environment variables from a . env file into the process. env object. In our app, we use it to config some sensitive data such as database and cloud keys.
+</details>
+  
+<details>
+    <summary><b>express ^4.18.1</b></summary>
+    Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. We used express framework to bulid our app backend server consist of routes, middlewares and modules.
+</details>
+
+<details>
+    <summary><b>express-async-handler ^1.2.0</b></summary>
+    Simple middleware for handling exceptions inside of async express routes and passing them to us express error handlers. In our controllers, when using async handler wrap the async function with asynchandler, like asyncHandler(async fn()), so it saves us writing our own try/catch for async/await and passes error on to next.
+</details>
+
+<details>
+    <summary><b>jsonwebtoken ^8.5.1</b></summary>
+    It is an implementation of JSON Web Tokens. We mainly use it to generate jwt and share security information(auth information) between two parties — a client and a server.
+</details>
+
+<details>
+    <summary><b>mongoose ^6.4.4</b></summary>
+    Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node. js. We use it to manage relationships between data, provides schema validation, and translate between objects in code and the representation of those objects in MongoDB.
+</details>
+
+<details>
+    <summary><b>morgan ^1.10.0</b></summary>
+    Morgan is a HTTP request logger middleware for Node. js. It simplifies the process of logging requests to our application. We only use it as a helper to check request logs in development environment.
+</details>
+
+<details>
+    <summary><b>multer ^1.4.5-lts.1</b></summary>
+    Multer is a node. js middleware for handling multipart/form-data , which is primarily used for uploading files. We use it to handle upload images only at this stage.
+</details>
+
+<details>
+    <summary><b>nodemon ^2.0.19</b></summary>
+    Nodemon is a tool that helps develop Node. js based applications by automatically restarting the node application when file changes in the directory are detected. In our development environment, we use npm run server to trigger script nodemon server.js, then nodemon will help us automatically restarting the server when we change files (devDependency).
+</details>
+
+<details>
+    <summary><b>node-mocks-http ^1.11.0 </b></summary>
+    It is used for testing our web server that have code that requires mockups of the request and response objects (devDependency).
+</details>
+
+<details>
+    <summary><b>supertest ^6.2.4 </b></summary>
+    It is a Node. js library that helps developers test APIs. We use it to test send requests (GET, POST, PUT, DELETE ) and fetch responses (devDependency).
+</details>
+
+<details>
+    <summary><b>jest ^28.1.3 </b></summary>
+    Jest is a JavaScript testing framework designed to ensure correctness of any JavaScript codebase. At server side, we use Jest for Unit Testing (devDependency).
+</details>
+
+<details>
+    <summary><b>babel-jest ^28.1.3 </b></summary>
+    It is is automatically installed when installing Jest and will automatically transform files if a babel configuration exists in our project (devDependency).
+</details>
 
 ---
 
@@ -176,6 +308,12 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 
 ### Unit and Integration Tests
 
+- [Cypress Test Result Logs](https://github.com/T3A2Group/client/tree/main/cypress/testResult)
+
+- [Client Side Test Result Screenshot](https://github.com/T3A2Group/client/blob/main/src/test/Unit-test-Screenshots.jpg)
+
+- [Server Side Test Result Logs and Screenshot](https://github.com/T3A2Group/server/tree/main/tests/test-result)
+
 ---
 
 ## :scroll: Project Management
@@ -203,3 +341,15 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
   - In your terminal, please run `$npm start` or `$yarn start` to start react.
   - If you seeded data in your server, please find users account details in backend: data folder, users.js
   - Have fun :blush:
+
+---
+
+## :pushpin: Limitations
+
+In general, we are all satisfied with the website. Through the hard work of each team member day and night, this website has helped Tasmania Resort solve most companies' business needs. Everyone also learned a lot through this project, not only the knowledge of code but also how to carry out team collaboration, how to achieve each milestone according to agile development, and how to use each member's strength to bring more significant benefits to the team project. But at the same time, we also realize that this website still has some limitations.
+
+- At this stage, the client only can do a standard search. We want to add advance search in the feature.
+- We want to add more payment options(such as Apple pay, Google pay etc.) in the app. At this stage, the client only can use PayPal to complete payment by using a PayPal account or bank card.
+- We couldn't achieve a complex booking system in our app. For example, we want to allow clients to choose a villa according to the date. If the client decides villa, we want to suggest some related products to them.
+- We didn't add an email validation check function and secure password suggestion for the sign-up form. We want to add this to the app as well.
+- Real-time chat system, when clients browse the website, we want to allow them to ask questions through a chat window, and resort admins can help clients to resolve some questions through chat.
