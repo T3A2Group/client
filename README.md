@@ -61,7 +61,7 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 - [:telescope: Tests](#telescope-tests)
   - [Manual Test Logs](#manual-test-logs)
   - [Unit and Integration Tests](#unit-and-integration-tests)
-- [:scroll: Project Management](#scroll-project-management)
+- [:scroll: Project and Task Management](#scroll-project-and-task-management)
 - [:feet: Help documentation](#feet-help-documentation)
   - [Steps to install the app](#steps-to-install-the-app)
 - [:pushpin: Limitations](#pushpin-limitations)
@@ -317,6 +317,8 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 ---
 
 ## :scroll: Project and Task Management
+
+Our Trello Link : [Trello URL](https://trello.com/b/Rqmp3DFm/tasmania-resort)
 
 We adopted an agile approach to manage this project with task management done through the use of a Trello board.
 
