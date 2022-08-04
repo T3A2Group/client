@@ -312,9 +312,9 @@ https://github.com/T3A2Group/T3A2_Part_A_Docs
 - [Cypress Test Result Logs Link](https://dashboard.cypress.io/projects/9eyfka/runs/1/test-results?actions=%5B%5D&browsers=%5B%5D&groups=%5B%5D&isFlaky=%5B%5D&modificationDateRange=%7B%22startDate%22%3A%221970-01-01%22%2C%22endDate%22%3A%222038-01-19%22%7D&orderBy=EXECUTION_ORDER&oses=%5B%5D&specs=%5B%5D&statuses=%5B%5D&testingTypesEnum=%5B%5D)
 - [Cypress Test All Specs Videos](https://dashboard.cypress.io/projects/9eyfka/runs/1/specs)
 
-- [Client Side Test Result Screenshot](https://github.com/T3A2Group/client/blob/main/src/test/Unit-test-Screenshots.jpg)
+- [Client Side Test Result Logs and Screenshot](https://github.com/T3A2Group/client/blob/main/src/test)
 
-- [Server Side Test Result Logs and Screenshot](https://github.com/T3A2Group/server/tree/main/tests/test-result)
+- [Server Side Test Result Logs and Screenshot](https://github.com/T3A2Group/server/tree/main/tests)
 
 ---
 
